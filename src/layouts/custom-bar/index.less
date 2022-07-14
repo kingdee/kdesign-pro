@@ -1,0 +1,279 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.custom {
+  &.visible {
+    .mask {
+      opacity: 1;
+      pointer-events: auto;
+      transition-timing-function: ease-in;
+    }
+
+    .bar {
+      transform: translateX(0);
+      transition-timing-function: ease-in;
+
+      .handle::before {
+        transform: translate(-75%, -50%) rotate(-135deg);
+      }
+    }
+  }
+
+  .mask {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    content: '';
+    opacity: 0;
+    pointer-events: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: opacity 0.2s ease-out;
+  }
+
+  .bar {
+    z-index: 101;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 320px;
+    background-color: @color-background;
+    transform: translateX(100%);
+    transition: transform 0.2s ease-out;
+
+    .header {
+      height: 40px;
+      padding-left: 24px;
+      line-height: 40px;
+      font-size: @font-size-large;
+      color: @color-text-primary;
+      border-bottom: 1px solid #ecedf2;
+    }
+
+    .settings {
+      flex: auto;
+      padding: 0 24px;
+      overflow-y: overlay;
+      .item {
+        padding: 14px 0;
+        &:not(:last-child) {
+          border-bottom: 1px solid #f2f4f7;
+        }
+
+        h3 {
+          position: relative;
+          margin-bottom: 16px;
+          font-size: @font-size-middle;
+          color: @color-text-primary;
+
+          .action {
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            button {
+              width: 32px;
+              height: 22px;
+              color: #808080;
+              background: #f9f9f9;
+              border-radius: 2px;
+              border: none;
+              cursor: pointer;
+
+              &.disabled {
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+
+      .theme {
+        display: flex;
+        flex-wrap: wrap;
+        li {
+          position: relative;
+          justify-content: center;
+          align-items: center;
+          flex: 0 0 20px;
+          height: 20px;
+          margin-bottom: 28px;
+          cursor: pointer;
+          border-radius: 2px;
+
+          &:not(:nth-child(5n)) {
+            margin-right: 36px;
+          }
+
+          &.active::before {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            content: '';
+            width: 9px;
+            height: 4px;
+            border-left: 1.5px solid #fff;
+            border-bottom: 1.5px solid #fff;
+            transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+          }
+
+          .name {
+            position: absolute;
+            left: -2px;
+            bottom: -20px;
+            width: 300%;
+            font-size: @font-size-small;
+            color: @color-text-third;
+            transform: scale(0.9);
+          }
+        }
+      }
+
+      .layout {
+        .option {
+          &.disabled {
+            filter: opacity(20%);
+            .list > li {
+              cursor: not-allowed;
+            }
+          }
+
+          .label {
+            margin-bottom: 6px;
+            font-size: @font-size-small;
+            color: @color-text-primary;
+          }
+
+          .list {
+            li {
+              display: inline-block;
+              width: 80px;
+              cursor: pointer;
+
+              &:not(:last-child) {
+                margin-right: 16px;
+              }
+
+              .piece {
+                background-color: @color-theme;
+
+                &.active {
+                  position: relative;
+                  overflow: hidden;
+                  &::before {
+                    position: absolute;
+                    right: -7px;
+                    bottom: -1px;
+                    content: '';
+                    width: 24px;
+                    height: 12px;
+                    transform: rotate(-45deg);
+                    background-color: @color-theme;
+                  }
+
+                  &::after {
+                    position: absolute;
+                    right: -3px;
+                    bottom: 2px;
+                    content: '';
+                    width: 9px;
+                    height: 4px;
+                    border-left: 1.5px solid #fff;
+                    border-bottom: 1.5px solid #fff;
+                    transform: translateX(-50%) translateY(-50%) rotate(-45deg);
+                  }
+                }
+              }
+
+              img {
+                width: 100%;
+              }
+
+              span {
+                display: block;
+                margin-left: -4px;
+                font-size: @font-size-small;
+                color: @color-text-secondary;
+                transform: scale(0.9);
+              }
+            }
+          }
+
+          &:not(:last-child) {
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+
+    .use {
+      padding: 24px;
+      box-shadow: 0 0 0 0 transparent, 0 -2px 5px 0 #ededed;
+      .tips {
+        display: flex;
+        align-items: center;
+        padding: 10px 15px;
+        border-radius: 2px;
+        background-color: rgba(85, 130, 243, 0.1);
+
+        i {
+          color: #276ff5;
+          font-size: 18px;
+        }
+
+        .text {
+          margin-left: 10px;
+        }
+      }
+      .copy {
+        width: 100%;
+        margin-top: 20px;
+      }
+    }
+
+    .handle {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      border-radius: 2px 0px 0px 2px;
+      background-color: @color-theme;
+      transform: translate(-100%, -50%);
+
+      &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        content: '';
+        width: 9px;
+        height: 9px;
+        border-left: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        transform: translate(-25%, -50%) rotate(45deg);
+        transition: all 0.5s linear;
+      }
+    }
+  }
+}
+
+.form {
+  margin: 10px;
+  :global {
+    .kd-form-field {
+      margin: 0 0 20px 0;
+    }
+    .kd-form-field-label {
+      margin-right: 0;
+    }
+    .kd-form-field-wrapper {
+      flex: auto;
+    }
+  }
+}

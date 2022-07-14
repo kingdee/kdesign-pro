@@ -1,0 +1,96 @@
+import { useState, useEffect } from 'react'
+import { history, IRoute } from 'umi'
+import classnames from 'classnames'
+import { Menu, Icon } from '@kdcloudjs/kdesign'
+
+import styles from './menu.less'
+
+const { SubMenu, Item } = Menu
+
+interface SiderProps {
+  route: IRoute
+  pathname: string
+  menu: string
+  menuTheme: string
+  sideMenus: IMenuItem[]
+}
+
+export default function ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderProps) {
+  const [collapsed, setCollapsed] = useState(false)
+  const handleSwitchCollapsed = () => setCollapsed(!collapsed)
+
+  const onClick = ({ key }: { key: string }) => {
+    history.push(key)
+  }
+
+  const onOpenChange = (openKeys: Array<string>) => {
+    setOpenKeys(openKeys)
+  }
+
+  const [enter, setEnter] = useState(false)
+
+  const [initOpenKey] = pathname.match(/(\/\w+){2}/g) || ['']
+  const [openKeys, setOpenKeys] = useState([initOpenKey])
+  const [selectedKey, setSelectedKey] = useState(pathname)
+
+  useEffect(() => {
+    const [openKey] = pathname.match(/(\/\w+){2}/g) || ['']
+    setOpenKeys([openKey])
+    setSelectedKey(pathname)
+  }, [pathname])
+
+  const menuProps: Record<string, any> = {
+    onClick,
+    openKeys,
+    selectedKey,
+    onOpenChange,
+    theme: menuTheme,
+    className: styles.menu,
+    mode: collapsed ? 'vertical' : menu,
+    collapsed: collapsed ? !enter : collapsed,
+  }
+
+  if (menu === 'vertical') {
+    let timer: any
+    const handleMouseEnter = () => {
+      timer = setTimeout(() => setEnter(true), 500)
+    }
+    const handleMouseLeave = () => {
+      timer && clearTimeout(timer)
+      enter && setEnter(false)
+    }
+    if (collapsed) {
+      menuProps.onMouseEnter = handleMouseEnter
+      menuProps.onMouseLeave = handleMouseLeave
+    }
+  }
+
+  return (
+    <div className={classnames(styles.side, { [styles.collapsed]: collapsed, [styles.light]: menuTheme === 'light' })}>
+      <div className={classnames(styles.inner, { [styles.enter]: enter })}>
+        <Menu {...menuProps}>
+          {menus.map(({ path, name, icon, routes }: IMenuItem) => {
+            const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
+            return currentRoute?.unaccessible ? null : routes ? (
+              <SubMenu key={path} icon={<Icon type={icon as string} />} title={name}>
+                {routes?.map(({ path, name }: IMenuItem) => {
+                  const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
+                  return currentRoute?.unaccessible ? null : <Item key={path}>{name}</Item>
+                })}
+              </SubMenu>
+            ) : (
+              <Item key={path} icon={<Icon type={icon as string} />}>
+                {name}
+              </Item>
+            )
+          })}
+        </Menu>
+        <div className={styles.innerBottom}>
+          <div className={styles.collapsedHandle} onClick={handleSwitchCollapsed}>
+            {collapsed ? <Icon type="foldmenu" /> : <Icon type="unfoldmenu" />}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

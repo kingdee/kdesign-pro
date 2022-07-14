@@ -1,0 +1,75 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.report {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .panel {
+    padding: 0 18px;
+    background-color: #fff;
+
+    .filter {
+      padding: 16px 0 8px;
+    }
+
+    .operation {
+      padding: 10px 0;
+    }
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex: auto;
+    height: 100%;
+    margin: 10px;
+    overflow: hidden;
+    background-color: @color-background;
+
+    .limit {
+      position: relative;
+      z-index: 100;
+      position: relative;
+      padding: 10px 8px;
+      background-color: #fff;
+
+      .viewType {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        transform: translateY(-50%);
+
+        :global {
+          .kdicon {
+            cursor: pointer;
+          }
+        }
+        img {
+          width: 16px;
+          height: 16px;
+          cursor: pointer;
+        }
+      }
+    }
+
+    :global {
+      .fJaqcD.use-outer-border {
+        border: 0px;
+      }
+    }
+  }
+
+  .label {
+    display: inline-block;
+    margin-right: 30px;
+    color: #666;
+    font-size: 12px;
+
+    em {
+      color: #fb2323;
+      font-style: normal;
+      vertical-align: super;
+    }
+  }
+}

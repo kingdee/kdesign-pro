@@ -1,0 +1,93 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+body {
+  overflow: hidden;
+
+  ol,
+  ul,
+  dl {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.container {
+  flex: auto;
+  height: 100%;
+  padding: 10px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.layout {
+  width: 100vw;
+  height: 100vh;
+
+  .main {
+    display: none;
+    flex-direction: row;
+
+    &.active {
+      display: flex;
+      background: #f2f2f2;
+    }
+  }
+
+  .content {
+    z-index: 0;
+    flex: auto;
+    width: 0;
+    font-size: 16px;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .empty {
+    display: none;
+    flex: auto;
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+:global {
+  .kd-table {
+    .kd-table-header-cell {
+      padding: 0 12px;
+      height: 31px;
+    }
+    .kd-table-cell {
+      padding: 0 12px;
+      height: 40px;
+    }
+  }
+
+  .kd-collapse-panel-top {
+    padding: 8px !important;
+  }
+}
+
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  position: relative;
+
+  .settings {
+    z-index: 100;
+    position: absolute;
+    top: 1px;
+    right: 0;
+    width: 30px;
+    height: 31px;
+    line-height: 30px;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-left: 1px solid #d9d9d9;
+  }
+}

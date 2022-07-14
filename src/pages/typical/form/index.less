@@ -1,0 +1,83 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  :global {
+    .kd-collapse-panel {
+      background-color: #fff;
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+      .kd-collapse-panel-children {
+        padding: 0 50px 30px;
+      }
+
+      .kd-collapse-panel-children-hide {
+        padding: 0 50px;
+      }
+    }
+
+    .kd-form-field {
+      margin: 0;
+      .kd-form-field-wrapper {
+        width: 100%;
+      }
+    }
+
+    .kd-carousel-list-item {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.operation {
+  padding: 10px 18px;
+  background-color: #fff;
+}
+
+.panel {
+  z-index: 1;
+  background-color: #fff;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.15);
+  .steps {
+    width: 462px;
+    margin: 0 auto;
+    padding: 12px 0;
+  }
+}
+
+.collapse {
+  flex: 1 1 auto;
+  padding: 10px;
+
+  .other {
+    padding-left: 20px;
+    font-size: 14px;
+    color: #999;
+  }
+}
+
+.extra {
+  button {
+    padding: 0;
+    color: #0e5fd8;
+    border: none;
+    cursor: pointer;
+    font-size: @font-size-middle;
+    background-color: transparent;
+  }
+}
+
+.split {
+  width: 1px;
+  height: 12px;
+  background: #d9d9d9;
+}
+
+em {
+  color: #fb2323;
+  font-style: normal;
+}

@@ -1,0 +1,80 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.login {
+  width: 100vw;
+  height: 100vh;
+
+  .banner {
+    padding: 216px 50px 50px 158px;
+    background: #276ff5 url(../../assets/images/login_banner.png) 60% 90% no-repeat;
+    background-size: 70%;
+
+    h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 50px;
+      font-weight: normal;
+    }
+    h2 {
+      margin: 0;
+      color: #fff;
+      font-size: 24px;
+      font-weight: lighter;
+    }
+  }
+
+  .bar {
+    position: relative;
+    padding: 5% 32px 15px;
+
+    .logo {
+      margin-bottom: 38px;
+      text-align: center;
+    }
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .assist {
+      display: flex;
+      justify-content: space-between;
+      margin: 32px 0 8px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .split {
+        width: 1px;
+        height: 12px;
+        background-color: #b2bbd3;
+      }
+
+      a {
+        color: #b2bbd3;
+      }
+    }
+
+    a {
+      font-size: 12px;
+      color: @color-theme;
+    }
+
+    :global {
+      .kd-form-field {
+        margin: 24px 0;
+
+        .kd-form-field-wrapper {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

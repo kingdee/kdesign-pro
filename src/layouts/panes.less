@@ -1,0 +1,41 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.panes {
+  flex: auto;
+  z-index: 0;
+  width: 0;
+  font-size: 16px;
+  height: auto;
+
+  :global {
+    .kd-tabs-navs {
+      border-top: 1px solid #e5e5e5;
+      border-bottom: 1px solid #e5e5e5;
+
+      .kd-tabs-left-operations,
+      .kd-tabs-right-operations {
+        color: #999;
+      }
+    }
+    .kd-carousel-root {
+      background-color: #eaeaea;
+
+      .kd-carousel-displaylist {
+        width: 100%;
+
+        .kd-carousel-displaylist-item {
+          &.kd-carousel-displaylist-item-hidden {
+            display: none;
+          }
+          &.kd-carousel-displaylist-item-not-hidden {
+            display: flex;
+            flex-direction: column;
+          }
+        }
+      }
+    }
+    .kd-tab-pane-operations span:first-child {
+      font-size: 16px;
+    }
+  }
+}

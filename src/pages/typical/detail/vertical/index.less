@@ -1,0 +1,77 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.detailVertical {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+}
+
+.card {
+  display: flex;
+  padding: 16px 30px;
+  background-color: #fff;
+
+  .attr {
+    margin-left: 20px;
+    li:last-child {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+    .title {
+      font-size: 18px;
+      color: #212121;
+      line-height: 27px;
+    }
+    .split {
+      width: 0.5px;
+      height: 16px;
+      background: #d9d9d9;
+    }
+  }
+}
+
+.tabs {
+  flex: auto;
+  margin-top: 10px;
+  overflow: hidden;
+  box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.15);
+
+  :global {
+    .kd-tabs-navs-card {
+      border-top: none;
+    }
+
+    .kd-tabs-navs-card .kd-tabs-tab-wrap {
+      top: 0;
+    }
+
+    .kd-tab-pane-type-card.kd-tab-pane-left.kd-tab-pane-box-active {
+      border-right-color: @color-border-strong;
+    }
+
+    .kd-tabs-tab-list {
+      left: 0 !important;
+    }
+    .kd-tab-pane:first-child {
+      border-top: none;
+    }
+    .kd-carousel-root {
+      background-color: #fff !important;
+
+      .kd-carousel-list-item {
+        overflow-y: overlay;
+        overflow-x: hidden;
+      }
+    }
+  }
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  text-align: right;
+  height: calc(100vh - 300px);
+}

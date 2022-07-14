@@ -1,0 +1,136 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
+.columns {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .topPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 22px;
+    background-color: #fff;
+  }
+  .layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    .tabs {
+      flex: 0 0 332px;
+      margin-left: 10px;
+      background-color: #fff;
+
+      :global {
+        .kd-tabs-navs {
+          height: 40px;
+          .kd-tabs-tab-list {
+            width: 100%;
+            left: 0 !important;
+            .kd-tab-pane {
+              width: 50%;
+              height: 40px;
+              line-height: 40px;
+              margin-right: 0;
+              .kd-tab-pane-text {
+                width: 100%;
+                line-height: 40px;
+                text-align: center;
+              }
+            }
+            .kd-active-line {
+              width: 50% !important;
+            }
+          }
+        }
+        .kd-tabs-right-arrows {
+          display: none;
+        }
+        .kd-carousel-root {
+          flex: 1;
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    .task {
+      padding: 20px 16px;
+
+      li {
+        margin-bottom: 22px;
+      }
+    }
+
+    .records {
+      padding: 45px 15px;
+
+      .item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        padding: 10px 40px 10px 15px;
+        border: 1px solid #e5e5e5;
+        background-color: #fafafa;
+        transform: translateY(-38%);
+
+        .avatar {
+          width: 40px;
+          height: 40px;
+          margin-right: 8px;
+          border-radius: 50%;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .attr {
+          flex: auto;
+          .title {
+            margin-bottom: 4px;
+            color: #212121;
+            font-size: 14px;
+
+            i {
+              vertical-align: top;
+              padding: 0 5px;
+            }
+          }
+
+          .time {
+            color: #999;
+            font-size: 12px;
+
+            a {
+              padding-left: 12px;
+              color: @color-theme;
+            }
+          }
+        }
+
+        .toMessage {
+          position: absolute;
+          top: 8px;
+          right: 15px;
+          color: #999;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+        &::after {
+          position: absolute;
+          left: -9px;
+          top: 50%;
+          width: 10px;
+          height: 10px;
+          content: '';
+          border-left: 1px solid #e5e5e5;
+          border-bottom: 1px solid #e5e5e5;
+          background-color: #fafafa;
+          transform: rotate(45deg) translateY(-50%);
+        }
+      }
+    }
+  }
+}
