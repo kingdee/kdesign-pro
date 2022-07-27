@@ -19,23 +19,6 @@
     .kd-tab-pane-type-card.kd-tab-pane-left {
       text-align: left;
     }
-    .kd-tabs-tab-list {
-      left: 0 !important;
-
-      & > .kd-tab-pane:nth-child(1),
-      .kd-tab-pane:nth-child(2),
-      .kd-tab-pane:nth-child(3) {
-        & > span {
-          position: relative;
-          &::after {
-            content: '*';
-            color: #fb2323;
-            position: absolute;
-            right: 15px;
-          }
-        }
-      }
-    }
     .kd-carousel-root {
       flex: auto;
       background-color: #fff !important;
@@ -63,6 +46,20 @@
         vertical-align: top;
       }
     }
+  }
+}
+
+.subject {
+  padding: 12px 50px;
+
+  .title {
+    margin-bottom: 10px;
+    font-size: @font-size-large;
+    color: @color-text-primary;
+  }
+
+  .inputs {
+    margin-bottom: 40px;
   }
 }
 
