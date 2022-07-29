@@ -1,7 +1,7 @@
 import { defineConfig } from 'umi'
 import routes from './routes'
 
-const basePath = '/'
+const basePath = process.env.NODE_ENV === 'production' ? '/preview/' : '/'
 
 export default defineConfig({
   title: 'KDesign Pro',
