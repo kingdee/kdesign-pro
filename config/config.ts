@@ -19,6 +19,7 @@ export default defineConfig({
   dynamicImport: {
     loading: '@/loading',
   },
+  hash: true,
   dynamicImportSyntax: {},
   favicon: basePath + 'favicon.ico',
 })
