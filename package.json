@@ -21,7 +21,10 @@
     "kdesign"
   ],
   "scripts": {
-    "start": "umi dev",
+    "start": "cross-env REACT_APP_ENV=dev umi dev",
+    "start:uat": "cross-env REACT_APP_ENV=uat MOCK=none umi dev",
+    "start:prod": "cross-env REACT_APP_ENV=prod MOCK=none umi dev",
+    "start:test": "cross-env REACT_APP_ENV=test MOCK=none umi dev",
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
@@ -48,7 +51,6 @@
   "dependencies": {
     "@kdcloudjs/kd-charts": "^1.1.2",
     "@kdcloudjs/kdesign": "^1.4.1",
-    "wangeditor": "^4.7.15",
     "classnames": "^2.3.1",
     "color": "^4.2.3",
     "echarts": "^5.3.2",
@@ -56,7 +58,8 @@
     "normalize.css": "^8.0.1",
     "react": "17.x",
     "react-copy-to-clipboard": "^5.1.0",
-    "react-dom": "17.x"
+    "react-dom": "17.x",
+    "wangeditor": "^4.7.15"
   },
   "devDependencies": {
     "@types/color": "^3.0.3",
@@ -65,6 +68,7 @@
     "@types/react-dom": "^17.0.0",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.23",
+    "cross-env": "^7.0.3",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.0",
     "typescript": "^4.1.2",
