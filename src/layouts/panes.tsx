@@ -71,7 +71,7 @@ export default function ({ sideMenus, location }: PanesProps) {
   }
 
   return (
-    <Tabs className={styles.panes} type="dynamic" showScrollArrow activeKey={activeKey} onChange={handleChange}>
+    <Tabs className={styles.panes}  effect="scrollx" type="dynamic" showScrollArrow activeKey={activeKey} onChange={handleChange}>
       {panes.map(({ key, name, component }) => (
         <Tabs.TabPane
           {...{

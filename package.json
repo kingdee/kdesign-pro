@@ -59,6 +59,7 @@
     "react": "17.x",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "17.x",
+    "react-transition-group": "^4.4.4",
     "wangeditor": "^4.7.15"
   },
   "devDependencies": {
@@ -66,6 +67,7 @@
     "@types/react": "^17.0.0",
     "@types/react-copy-to-clipboard": "^5.0.2",
     "@types/react-dom": "^17.0.0",
+    "@types/react-transition-group": "^4.4.5",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.5.23",
     "cross-env": "^7.0.3",

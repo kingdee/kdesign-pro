@@ -1,0 +1,62 @@
+@duration: .3s;
+
+:global {
+  .main {
+    position: absolute;
+    height: 100%;
+    background-color: #f2f2f2;
+  }
+  
+  .forward-enter {
+    .main;
+    opacity: 0;
+    transform: translateX(20%);
+  }
+  
+  .forward-enter-active {
+    .main;
+    opacity: 1;
+    transform: translateX(0);
+    transition: all @duration ease-in;
+  }
+  
+  .forward-exit {
+    .main;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .forward-exit-active {
+    .main;
+    opacity: 0;
+    transform: translateX(-20%);
+    transition: all @duration ease-in;
+  }
+  
+  .back-enter {
+    .main;
+    opacity: 0;
+    transform: translateX(-20%);
+  }
+  
+  .back-enter-active {
+    .main;
+    opacity: 1;
+    transform: translateX(0);
+    transition: all @duration ease-in;
+  }
+  
+  .back-exit {
+    .main;
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .back-exit-active {
+    .main;
+    opacity: 0;
+    transform: translate(20%);
+    transition: all @duration ease-in;
+  }
+  
+}
