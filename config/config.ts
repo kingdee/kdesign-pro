@@ -1,6 +1,8 @@
 import { defineConfig } from 'umi'
 import routes from './routes'
 
+const { NODE_ENV, REACT_APP_ENV, UMI_ENV } = process.env;
+
 const basePath = process.env.NODE_ENV === 'production' ? '/preview/' : '/'
 
 export default defineConfig({
@@ -22,4 +24,7 @@ export default defineConfig({
   hash: true,
   dynamicImportSyntax: {},
   favicon: basePath + 'favicon.ico',
+  define: {
+    "process.env": { NODE_ENV, REACT_APP_ENV, UMI_ENV }
+  }
 })
