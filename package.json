@@ -21,7 +21,7 @@
     "kdesign"
   ],
   "scripts": {
-    "start": "cross-env REACT_APP_ENV=dev umi PORT=6000 dev",
+    "start": "cross-env REACT_APP_ENV=dev PORT=6000 umi dev",
     "start:uat": "cross-env REACT_APP_ENV=uat PORT=6000 umi dev",
     "start:prod": "cross-env REACT_APP_ENV=prod PORT=6000 umi dev",
     "start:test": "cross-env REACT_APP_ENV=test PORT=6000 umi dev",
