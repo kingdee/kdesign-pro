@@ -1,9 +1,14 @@
+@import '~@kdcloudjs/kdesign/dist/kdesign-complete.less';
+
 .cross {
   display: flex;
   height: 100%;
   flex-direction: column;
   .tabs {
     display: flex;
+    height: auto;
+    margin-top: 10px;
+    background-color: @color-background;
 
     :global {
       .kd-collapse-panel-right {
@@ -17,7 +22,7 @@
       }
       .kd-collapse-panel-children {
         margin-bottom: 8px;
-        padding: 0 50px;
+        padding: 0 50px 10px;
       }
     }
   }

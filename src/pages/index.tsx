@@ -8,6 +8,7 @@ echarts.registerTheme('defaultTheme', defaultTheme)
 
 import 'normalize.css'
 import '@kdcloudjs/kdesign/dist/kdesign.css'
+import './index.less'
 
 export default function ({ children }: IRouteComponentProps) {
   const { initialState } = useModel('@@initialState')

@@ -144,7 +144,7 @@ export default function (props: any) {
       <div className={styles.content}>
         <div className={styles.sider}>
           <Input placeholder="请输入编码/名称" borderType="bordered" prefix={<Icon type="search" />} />
-          <div className={globalStyles.container} style={{ padding: '21px 0 0 0', fontSize: '12px' }}>
+          <div className={globalStyles.container} style={{ margin: '21px -18px 0', fontSize: '12px' }}>
             <Tree
               treeData={treeData}
               selectedKeys={selectedKeys}

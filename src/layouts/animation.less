@@ -1,61 +1,61 @@
 @duration: .3s;
 
 :global {
-  .main {
+  .page {
     position: absolute;
     height: 100%;
     width: 100%;
   }
   
   .forward-enter {
-    .main;
+    .page;
     opacity: 0;
-    transform: translateX(20%);
+    transform: translateX(10%);
   }
   
   .forward-enter-active {
-    .main;
+    .page;
     opacity: 1;
     transform: translateX(0);
     transition: all @duration ease-in;
   }
   
   .forward-exit {
-    .main;
+    .page;
     opacity: 1;
     transform: translateX(0);
   }
   
   .forward-exit-active {
-    .main;
+    .page;
     opacity: 0;
-    transform: translateX(-20%);
+    transform: translateX(-10%);
     transition: all @duration ease-in;
   }
   
   .back-enter {
-    .main;
+    .page;
     opacity: 0;
-    transform: translateX(-20%);
+    transform: translateX(-10%);
   }
   
   .back-enter-active {
-    .main;
+    .page;
     opacity: 1;
     transform: translateX(0);
     transition: all @duration ease-in;
   }
   
   .back-exit {
-    .main;
+    .page;
     opacity: 1;
     transform: translateX(0);
   }
   
   .back-exit-active {
-    .main;
+    .page;
     opacity: 0;
-    transform: translate(20%);
+    transform: translate(10%);
     transition: all @duration ease-in;
   }
   

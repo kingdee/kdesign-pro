@@ -50,7 +50,7 @@
   ],
   "dependencies": {
     "@kdcloudjs/kd-charts": "^1.1.2",
-    "@kdcloudjs/kdesign": "^1.4.1",
+    "@kdcloudjs/kdesign": "^1.5.4",
     "classnames": "^2.3.1",
     "color": "^4.2.3",
     "echarts": "^5.3.2",
