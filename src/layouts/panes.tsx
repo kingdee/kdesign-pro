@@ -1,5 +1,5 @@
 import { useState, lazy, useEffect, Suspense, ReactElement } from 'react'
-import { history, IRouteComponentProps } from 'umi'
+import { history, IRouteComponentProps, useIntl } from 'umi'
 import { Tabs, Icon } from '@kdcloudjs/kdesign'
 import Loading from '@/loading'
 
@@ -17,6 +17,7 @@ interface PanesProps extends IRouteComponentProps {
 }
 
 export default function ({ sideMenus, location }: PanesProps) {
+  const intl = useIntl()
   const { pathname } = location
 
   const [panes, setPanes] = useState<IPane[]>([])
@@ -76,7 +77,7 @@ export default function ({ sideMenus, location }: PanesProps) {
         <Tabs.TabPane
           {...{
             key,
-            tab: name,
+            tab: intl.formatMessage({ id: `menu${key.replace(/\//g, '.')}`, defaultMessage: name }),
             operations: panes.length > 1 && [<Icon type="close" onClick={handleCloseTab.bind(this, key)} />],
           }}
         >
