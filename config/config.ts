@@ -3,13 +3,14 @@ import routes from './routes'
 
 const { NODE_ENV, REACT_APP_ENV, UMI_ENV } = process.env;
 
-const basePath = process.env.NODE_ENV === 'production' ? '/preview/' : '/'
+const basePath = REACT_APP_ENV === 'pre' ? '/preview/' : '/'
 
 export default defineConfig({
   title: 'KDesign Pro',
   targets: {
     ie: 11,
   },
+  locale: {},
   ignoreMomentLocale: true,
   nodeModulesTransform: {
     type: 'none',

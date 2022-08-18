@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { useIntl } from 'umi'
 import classnames from 'classnames'
 import { Layout, Space, Input, Icon } from '@kdcloudjs/kdesign'
 import User from './user'
@@ -15,6 +16,7 @@ interface IHeaderProps {
 }
 
 export default function ({ top, menus, appPath, handleSwitchApp }: IHeaderProps) {
+  const intl = useIntl()
   const searchRef = useRef<HTMLInputElement>()
   const [showSearch, setShowSearch] = useState(false)
 
@@ -40,7 +42,7 @@ export default function ({ top, menus, appPath, handleSwitchApp }: IHeaderProps)
                 className={classnames({ [styles.active]: path === appPath })}
                 onClick={handleSwitchApp.bind(null, path)}
               >
-                {name}
+                {intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })}
               </li>
             ))}
           </ul>
@@ -51,7 +53,7 @@ export default function ({ top, menus, appPath, handleSwitchApp }: IHeaderProps)
           <Input
             ref={searchRef}
             borderType="underline"
-            placeholder="输入搜索内容"
+            placeholder={intl.formatMessage({ id: 'header.search.placeholder', defaultMessage: '输入搜索内容' })}
             onBlur={handleSearchBlur}
             style={{ width: 300 }}
             prefix={<Icon type="search" />}

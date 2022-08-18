@@ -1,5 +1,5 @@
 import React from 'react'
-import { IRouteComponentProps } from 'umi'
+import { IRouteComponentProps, useIntl } from 'umi'
 import { Row, Col, Carousel, Button } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
 import { getHome } from '@/services/workbench'
@@ -9,6 +9,7 @@ import globalStyles from '@/layouts/global.less'
 import styles from './index.less'
 
 export default function (props: IRouteComponentProps) {
+  const intl = useIntl()
   const [home, setHome] = React.useState<Record<string, any>>({})
 
   async function initHome() {
@@ -38,22 +39,22 @@ export default function (props: IRouteComponentProps) {
         </Col>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>发票处理</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.invoice', defaultMessage: '发票处理' })}</h4>
             {receipt && (
               <Row className={styles.data}>
                 <Col span={8}>
                   <div className={styles.count}>{receipt.submit}</div>
-                  <div className={styles.status}>发票待提交</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.invoice.pending', defaultMessage: '发票待提交' })}</div>
                 </Col>
                 <Col span={8}>
                   <div className={styles.count}>{receipt.audit}</div>
-                  <div className={styles.status}>发票待审核</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.invoice.approving', defaultMessage: '发票待审核' })}</div>
                 </Col>
                 <Col span={8}>
                   <div className={styles.count}>
                     <strong>{receipt.notPass}</strong>
                   </div>
-                  <div className={styles.status}>未通过</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.not.passed', defaultMessage: '未通过' })}</div>
                 </Col>
               </Row>
             )}
@@ -61,22 +62,22 @@ export default function (props: IRouteComponentProps) {
         </Col>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>应收处理</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.receivable', defaultMessage: '应收处理' })}</h4>
             {receive && (
               <Row className={styles.data}>
                 <Col span={8}>
                   <div className={styles.count}>{receive.submit}</div>
-                  <div className={styles.status}>应收待提交</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.receivable.pending', defaultMessage: '应收待提交' })}</div>
                 </Col>
                 <Col span={8}>
                   <div className={styles.count}>{receive.audit}</div>
-                  <div className={styles.status}>应收待审核</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.receivable.approving', defaultMessage: '应收待审核' })}</div>
                 </Col>
                 <Col span={8}>
                   <div className={styles.count}>
                     <strong>{receive.notPass}</strong>
                   </div>
-                  <div className={styles.status}>未通过</div>
+                  <div className={styles.status}>{intl.formatMessage({ id: 'workbench.not.passed', defaultMessage: '未通过' })}</div>
                 </Col>
               </Row>
             )}
@@ -86,7 +87,7 @@ export default function (props: IRouteComponentProps) {
       <Row gutter={10} align="stretch" className={styles.row}>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>快速发起</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.quick', defaultMessage: '快速发起' })}</h4>
             <ul className={styles.boot}>
               {boots?.map((text: string) => (
                 <li key={text}>
@@ -99,7 +100,7 @@ export default function (props: IRouteComponentProps) {
         </Col>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>逾期账款</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.overdue', defaultMessage: '逾期账款' })}</h4>
             {funds && (
               <Carousel className={styles.funds}>
                 {funds.map(({ name, code, logo, amount, expire, payment, settlement }: Record<string, any>) => (
@@ -108,25 +109,25 @@ export default function (props: IRouteComponentProps) {
                       <img src={require(`@/assets/images/${logo}`)} width="48" />
                       <div className={styles.tit}>
                         <span className={styles.name}>{name}</span>
-                        <span className={styles.code}>单据编号 {code}</span>
+                        <span className={styles.code}>{intl.formatMessage({ id: 'workbench.overdue.code', defaultMessage: '单据编号' })} {code}</span>
                       </div>
                       <img src={require(`@/assets/images/unpopable.png`)} style={{ height: 60, marginTop: -12 }} />
                     </header>
                     <ul className={styles.attr}>
                       <li>
-                        <label>逾期金额：</label>
+                        <label>{intl.formatMessage({ id: 'workbench.overdue.amount', defaultMessage: '逾期金额' })}：</label>
                         {amount}
                       </li>
                       <li>
-                        <label>到期日：</label>
+                        <label>{intl.formatMessage({ id: 'workbench.overdue.expiry', defaultMessage: '到期日' })}：</label>
                         {expire}
                       </li>
                       <li>
-                        <label>付款方式：</label>
+                        <label>{intl.formatMessage({ id: 'workbench.overdue.payment', defaultMessage: '付款方式' })}：</label>
                         {payment}
                       </li>
                       <li>
-                        <label>结算方式：</label>
+                        <label>{intl.formatMessage({ id: 'workbench.overdue.settlement', defaultMessage: '结算方式' })}：</label>
                         {settlement}
                       </li>
                     </ul>
@@ -139,7 +140,8 @@ export default function (props: IRouteComponentProps) {
         <Col span={8}>
           <div className={styles.card}>
             <h4 className={styles.title}>
-              <span>最近开启单据</span> <Button type="text">更多单据（2/20）</Button>
+              <span>{intl.formatMessage({ id: 'workbench.documents', defaultMessage: '最近开启单据' })}</span>
+              <Button type="text">{intl.formatMessage({ id: 'workbench.documents.more', defaultMessage: '最近开启单据' })}（2/20）</Button>
             </h4>
             <ul className={styles.bills}>
               {bills?.map(({ name, code, time, status }: Record<string, any>) => (
@@ -147,10 +149,10 @@ export default function (props: IRouteComponentProps) {
                   <span className={styles.name}>{name}</span>
                   <span className={styles.code}>{code}</span>
                   <span className={styles.time}>
-                    申请时间：<strong>{time}</strong>
+                    {intl.formatMessage({ id: 'workbench.documents.time', defaultMessage: '申请时间' })}：<strong>{time}</strong>
                   </span>
                   <span className={classnames(styles.status, { [styles.green]: status === '1' })}>
-                    {status === '1' ? '审批通过' : '待审批'}
+                    {intl.formatMessage({ id: status === '1' ? 'workbench.documents.approve' : 'workbench.documents.pending', defaultMessage: status === '1' ? '审批通过' : '待审批' })}
                   </span>
                 </li>
               ))}
@@ -161,13 +163,13 @@ export default function (props: IRouteComponentProps) {
       <Row gutter={10} align="stretch" className={styles.row}>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>应收账龄分析</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.analysis', defaultMessage: '应收账龄分析' })}</h4>
             {agingOption && <ReactECharts option={agingOption} theme={'defaultTheme'} style={{ height: 250 }} />}
           </div>
         </Col>
         <Col span={8}>
           <div className={styles.card}>
-            <h4 className={styles.title}>应收账款周转率</h4>
+            <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.ratio', defaultMessage: '应收账款周转率' })}</h4>
             {rateOptions && (
               <ReactECharts option={rateOptions} theme={'defaultTheme'} style={{ height: 250, marginRight: -30 }} />
             )}
@@ -176,7 +178,8 @@ export default function (props: IRouteComponentProps) {
         <Col span={8}>
           <div className={styles.card}>
             <h4 className={styles.title}>
-              <span>新闻动态</span> <Button type="text">查看更多（3/20）</Button>
+              <span>{intl.formatMessage({ id: 'workbench.news', defaultMessage: '新闻动态' })}</span> 
+              <Button type="text">{intl.formatMessage({ id: 'workbench.news.more', defaultMessage: '查看更多' })}（3/20）</Button>
             </h4>
             <ul className={styles.news}>
               {news?.map(({ title, author, time, cover }: Record<string, any>) => (

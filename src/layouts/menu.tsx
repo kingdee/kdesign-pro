@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { history, IRoute } from 'umi'
+import { history, IRoute, useIntl } from 'umi'
 import classnames from 'classnames'
 import { Menu, Icon } from '@kdcloudjs/kdesign'
 
@@ -16,6 +16,7 @@ interface SiderProps {
 }
 
 export default function ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderProps) {
+  const intl = useIntl()
   const [collapsed, setCollapsed] = useState(false)
   const handleSwitchCollapsed = () => setCollapsed(!collapsed)
 
@@ -70,17 +71,18 @@ export default function ({ route, menu, menuTheme, pathname, sideMenus: menus }:
       <div className={classnames(styles.inner, { [styles.enter]: enter })}>
         <Menu {...menuProps}>
           {menus.map(({ path, name, icon, routes }: IMenuItem) => {
+            const nameText = intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
             const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
             return currentRoute?.unaccessible ? null : routes ? (
-              <SubMenu key={path} icon={<Icon type={icon as string} />} title={name}>
+              <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
                 {routes?.map(({ path, name }: IMenuItem) => {
                   const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
-                  return currentRoute?.unaccessible ? null : <Item key={path}>{name}</Item>
+                  return currentRoute?.unaccessible ? null : <Item key={path}>{intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })}</Item>
                 })}
               </SubMenu>
             ) : (
               <Item key={path} icon={<Icon type={icon as string} />}>
-                {name}
+                {nameText}
               </Item>
             )
           })}

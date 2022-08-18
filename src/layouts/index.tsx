@@ -51,7 +51,7 @@ export default function (props: IRouteComponentProps) {
           <Empty description={name} className={classnames(styles.empty, { [styles.active]: path === appPath })} />
         ),
       )}
-      <CustomBar />
+      {process.env.REACT_APP_ENV === 'pre' && <CustomBar />}
     </Layout>
   )
 }

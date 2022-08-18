@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
+import { useIntl } from 'umi'
 import classnames from 'classnames'
 import { Tabs, Icon, Button, Empty } from '@kdcloudjs/kdesign'
 import { getUserTasks, getUserMessages } from '@/services/user'
@@ -7,6 +8,7 @@ import { getUserTasks, getUserMessages } from '@/services/user'
 import styles from './news.less'
 
 export default function News() {
+  const intl = useIntl()
   const [exist, setExist] = useState(false)
   const [visible, setVisible] = useState(false)
   const handleClose = () => setVisible(false)
@@ -48,7 +50,7 @@ export default function News() {
       <div className={styles.mask} onClick={handleClose}></div>
       <div className={styles.bar}>
         <Tabs>
-          <Tabs.TabPane key="task" tab="任务">
+          <Tabs.TabPane key="task" tab={intl.formatMessage({ id: 'header.news.task', defaultMessage: '任务' })}>
             {tasks.length > 0 ? (
               <ul className={styles.list}>
                 {tasks.map(({ title, time, code, status }) => (
@@ -58,7 +60,7 @@ export default function News() {
                       <span className={styles.time}>{time}</span>
                     </div>
                     <div className={styles.content}>
-                      <span className={styles.code}>单据编号：{code}</span>
+                      <span className={styles.code}>{intl.formatMessage({ id: 'header.news.code', defaultMessage: '单据编号' })}：{code}</span>
                       <span className={styles.status}>{status}</span>
                     </div>
                   </li>
@@ -68,7 +70,7 @@ export default function News() {
               <Empty className={styles.empty} />
             )}
           </Tabs.TabPane>
-          <Tabs.TabPane key="message" tab="消息">
+          <Tabs.TabPane key="message" tab={intl.formatMessage({ id: 'header.news.message', defaultMessage: '消息' })}>
             {messages.length > 0 ? (
               <ul className={styles.list}>
                 {messages.map(({ title, time, message, code }) => (
@@ -89,7 +91,7 @@ export default function News() {
           </Tabs.TabPane>
         </Tabs>
         <Button type="text" className={styles.more}>
-          更多
+          {intl.formatMessage({ id: 'header.news.more', defaultMessage: '更多' })}
         </Button>
       </div>
     </div>
