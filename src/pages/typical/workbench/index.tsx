@@ -1,5 +1,5 @@
 import React from 'react'
-import { IRouteComponentProps, useIntl } from 'umi'
+import { IRouteComponentProps, useIntl, getLocale } from 'umi'
 import { Row, Col, Carousel, Button } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
 import { getHome } from '@/services/workbench'
@@ -10,16 +10,17 @@ import styles from './index.less'
 
 export default function (props: IRouteComponentProps) {
   const intl = useIntl()
+  const lang = getLocale()
   const [home, setHome] = React.useState<Record<string, any>>({})
 
-  async function initHome() {
-    const payable = await getHome()
+  async function getData() {
+    const payable = await getHome({ lang })
     setHome(payable)
   }
 
   React.useEffect(() => {
-    initHome()
-  }, [])
+    getData()
+  }, [lang])
 
   const { banners, receipt, receive, boots, funds, bills, agingOption, rateOptions, news } = home
 
@@ -89,10 +90,10 @@ export default function (props: IRouteComponentProps) {
           <div className={styles.card}>
             <h4 className={styles.title}>{intl.formatMessage({ id: 'workbench.quick', defaultMessage: '快速发起' })}</h4>
             <ul className={styles.boot}>
-              {boots?.map((text: string) => (
-                <li key={text}>
-                  <img src={require(`@/assets/images/${text}.png`)} width="48" />
-                  <span>{text}</span>
+              {boots?.map(({name, pic}: Record<string, string>) => (
+                <li key={pic}>
+                  <img src={require(`@/assets/images/${pic}.png`)} width="48" />
+                  <span>{name}</span>
                 </li>
               ))}
             </ul>

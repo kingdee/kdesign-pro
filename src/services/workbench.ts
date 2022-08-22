@@ -1,8 +1,8 @@
 import { request } from 'umi'
 
-export async function getHome(options?: { [key: string]: any }) {
+export async function getHome(params?: { [key: string]: any }) {
   return request('/mock/home', {
     method: 'GET',
-    ...(options || {}),
+    params,
   })
 }

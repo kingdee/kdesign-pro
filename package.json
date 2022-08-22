@@ -25,6 +25,7 @@
     "start:uat": "cross-env REACT_APP_ENV=uat umi dev",
     "start:prod": "cross-env REACT_APP_ENV=prod umi dev",
     "start:test": "cross-env REACT_APP_ENV=test umi dev",
+    "start:pre": "cross-env REACT_APP_ENV=pre umi dev",
     "build": "umi build",
     "build:pre": "cross-env REACT_APP_ENV=pre umi build",
     "postinstall": "umi generate tmp",
