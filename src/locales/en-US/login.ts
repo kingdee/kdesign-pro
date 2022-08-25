@@ -1,0 +1,15 @@
+export default {
+  'login.account': 'Account Password Login',
+  'login.register': 'Register Now',
+  'login.username': 'Username',
+  'login.password': 'Password',
+  'login.auto': 'Auto Login',
+  'login.forget': 'Forgot Password',
+  'login.login': 'Login',
+  'login.agreement': 'Service Agreement',
+  'login.privacy': 'Privacy Policy',
+  'login.success': 'Login successful!',
+  'login.failure': 'The user name or password error!',
+  'login.location': 'Enterprise product design system',
+  'login.slogan': 'New experience in the era of digitalization',
+}
