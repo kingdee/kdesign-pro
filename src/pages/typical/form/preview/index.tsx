@@ -130,7 +130,7 @@ const ArticleForm = (props: any) => {
         </Col>
         <Col span={24}>
           <Form.Item label={<span className={styles.text}>正文</span>} name="body">
-            <div className={styles.editor} id="wang-editor" />
+            <div className={styles.editor} id="wang-editor" ke="wang-editor" />
           </Form.Item>
         </Col>
       </Row>
@@ -152,7 +152,7 @@ export default function (props: any) {
 
   React.useEffect(() => {
     init()
-    const editor = new E('#wang-editor')
+    const editor = new E('div[ke="wang-editor"]')
     editor.config.menus = [
       'bold',
       'fontSize',
