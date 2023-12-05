@@ -1,0 +1,87 @@
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    es6: true,
+    jest: true,
+  },
+  globals: {
+    wx: true,
+  },
+  extends: [
+    'airbnb',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+    'plugin:import/typescript',
+  ],
+  plugins: ['prettier', 'react-hooks', '@typescript-eslint'],
+  rules: {
+    camelcase: 0,
+    'prettier/prettier': 2,
+    semi: [2, 'never'],
+    'jsx-quotes': [1, 'prefer-double'],
+    'import/extensions': 0,
+    'import/no-unresolved': 0,
+    'import/no-dynamic-require': 0,
+    'import/no-extraneous-dependencies': 0,
+    'react/jsx-no-bind': 0,
+    'react/react-in-jsx-scope': 0,
+    'react/jsx-filename-extension': 0,
+    'react/button-has-type': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/jsx-wrap-multilines': 0,
+    'react/no-array-index-key': 0,
+    'react/require-default-props': 0,
+    'jsx-a11y/alt-text': 0,
+    'jsx-a11y/click-events-have-key-events': 0,
+    'jsx-a11y/no-static-element-interactions': 0,
+    'jsx-a11y/anchor-is-valid': 0,
+    'jsx-a11y/no-noninteractive-tabindex': 0,
+    'jsx-a11y/no-noninteractive-element-interactions': 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'global-require': 0,
+    'no-use-before-define': 0,
+    'no-unused-expressions': 0,
+    'no-param-reassign': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
+    '@typescript-eslint/no-explicit-any': 0,
+  },
+  settings: {
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
+    },
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/order': [
+      0,
+      {
+        groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
+        pathGroups: [
+          {
+            pattern: 'react*',
+            group: 'builtin',
+            position: 'before',
+          },
+          {
+            pattern: '@/**',
+            group: 'external',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: [],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+        warnOnUnassignedImports: false,
+      },
+    ],
+  },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    ecmaFeatures: {
+      jsx: true,
+    },
+  },
+}
