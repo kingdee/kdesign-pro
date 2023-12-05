@@ -15,7 +15,9 @@ import styles from './global.less'
 
 const menus = getMenus(originMenus)
 
-export default function (props: IRouteComponentProps) {
+const appPath = '/typical'
+
+const Layouts = (props: IRouteComponentProps) => {
   const { location, history, route } = props
 
   const user = JSON.parse(sessionStorage.getItem('user') as any)
@@ -33,8 +35,6 @@ export default function (props: IRouteComponentProps) {
   const handleSwitchApp = (path: string) => history.push(path)
 
   const { settings } = useContext(SettingsContext)
-
-  const appPath = '/typical'
 
   const { top, menu, menuTheme, tabs } = settings
 
@@ -55,3 +55,5 @@ export default function (props: IRouteComponentProps) {
     </Layout>
   )
 }
+
+export default Layouts

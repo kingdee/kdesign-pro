@@ -1,6 +1,4 @@
-import { Request, Response } from 'express'
-
-const waitTime = (time: number = 100) => {
+const waitTime = (time = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(true)
@@ -15,7 +13,7 @@ const getAccess = () => access
 const legalAccounts = ['kdcloud', 'guest']
 
 export default {
-  'POST /mock/user/login': async (req: Request, res: Response) => {
+  'POST /mock/user/login': async (req: any, res: any) => {
     const { username, password } = req.body
     await waitTime(2000)
     if (legalAccounts.includes(username) && password === 'kdesign') {
@@ -41,7 +39,7 @@ export default {
   '/mock/user/logout': {
     status: 'success',
   },
-  '/mock/access': (req: Request, res: Response) => {
+  '/mock/access': (req: any, res: any) => {
     res.send({
       status: 'success',
       data: {

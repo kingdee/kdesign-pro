@@ -27,11 +27,11 @@ export default function News() {
   const [messages, setMessages] = useState<Record<string, any>[]>([])
 
   async function getNews() {
-    const tasks = await getUserTasks()
-    setTasks(tasks)
+    const ts = await getUserTasks()
+    setTasks(ts)
 
-    const messages = await getUserMessages()
-    setMessages(messages)
+    const msg = await getUserMessages()
+    setMessages(msg)
   }
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function News() {
 
   const NewsBar = (
     <div className={classnames(styles.news, { [styles.visible]: visible })}>
-      <div className={styles.mask} onClick={handleClose}></div>
+      <div className={styles.mask} onClick={handleClose} />
       <div className={styles.bar}>
         <Tabs>
           <Tabs.TabPane key="task" tab={intl.formatMessage({ id: 'header.news.task', defaultMessage: '任务' })}>
@@ -60,7 +60,9 @@ export default function News() {
                       <span className={styles.time}>{time}</span>
                     </div>
                     <div className={styles.content}>
-                      <span className={styles.code}>{intl.formatMessage({ id: 'header.news.code', defaultMessage: '单据编号' })}：{code}</span>
+                      <span className={styles.code}>
+                        {`${intl.formatMessage({ id: 'header.news.code', defaultMessage: '单据编号' })}：${code}`}
+                      </span>
                       <span className={styles.status}>{status}</span>
                     </div>
                   </li>

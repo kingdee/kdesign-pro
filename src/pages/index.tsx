@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
 import { IRouteComponentProps, useModel } from 'umi'
-import { SettingsContextProvider } from '@/layouts/custom-bar/context'
-import changeTheme from '@/utils/change-theme'
 import * as echarts from 'echarts'
 import defaultTheme from '@kdcloudjs/kd-charts/theme/echarts-theme-default'
-echarts.registerTheme('defaultTheme', defaultTheme)
+import { SettingsContextProvider } from '@/layouts/custom-bar/context'
+import changeTheme from '@/utils/change-theme'
 
 import 'normalize.css'
 import '@kdcloudjs/kdesign/dist/kdesign.css'
 import './index.less'
+
+echarts.registerTheme('defaultTheme', defaultTheme)
 
 export default function ({ children }: IRouteComponentProps) {
   const { initialState } = useModel('@@initialState')

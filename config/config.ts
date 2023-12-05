@@ -1,7 +1,7 @@
 import { defineConfig } from 'umi'
 import routes from './routes'
 
-const { NODE_ENV, REACT_APP_ENV, UMI_ENV } = process.env;
+const { NODE_ENV, REACT_APP_ENV, UMI_ENV } = process.env
 
 const basePath = REACT_APP_ENV === 'pre' ? '/preview/' : '/'
 
@@ -24,8 +24,8 @@ export default defineConfig({
   },
   hash: true,
   dynamicImportSyntax: {},
-  favicon: basePath + 'favicon.ico',
+  favicon: `${basePath}favicon.ico`,
   define: {
-    "process.env": { NODE_ENV, REACT_APP_ENV, UMI_ENV }
-  }
+    'process.env': { NODE_ENV, REACT_APP_ENV, UMI_ENV },
+  },
 })

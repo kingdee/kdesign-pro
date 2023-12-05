@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Row, Col, Input, Switch, Tabs, Form, Anchor, Table, Empty } from '@kdcloudjs/kdesign'
 import { getFormAnchor } from '@/services/form'
@@ -16,22 +16,22 @@ const customerColumns = [
   { code: 'memo', width: 200, name: '备注' },
 ]
 
-export default function (props: any) {
+export default () => {
   const [form] = Form.useForm()
-  const [dataSource, setDataSource] = React.useState([])
-  const [basicInformation, setBasicInformation] = React.useState([])
-  const [recommendedInformation, setRecommendedInformation] = React.useState([])
-  const [cardData, setCardData] = React.useState([])
+  const [dataSource, setDataSource] = useState([])
+  const [basicInformation, setBasicInformation] = useState([])
+  const [recommendedInformation, setRecommendedInformation] = useState([])
+  const [cardData, setCardData] = useState([])
 
   async function initListForm() {
-    const { dataSource, basicInformation, recommendedInformation, cardData } = await getFormAnchor()
-    setDataSource(dataSource)
-    setBasicInformation(basicInformation)
-    setRecommendedInformation(recommendedInformation)
-    setCardData(cardData)
+    const gfa = await getFormAnchor()
+    setDataSource(gfa.dataSource)
+    setBasicInformation(gfa.basicInformation)
+    setRecommendedInformation(gfa.recommendedInformation)
+    setCardData(gfa.cardData)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListForm()
   }, [])
 
@@ -62,7 +62,7 @@ export default function (props: any) {
           <div className={styles.cont}>
             <Form form={form} labelWidth={100}>
               <div className={styles.part}>
-                <div className={styles['anchor']}>
+                <div className={styles.anchor}>
                   <Anchor type="advanced">
                     <Anchor.Link href="#basicInformation" title="基本信息" />
                     <Anchor.Link href="#recommendedInformation" title="会员推荐信息" />
@@ -123,7 +123,7 @@ export default function (props: any) {
                 </div>
                 <div className={styles.part}>
                   <h4>渠道信息</h4>
-                  <Table columns={customerColumns} dataSource={dataSource} rowSelection={rowSelection} />
+                  <Table columns={customerColumns} dataSource={dataSource} rowSelection={rowSelection as any} />
                 </div>
                 <div className={styles.part}>
                   <h4 id="identityInformation">身份信息</h4>

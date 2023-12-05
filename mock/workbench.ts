@@ -1,7 +1,5 @@
-import { Request, Response } from 'express'
-
 export default {
-  '/mock/home': async (req: Request, res: Response) => {
+  '/mock/home': async (req: any, res: any) => {
     const { lang } = req.query || {}
     const isEn = lang === 'en-US'
     res.send({
@@ -16,27 +14,27 @@ export default {
         audit: 18,
         notPass: 26,
       },
-      boots: isEn ?
-        [
-          { name: 'Assets', pic: 'assets' },
-          { name: 'Schedule', pic: 'schedule' },
-          { name: 'Receipt', pic: 'receipt' },
-          { name: 'BMP', pic: 'BMP' },
-          { name: 'Cost', pic: 'cost' },
-          { name: 'Maintenance', pic: 'maintenance' },
-          { name: 'Report', pic: 'report' },
-          { name: 'Billing', pic: 'billing' }
-        ] :
-        [
-          { name: '固定资产', pic: 'assets' },
-          { name: '收款排程', pic: 'schedule' },
-          { name: '付款单', pic: 'receipt' },
-          { name: '流程管理', pic: 'BMP' },
-          { name: '成本核算', pic: 'cost' },
-          { name: '合同维护', pic: 'maintenance' },
-          { name: '报表查询', pic: 'report' },
-          { name: '收款信息', pic: 'billing' }
-        ],
+      boots: isEn
+        ? [
+            { name: 'Assets', pic: 'assets' },
+            { name: 'Schedule', pic: 'schedule' },
+            { name: 'Receipt', pic: 'receipt' },
+            { name: 'BMP', pic: 'BMP' },
+            { name: 'Cost', pic: 'cost' },
+            { name: 'Maintenance', pic: 'maintenance' },
+            { name: 'Report', pic: 'report' },
+            { name: 'Billing', pic: 'billing' },
+          ]
+        : [
+            { name: '固定资产', pic: 'assets' },
+            { name: '收款排程', pic: 'schedule' },
+            { name: '付款单', pic: 'receipt' },
+            { name: '流程管理', pic: 'BMP' },
+            { name: '成本核算', pic: 'cost' },
+            { name: '合同维护', pic: 'maintenance' },
+            { name: '报表查询', pic: 'report' },
+            { name: '收款信息', pic: 'billing' },
+          ],
       funds: [
         {
           name: isEn ? 'Blue ocean group' : '蓝海集团',
@@ -104,7 +102,9 @@ export default {
         grid: { left: 30, top: 50, right: 30, bottom: 20 },
         xAxis: {
           type: 'category',
-          data: isEn ? ['undue', 'above 180days', '90-180days', '31-90days'] : ['未到期', '180天以上', '90-180天', '31-90天'],
+          data: isEn
+            ? ['undue', 'above 180days', '90-180days', '31-90days']
+            : ['未到期', '180天以上', '90-180天', '31-90天'],
           axisLabel: {
             fontSize: 12,
             color: '#999',
@@ -168,7 +168,7 @@ export default {
           {
             data: [40, 175, 230, 170],
             type: 'bar', // echarts 图表类型， 必选
-            name: isEn ? 'Amount(wan)' : '应收金额（万）', //数据项名称，非必选
+            name: isEn ? 'Amount(wan)' : '应收金额（万）', // 数据项名称，非必选
             color: '#40A9FF',
             barWidth: 16,
           },
@@ -221,7 +221,7 @@ export default {
         },
         tooltip: {
           axisPointer: {
-            type: 'cross', //坐标轴指示器设置为十字准星指示器
+            type: 'cross', // 坐标轴指示器设置为十字准星指示器
           },
         },
         series: [
@@ -253,5 +253,5 @@ export default {
         ],
       },
     })
-  }
+  },
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { cloneElement, useEffect, useState } from 'react'
 import {
   Pagination,
   Space,
@@ -87,7 +87,9 @@ const ApprovalRecord = ({ records }: { records: Array<any> }) => {
               <h4 className={styles.title}>
                 {index === 0 ? (
                   <>
-                    {item.title.slice(0, 2)} <Icon type="material" /> {item.title.slice(2)}
+                    {item.title.slice(0, 2)}
+                    <Icon type="material" />
+                    {item.title.slice(2)}
                   </>
                 ) : (
                   item.title
@@ -111,15 +113,17 @@ const panes = [
   { name: '审批记录', component: <ApprovalRecord records={[]} /> },
 ]
 
-export default function (props: any) {
+export default () => {
   const initalResources = { basicInfo: {}, saleInfo: {}, records: [] }
-  const [resources, setResources] = React.useState<Record<string, any>>(initalResources)
-  async function getResources() {
-    const resources = await getDetailColumns()
-    setResources(resources)
+  const [resources, setResources] = useState<Record<string, any>>(initalResources)
+
+  function getResources() {
+    getDetailColumns().then((rs) => {
+      setResources(rs)
+    })
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getResources()
   }, [])
 
@@ -139,7 +143,7 @@ export default function (props: any) {
       </div>
       <div className={classnames(globalStyles.container, styles.layout)}>
         <Collapse className={detailStyles.collapse} defaultActiveKey={['base', 'sale']}>
-          <Collapse.Panel header={'基本信息'} panelKey="base">
+          <Collapse.Panel header="基本信息" panelKey="base">
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
@@ -183,7 +187,7 @@ export default function (props: any) {
               </Col>
             </Row>
           </Collapse.Panel>
-          <Collapse.Panel header={'销售信息'} panelKey="sale">
+          <Collapse.Panel header="销售信息" panelKey="sale">
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
@@ -278,7 +282,7 @@ export default function (props: any) {
           <Tabs activeKey="任务处理">
             {panes.map((pane) => (
               <Tabs.TabPane key={pane.name} tab={pane.name}>
-                {pane.name === '审批记录' ? React.cloneElement(pane.component, { records }) : pane.component}
+                {pane.name === '审批记录' ? cloneElement(pane.component, { records }) : pane.component}
               </Tabs.TabPane>
             ))}
           </Tabs>

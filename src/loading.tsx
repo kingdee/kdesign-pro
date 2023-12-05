@@ -6,7 +6,7 @@ interface IProps {
   type?: TType
 }
 
-export default function ({ type = 'page' }: IProps) {
+export default ({ type = 'page' }: IProps) => {
   const styles = {
     flex: 'auto',
     display: 'flex',

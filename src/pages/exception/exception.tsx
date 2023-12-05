@@ -7,7 +7,7 @@ interface IExceptionProps {
   message: string
 }
 
-export default function ({ status, message }: IExceptionProps) {
+export default ({ status, message }: IExceptionProps) => {
   const handleBackHome = () => {
     history.push('/')
   }

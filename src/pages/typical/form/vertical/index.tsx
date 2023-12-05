@@ -1,17 +1,4 @@
-import {
-  Icon,
-  Row,
-  Col,
-  Input,
-  Switch,
-  Button,
-  Space,
-  Tabs,
-  Select,
-  Form,
-  Empty,
-  Upload,
-} from '@kdcloudjs/kdesign'
+import { Icon, Row, Col, Input, Switch, Button, Space, Tabs, Select, Form, Upload } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
 
 import globalStyles from '@/layouts/global.less'
@@ -55,7 +42,8 @@ const OperationRecord = () => {
             </Col>
           </Row>
           <span className={styles.switch}>
-            是否通用 <Switch defaultChecked={true} />
+            是否通用
+            <Switch defaultChecked />
           </span>
         </div>
       </div>
@@ -147,7 +135,8 @@ const OperationRecord = () => {
 
               <Col span={6}>
                 <Button ghost type="primary">
-                  <Icon type="add" /> 添加条件
+                  <Icon type="add" />
+                  添加条件
                 </Button>
               </Col>
             </Row>
@@ -221,7 +210,8 @@ const OperationRecord = () => {
 
               <Col span={6}>
                 <Button ghost type="primary">
-                  <Icon type="add" /> 添加条件
+                  <Icon type="add" />
+                  添加条件
                 </Button>
               </Col>
             </Row>
@@ -259,7 +249,8 @@ const OperationRecord = () => {
       </div>
       <div>
         <Button type="primary" ghost className={styles.add}>
-          <Icon type="add" /> 添加特殊规则
+          <Icon type="add" />
+          添加特殊规则
         </Button>
       </div>
     </>
@@ -433,11 +424,11 @@ const PersonGroup = () => {
   )
 }
 
-export default function (props: any) {
+export default () => {
   const mapCont: Record<string, JSX.Element> = {
-    '支付主体': <PaymentSubject />,
-    '发薪核算组': <OperationRecord />,
-    '计薪人员组': <PersonGroup />,
+    支付主体: <PaymentSubject />,
+    发薪核算组: <OperationRecord />,
+    计薪人员组: <PersonGroup />,
   }
 
   return (
@@ -456,7 +447,7 @@ export default function (props: any) {
           <Icon type="delete" />
           <Icon type="add" />
         </div>
-        <Tabs type="card" position="left" defaultActiveKey={'支付主体'}>
+        <Tabs type="card" position="left" defaultActiveKey="支付主体">
           {panes.map((pane: string) => (
             <Tabs.TabPane key={pane} tab={pane}>
               {mapCont[pane]}

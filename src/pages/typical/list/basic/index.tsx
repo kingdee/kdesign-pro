@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Pagination, Table, Filter } from '@kdcloudjs/kdesign'
 import { getListBasic } from '@/services/list'
@@ -59,16 +59,17 @@ const columns = [
   { code: 'department', width: 200, name: '部门' },
 ]
 
-export default function (props: any) {
-  const [viewType, setViewType] = React.useState('list')
-  const [listBasic, setListBasic] = React.useState<{ [key: string]: any }>({})
+export default () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setViewType] = useState('list')
+  const [listBasic, setListBasic] = useState<{ [key: string]: any }>({})
 
   async function initListBasic() {
     const data = await getListBasic()
     setListBasic(data)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListBasic()
   }, [])
 
@@ -78,7 +79,7 @@ export default function (props: any) {
     setViewType(type)
   }
 
-  const [rows, setRows] = React.useState<string[]>([])
+  const [rows, setRows] = useState<string[]>([])
 
   const rowSelection = {
     type: 'checkbox',
@@ -108,7 +109,7 @@ export default function (props: any) {
               title="差旅报销"
               search={searchProps}
               conditions={filterConditions}
-              defaultValue={filterDefaultValue}
+              defaultValue={filterDefaultValue as any}
               onSchemeSave={() => {}}
             />
           )}
@@ -167,7 +168,10 @@ export default function (props: any) {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选{rows?.length}条数据，共{dataSource?.length}条
+              已选
+              {rows?.length}
+              条数据，共
+              {dataSource?.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
               {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
@@ -184,8 +188,8 @@ export default function (props: any) {
               useOuterBorder={false}
               style={{ flex: '1 1 100px', overflow: 'auto' }}
               dataSource={dataSource}
-              columns={columns}
-              rowSelection={rowSelection}
+              columns={columns as any}
+              rowSelection={rowSelection as any}
               columnResize
             />
           )}

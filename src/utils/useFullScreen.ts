@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-export function useFullScreen(selector: string) {
+function useFullScreen(selector: string) {
   const [fullScreen, setFullScreen] = useState(false)
 
   function enterFullScreen() {
@@ -30,7 +30,7 @@ export function useFullScreen(selector: string) {
   }
 
   function changeFullscreen() {
-    setFullScreen((fullScreen) => !fullScreen)
+    setFullScreen((fs) => !fs)
   }
 
   useEffect(() => {
@@ -39,3 +39,5 @@ export function useFullScreen(selector: string) {
 
   return { fullScreen, enterFullScreen, exitFullScreen }
 }
+
+export default useFullScreen

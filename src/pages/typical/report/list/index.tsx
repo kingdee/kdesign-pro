@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Space, Button, Icon, Select, Input, RangePicker, Table, Tag } from '@kdcloudjs/kdesign'
 import { getReportBasic, getReportBasicSum } from '@/services/report'
 
@@ -28,19 +28,22 @@ const columns = [
             进行中
           </Tag>
         )
-      } else if (text === 1) {
+      }
+      if (text === 1) {
         return (
           <Tag type="text" color="warning">
             待处理
           </Tag>
         )
-      } else if (text === 2) {
+      }
+      if (text === 2) {
         return (
           <Tag type="text" color="success">
             已完成
           </Tag>
         )
       }
+      return null
     },
   },
   { code: 'end_time', width: 160, name: '计算结束时间' },
@@ -53,19 +56,19 @@ const sum_columns = [
   { code: 'summary', width: 80, name: '汇总计算' },
 ]
 
-export default function (props: any) {
-  const [isSumView, setIsSumView] = React.useState(false)
-  const [data, setData] = React.useState([])
-  const [sumData, setSumData] = React.useState([])
+export default () => {
+  const [isSumView, setIsSumView] = useState(false)
+  const [data, setData] = useState([])
+  const [sumData, setSumData] = useState([])
 
   async function initListBasic() {
     const { dataSource } = await getReportBasic()
     setData(dataSource)
-    const { sumData } = await getReportBasicSum()
-    setSumData(sumData)
+    const { sumData: sd } = await getReportBasicSum()
+    setSumData(sd)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListBasic()
   }, [])
 
@@ -100,7 +103,8 @@ export default function (props: any) {
           <Space className={reportStyles.operation} size={20}>
             <div>
               <span className={reportStyles.label}>
-                汇总依据<em>*</em>
+                汇总依据
+                <em>*</em>
               </span>
               <Input value="组织" style={{ width: 200 }} />
             </div>
@@ -130,7 +134,7 @@ export default function (props: any) {
               useOuterBorder={false}
               style={{ flex: '1 1 100px', overflow: 'auto' }}
               dataSource={sumData}
-              columns={sum_columns}
+              columns={sum_columns as any}
               columnResize
             />
           ) : (
@@ -138,7 +142,7 @@ export default function (props: any) {
               useOuterBorder={false}
               style={{ flex: '1 1 100px', overflow: 'auto' }}
               dataSource={data}
-              columns={columns}
+              columns={columns as any}
               columnResize
             />
           )}

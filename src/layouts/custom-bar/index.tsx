@@ -8,16 +8,9 @@ import changeTheme from '@/utils/change-theme'
 
 import styles from './index.less'
 
-function generateNo() {
-  let no = 1
-  return function getNo() {
-    return no++
-  }
-}
+let no = 0
 
-const getNo = generateNo()
-
-export default function () {
+const CustomBar = () => {
   const intl = useIntl()
   const [form] = Form.useForm()
   const [visible, setVisible] = useState(false)
@@ -26,19 +19,26 @@ export default function () {
 
   const { settings, updateSettings } = useContext(SettingsContext)
 
-  const { colors, themeColor, top, menu, menuTheme, tabs } = settings
+  const { colors, themeColor, top, menu, tabs } = settings
 
   const { current: defaultColors } = useRef(colors)
 
-  const updateThemeColor = (themeColor: string) => {
-    updateSettings({ themeColor })
-    changeTheme(themeColor)
+  const getNo = () => {
+    no += 1
+    return no
   }
-  const handleCopy = () => Message.info(intl.formatMessage({ id: 'setting.copy.success', defaultMessage: '复制配置信息成功！' }))
+
+  const updateThemeColor = (tc: string) => {
+    updateSettings({ themeColor: tc })
+    changeTheme(tc)
+  }
+
+  const handleCopy = () =>
+    Message.info(intl.formatMessage({ id: 'setting.copy.success', defaultMessage: '复制配置信息成功！' }))
 
   const handleAdd = ({ values }: { values: Record<string, string> }) => {
-    if (!values.name) values.name = `${intl.formatMessage({ id: 'setting.theme.color.custom', defaultMessage: '自定义' }
-    )}${getNo()}`
+    if (!values.name)
+      values.name = `${intl.formatMessage({ id: 'setting.theme.color.custom', defaultMessage: '自定义' })}${getNo()}`
     updateSettings({ colors: [...colors, values], themeColor: values.value })
     form.resetFields()
     setAddVisible(false)
@@ -61,25 +61,24 @@ export default function () {
     { name: 'setting.layouts.menu.off', value: 'off' },
   ]
 
-  const menuThemeList = [
-    { name: 'setting.layouts.menu.theme.light', value: 'light' },
-    { name: 'setting.layouts.menu.theme.dark', value: 'dark' },
-  ]
-
   const tabsList = [
     { name: 'setting.layouts.tab.on', value: true },
     { name: 'setting.layouts.tab.off', value: false },
   ]
 
   const [addVisible, setAddVisible] = useState(false)
-  const handleVisibleChange = (visible: boolean) => setAddVisible(visible)
+  const handleVisibleChange = (v: boolean) => setAddVisible(v)
 
   const addColor = (
     <Form layout="horizontal" labelWidth={60} form={form} className={styles.form} onFinish={handleAdd}>
       <Form.Item label={intl.formatMessage({ id: 'setting.theme.color.name', defaultMessage: '颜色名' })} name="name">
         <Input borderType="bordered" />
       </Form.Item>
-      <Form.Item label={intl.formatMessage({ id: 'setting.theme.color.value', defaultMessage: '颜色值' })} name="value" required>
+      <Form.Item
+        label={intl.formatMessage({ id: 'setting.theme.color.value', defaultMessage: '颜色值' })}
+        name="value"
+        required
+      >
         <Input borderType="bordered" type="color" />
       </Form.Item>
       <Space size={20}>
@@ -97,16 +96,25 @@ export default function () {
 
   return (
     <div className={classnames(styles.custom, { [styles.visible]: visible })}>
-      <div className={styles.mask} onClick={handleClose}></div>
+      <div className={styles.mask} onClick={handleClose} />
       <div className={styles.bar}>
-        <header className={styles.header}>{intl.formatMessage({ id: 'setting.theme.editor', defaultMessage: '主题编辑' })}</header>
+        <header className={styles.header}>
+          {intl.formatMessage({ id: 'setting.theme.editor', defaultMessage: '主题编辑' })}
+        </header>
         <ul className={styles.settings}>
           <li className={styles.item}>
             <h3>
               {intl.formatMessage({ id: 'setting.theme.color', defaultMessage: '主题色' })}
               <Space className={styles.action} size={8}>
                 {isDefaultColor ? (
-                  <Tooltip trigger="click" placement="top" tip={intl.formatMessage({ id: 'setting.theme.delete.tip', defaultMessage: '系统内置颜色不能删除！' })}>
+                  <Tooltip
+                    trigger="click"
+                    placement="top"
+                    tip={intl.formatMessage({
+                      id: 'setting.theme.delete.tip',
+                      defaultMessage: '系统内置颜色不能删除！',
+                    })}
+                  >
                     <button className={styles.disabled}>-</button>
                   </Tooltip>
                 ) : (
@@ -124,7 +132,7 @@ export default function () {
               </Space>
             </h3>
             <ul className={styles.theme}>
-              {colors.map(({ name, value }: { name: string; value: string }) => (
+              {colors.map(({ name, value }: any) => (
                 <li
                   key={value}
                   title={name}
@@ -145,7 +153,9 @@ export default function () {
             <h3>{intl.formatMessage({ id: 'setting.layouts', defaultMessage: '页面布局' })}</h3>
             <ul className={styles.layout}>
               <li className={styles.option}>
-                <h4 className={styles.label}>{intl.formatMessage({ id: 'setting.layouts.top', defaultMessage: '顶部' })}</h4>
+                <h4 className={styles.label}>
+                  {intl.formatMessage({ id: 'setting.layouts.top', defaultMessage: '顶部' })}
+                </h4>
                 <ul className={styles.list}>
                   {topList.map(({ name, value }) => (
                     <li key={value} onClick={updateSettings.bind(null, { top: value })}>
@@ -158,7 +168,9 @@ export default function () {
                 </ul>
               </li>
               <li className={styles.option}>
-                <h4 className={styles.label}>{intl.formatMessage({ id: 'setting.layouts.menu', defaultMessage: '侧边菜单栏' })}</h4>
+                <h4 className={styles.label}>
+                  {intl.formatMessage({ id: 'setting.layouts.menu', defaultMessage: '侧边菜单栏' })}
+                </h4>
                 <ul className={styles.list}>
                   {menuList.map(({ name, value }) => (
                     <li key={value} onClick={updateSettings.bind(null, { menu: value })}>
@@ -170,21 +182,23 @@ export default function () {
                   ))}
                 </ul>
               </li>
-              {/*<li className={classnames(styles.option, { [styles.disabled]: menu === 'off' })}>*/}
-              {/*  <h4 className={styles.label}>侧边菜单栏底色</h4>*/}
-              {/*  <ul className={styles.list}>*/}
-              {/*    {menuThemeList.map(({ name, value }) => (*/}
-              {/*      <li key={value} onClick={() => menu !== 'off' && updateSettings({ menuTheme: value })}>*/}
-              {/*        <div className={classnames(styles.piece, { [styles.active]: menuTheme === value })}>*/}
-              {/*          <img src={require(`./images/menu_${value}.png`)} />*/}
-              {/*        </div>*/}
-              {/*        <span>{intl.formatMessage({ id: name })}</span>*/}
-              {/*      </li>*/}
-              {/*    ))}*/}
-              {/*  </ul>*/}
-              {/*</li>*/}
+              {/* <li className={classnames(styles.option, { [styles.disabled]: menu === 'off' })}> */}
+              {/*  <h4 className={styles.label}>侧边菜单栏底色</h4> */}
+              {/*  <ul className={styles.list}> */}
+              {/*    {menuThemeList.map(({ name, value }) => ( */}
+              {/*      <li key={value} onClick={() => menu !== 'off' && updateSettings({ menuTheme: value })}> */}
+              {/*        <div className={classnames(styles.piece, { [styles.active]: menuTheme === value })}> */}
+              {/*          <img src={require(`./images/menu_${value}.png`)} /> */}
+              {/*        </div> */}
+              {/*        <span>{intl.formatMessage({ id: name })}</span> */}
+              {/*      </li> */}
+              {/*    ))} */}
+              {/*  </ul> */}
+              {/* </li> */}
               <li className={styles.option}>
-                <h4 className={styles.label}>{intl.formatMessage({ id: 'setting.layouts.tab', defaultMessage: '页签栏' })}</h4>
+                <h4 className={styles.label}>
+                  {intl.formatMessage({ id: 'setting.layouts.tab', defaultMessage: '页签栏' })}
+                </h4>
                 <ul className={styles.list}>
                   {tabsList.map(({ name, value }) => (
                     <li key={name} onClick={updateSettings.bind(null, { tabs: value })}>
@@ -203,17 +217,24 @@ export default function () {
           <div className={styles.tips}>
             <Icon type="notice" />
             <div className={styles.text}>
-              {intl.formatMessage({ id: 'setting.copy.tip', defaultMessage: '配置后仅仅是预览效果，若要运用于实际项目，请将配置信息复制到/config/settings.ts文件中。' })}
+              {intl.formatMessage({
+                id: 'setting.copy.tip',
+                defaultMessage:
+                  '配置后仅仅是预览效果，若要运用于实际项目，请将配置信息复制到/config/settings.ts文件中。',
+              })}
             </div>
           </div>
           <CopyToClipboard text={JSON.stringify(settings, null, 2)} onCopy={handleCopy}>
             <Button type="primary" className={styles.copy}>
-              <Icon type="copy-code" /> {intl.formatMessage({ id: 'setting.copy.button', defaultMessage: '复制配置' })}
+              <Icon type="copy-code" />
+              {intl.formatMessage({ id: 'setting.copy.button', defaultMessage: '复制配置' })}
             </Button>
           </CopyToClipboard>
         </div>
-        <div className={styles.handle} onClick={handleSwitchBar}></div>
+        <div className={styles.handle} onClick={handleSwitchBar} />
       </div>
     </div>
   )
 }
+
+export default CustomBar

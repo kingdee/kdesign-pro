@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Pagination, Filter, Icon, Table } from '@kdcloudjs/kdesign'
 import { getListForm } from '@/services/list'
@@ -34,22 +34,22 @@ const detailColumns = [
   { code: 'memo', width: 100, name: '备注', align: 'left' },
 ]
 
-export default function (props: any) {
-  const [listForm, setListForm] = React.useState<{ [key: string]: any }>({})
-  const [openKeys, setOpenKeys] = React.useState<string[]>(['2'])
+export default () => {
+  const [listForm, setListForm] = useState<{ [key: string]: any }>({})
+  const [openKeys, setOpenKeys] = useState<string[]>(['2'])
 
   async function initListForm() {
     const data = await getListForm()
     setListForm(data)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListForm()
   }, [])
 
   const { filterConditions, filterDefaultValue, dataSource, detailData } = listForm
 
-  const [rows, setRows] = React.useState<string[]>([])
+  const [rows, setRows] = useState<string[]>([])
 
   const rowSelection = {
     type: 'checkbox',
@@ -70,13 +70,14 @@ export default function (props: any) {
     }
   }
 
-  const [viewType, setViewType] = React.useState('list')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setViewType] = useState('list')
 
   const handleChangeView = (type: string) => {
     setViewType(type)
   }
 
-  const handleSwitchDetail = (key: string, e: React.MouseEvent) => {
+  const handleSwitchDetail = (key: string, e: any) => {
     e.stopPropagation()
     const isOpened = openKeys.find((item) => item === key)
     if (isOpened) {
@@ -121,7 +122,7 @@ export default function (props: any) {
       name: '',
       align: 'center',
       render: (key: string) => (
-        <Button type="text" onClick={handleSwitchDetail.bind(null, key)}>
+        <Button type="text" onClick={(e) => handleSwitchDetail(key, e)}>
           {openKeys.find((item) => item === key) ? '收起' : '展开'}
           <Icon
             type={openKeys.find((item) => item === key) ? 'arrow-up' : 'arrow-down'}
@@ -143,7 +144,7 @@ export default function (props: any) {
           style={{ flex: '1 1 100px', overflow: 'auto' }}
           className={styles.detail}
           dataSource={detailData}
-          columns={detailColumns}
+          columns={detailColumns as any}
           useOuterBorder={false}
           columnResize
         />
@@ -161,7 +162,7 @@ export default function (props: any) {
               title="订单中心"
               search={searchProps}
               conditions={filterConditions}
-              defaultValue={filterDefaultValue}
+              defaultValue={filterDefaultValue as any}
               onSchemeSave={() => {}}
             />
           )}
@@ -199,7 +200,10 @@ export default function (props: any) {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选{rows.length}条数据，共{dataSource?.length}条
+              已选
+              {rows.length}
+              条数据，共
+              {dataSource?.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
               {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
@@ -216,10 +220,10 @@ export default function (props: any) {
               useOuterBorder={false}
               style={{ flex: '1 1 100px', overflow: 'auto' }}
               dataSource={dataSource}
-              columns={columns}
-              rowSelection={rowSelection}
-              primaryKey={'index'}
-              rowDetail={rowDetail}
+              columns={columns as any}
+              rowSelection={rowSelection as any}
+              primaryKey="index"
+              rowDetail={rowDetail as any}
               columnResize
             />
           )}
