@@ -1,8 +1,8 @@
 import { history, getAllLocales, getLocale, setLocale, useIntl } from 'umi'
 import { useState, useRef, useContext, useEffect } from 'react'
-import SettingsContext from '@/layouts/custom-bar/context'
 import { Icon, Space, Dropdown } from '@kdcloudjs/kdesign'
 import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
+import SettingsContext from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
 import { logout } from '@/services/user'
 
@@ -17,7 +17,7 @@ type IThemeColor = {
 
 const mapLocal: Record<string, string> = {
   'zh-CN': '简体中文',
-  'en-US': 'English'
+  'en-US': 'English',
 }
 
 export default function User() {
@@ -48,8 +48,8 @@ export default function User() {
   )
 
   const switchTheme = (color: string, save = true) => {
-    const theme = colors.find(({ value }: IThemeColor) => value === color)
-    setTheme(theme)
+    const te = colors.find(({ value }: IThemeColor) => value === color)
+    setTheme(te)
     changeTheme(color)
     updateSettings({ themeColor: color })
     save && localStorage.setItem('themeColor', color)
@@ -57,10 +57,10 @@ export default function User() {
 
   const colorMenu = (
     <Menu onClick={switchTheme}>
-      {colors.map(({ name, value }: IThemeColor) => (
+      {colors.map(({ name: n, value }: IThemeColor) => (
         <Item key={value}>
-          <i className={styles.colorSquare} style={{ backgroundColor: value }}></i>
-          {name}
+          <i className={styles.colorSquare} style={{ backgroundColor: value }} />
+          {n}
         </Item>
       ))}
     </Menu>
@@ -117,19 +117,25 @@ export default function User() {
       <div className={styles.cont}>
         <ul className={styles.list}>
           <li>
-            <span className={styles.name}>{intl.formatMessage({ id: 'header.user.DC', defaultMessage: '数据中心' })}</span>
+            <span className={styles.name}>
+              {intl.formatMessage({ id: 'header.user.DC', defaultMessage: '数据中心' })}
+            </span>
             <span className={styles.value}>{data_center}</span>
-            <i className={styles.icon}></i>
+            <i className={styles.icon} />
           </li>
           <li>
-            <span className={styles.name}>{intl.formatMessage({ id: 'header.user.bussiness.unit', defaultMessage: '业务单元' })}</span>
+            <span className={styles.name}>
+              {intl.formatMessage({ id: 'header.user.bussiness.unit', defaultMessage: '业务单元' })}
+            </span>
             <span className={styles.value}>
               {business_unit}
               <Icon className={styles.icon} type="switch" />
             </span>
           </li>
           <li>
-            <span className={styles.name}>{intl.formatMessage({ id: 'header.user.theme', defaultMessage: '主题' })}</span>
+            <span className={styles.name}>
+              {intl.formatMessage({ id: 'header.user.theme', defaultMessage: '主题' })}
+            </span>
             <Dropdown
               selectable
               trigger="click"
@@ -139,14 +145,14 @@ export default function User() {
               getPopupContainer={() => document.querySelector('.kd-pro-user-center-popper') as HTMLElement}
             >
               <span className={`${styles.value} ${styles.color}`} tabIndex={0}>
-                <i className={styles.colorSquare} style={{ backgroundColor: theme.value }}></i>
+                <i className={styles.colorSquare} style={{ backgroundColor: theme.value }} />
                 {theme.name}
                 <Icon className={styles.icon} type="arrow-down" />
               </span>
             </Dropdown>
           </li>
         </ul>
-        <Space className={styles.features} size={16} split={<span className={styles.split}></span>}>
+        <Space className={styles.features} size={16} split={<span className={styles.split} />}>
           <span>{intl.formatMessage({ id: 'header.user.center', defaultMessage: '用户中心' })}</span>
           <span>{intl.formatMessage({ id: 'header.user.about', defaultMessage: '关于产品' })}</span>
         </Space>

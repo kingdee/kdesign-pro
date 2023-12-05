@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react'
-import { getDetailVertical } from '@/services/detail'
-import { getFormAnchor } from '@/services/form'
 import { Space, Tag, Tabs, Button, Input, Row, Col, Pagination, Icon, Table, Form, Switch } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
+import { getDetailVertical } from '@/services/detail'
+import { getFormAnchor } from '@/services/form'
 import globalStyles from '@/layouts/global.less'
 import detailStyles from '../index.less'
 import styles from './index.less'
 import formStyles from '../../form/index.less'
 import infoStyles from './info.less'
 
-export default function (props: any) {
+export default () => {
   const [panes, setPanes] = useState<any>([])
   const [expenseColumns, setExpenseColumns] = useState<any>([])
   const [expenseData, setExpenseData] = useState<any>([])
@@ -17,8 +17,8 @@ export default function (props: any) {
   const [rechargeData, setRechargeData] = useState<any>([])
 
   const getData = async () => {
-    let {
-      panes,
+    const {
+      panes: ps,
       rechargeColumns: tempRechargeColumns,
       rechargeData: temRechargeData,
       expenseColumns: tempExpenseColumns,
@@ -31,6 +31,7 @@ export default function (props: any) {
           {v.code}
         </a>
       )
+      return v
     })
 
     temRechargeData.map((v: any) => {
@@ -39,13 +40,14 @@ export default function (props: any) {
           {v.code}
         </a>
       )
+      return v
     })
 
     setExpenseColumns(tempExpenseColumns)
     setExpenseData(temExpenseData)
     setRechargeColumns(tempRechargeColumns)
     setRechargeData(temRechargeData)
-    setPanes(panes)
+    setPanes(ps)
   }
 
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function (props: any) {
           <li>
             <Space size={12}>
               <span className={styles.title}>多账户卡</span>
-              <i className={styles.split}></i>
+              <i className={styles.split} />
               <Tag type="status" color="success">
                 正常
               </Tag>
@@ -88,7 +90,7 @@ export default function (props: any) {
   )
 }
 
-const MemberInfo = (props: any) => {
+const MemberInfo = () => {
   const [form] = Form.useForm()
   const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
   const [dataSource, setDataSource] = useState([])
@@ -97,11 +99,11 @@ const MemberInfo = (props: any) => {
   const [cardData, setCardData] = useState([])
 
   async function initListForm() {
-    const { dataSource, basicInformation, recommendedInformation, cardData } = await getFormAnchor()
-    setDataSource(dataSource)
-    setBasicInformation(basicInformation)
-    setRecommendedInformation(recommendedInformation)
-    setCardData(cardData)
+    const gfa = await getFormAnchor()
+    setDataSource(gfa.dataSource)
+    setBasicInformation(gfa.basicInformation)
+    setRecommendedInformation(gfa.recommendedInformation)
+    setCardData(gfa.cardData)
   }
 
   useEffect(() => {
@@ -178,7 +180,7 @@ const MemberInfo = (props: any) => {
             </div>
             <div className={infoStyles.part}>
               <h4>渠道信息</h4>
-              <Table columns={customerColumns} dataSource={dataSource} rowSelection={rowSelection} />
+              <Table columns={customerColumns} dataSource={dataSource} rowSelection={rowSelection as any} />
             </div>
             <div className={infoStyles.part}>
               <h4 id="identityInformation">身份信息</h4>

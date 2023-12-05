@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Pagination, Card, Row, Col, Filter, Checkbox } from '@kdcloudjs/kdesign'
 import { getListCard } from '@/services/list'
@@ -18,27 +18,27 @@ const searchProps = {
   ],
 }
 
-export default function (props: any) {
-  const [viewType, setViewType] = React.useState('card')
-  const [data, setData] = React.useState([])
-  const [filterConditions, setFilterConditions] = React.useState([])
-  const [filterDefaultValue, setFilterDefaultValue] = React.useState([])
+export default () => {
+  const [viewType, setViewType] = useState('card')
+  const [data, setData] = useState<any[]>([])
+  const [filterConditions, setFilterConditions] = useState([])
+  const [filterDefaultValue, setFilterDefaultValue] = useState([])
 
   async function initListBasic() {
-    const { filterConditions, filterDefaultValue, dataSource } = await getListCard()
-    setData(dataSource)
-    setFilterConditions(filterConditions)
-    setFilterDefaultValue(filterDefaultValue)
+    const glc = await getListCard()
+    setData(glc.dataSource)
+    setFilterConditions(glc.filterConditions)
+    setFilterDefaultValue(glc.filterDefaultValue)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListBasic()
   }, [])
   const handleChangeView = (type: string) => {
     setViewType(type)
   }
 
-  const handleChange = (key: string, checked: boolean) => {
+  const handleChange = (key: string) => {
     const nextData = data.map((item) => {
       if (item.key === key) {
         item.checked = !item.checked
@@ -76,7 +76,7 @@ export default function (props: any) {
               title="任务审批"
               search={searchProps}
               conditions={filterConditions}
-              defaultValue={filterDefaultValue}
+              defaultValue={filterDefaultValue as any}
               onSchemeSave={() => {}}
             />
           )}
@@ -112,7 +112,10 @@ export default function (props: any) {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选{selectedItems.length}条数据，共{data.length}条
+              已选
+              {selectedItems.length}
+              条数据，共
+              {data.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
               {selectedItems.length === data?.length ? '取消选择' : '选择全部'}
@@ -126,19 +129,13 @@ export default function (props: any) {
               <Col span={6} key={index}>
                 <Card title={title} style={{ width: '100%' }} hoverable>
                   <ul className={styles.attr}>
-                    <li>
-                      {name} {dep}
-                    </li>
+                    <li>{`${name} ${dep}`}</li>
                     <li>{way}</li>
                     <li>{time}</li>
                     <li className={styles.amount}>{cost}</li>
                   </ul>
 
-                  <Checkbox
-                    className={styles.checkbox}
-                    checked={checked}
-                    onChange={handleChange.bind(null, key, checked)}
-                  />
+                  <Checkbox className={styles.checkbox} checked={checked} onChange={() => handleChange(key)} />
                 </Card>
               </Col>
             ))}

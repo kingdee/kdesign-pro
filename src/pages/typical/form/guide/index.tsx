@@ -7,7 +7,7 @@ import Proof from './proof'
 import formStyles from '../index.less'
 import styles from './index.less'
 
-export default function (props: any) {
+export default () => {
   const [current, setCurrent] = useState<number>(0)
 
   const mapCont: Record<string, any> = {

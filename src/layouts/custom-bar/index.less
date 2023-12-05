@@ -59,8 +59,10 @@
       flex: auto;
       padding: 0 24px;
       overflow-y: overlay;
+
       .item {
         padding: 14px 0;
+
         &:not(:last-child) {
           border-bottom: 1px solid #f2f4f7;
         }
@@ -96,6 +98,7 @@
       .theme {
         display: flex;
         flex-wrap: wrap;
+
         li {
           position: relative;
           justify-content: center;
@@ -138,6 +141,7 @@
         .option {
           &.disabled {
             filter: opacity(20%);
+
             .list > li {
               cursor: not-allowed;
             }
@@ -165,6 +169,7 @@
                 &.active {
                   position: relative;
                   overflow: hidden;
+
                   &::before {
                     position: absolute;
                     right: -7px;
@@ -214,6 +219,7 @@
     .use {
       padding: 24px;
       box-shadow: 0 0 0 0 transparent, 0 -2px 5px 0 #ededed;
+
       .tips {
         display: flex;
         align-items: center;
@@ -230,6 +236,7 @@
           margin-left: 10px;
         }
       }
+
       .copy {
         width: 100%;
         margin-top: 20px;
@@ -265,13 +272,16 @@
 
 .form {
   margin: 10px;
+
   :global {
     .kd-form-field {
       margin: 0 0 20px 0;
     }
+
     .kd-form-field-label {
       margin-right: 0;
     }
+
     .kd-form-field-wrapper {
       flex: auto;
     }

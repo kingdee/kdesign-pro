@@ -98,7 +98,7 @@ export default function Contact() {
       defaultActiveKey={['contact', 'pay', 'amount', 'detail', 'attachment']}
       style={{ overflow: 'overlay' }}
     >
-      <Collapse.Panel header={'联系信息'} panelKey="contact">
+      <Collapse.Panel header="联系信息" panelKey="contact">
         <Form form={form} labelWidth={100}>
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
@@ -143,13 +143,14 @@ export default function Contact() {
           </Row>
         </Form>
       </Collapse.Panel>
-      <Collapse.Panel header={'付款信息'} panelKey="pay">
+      <Collapse.Panel header="付款信息" panelKey="pay">
         <Row gutter={[100, 22]} className={formStyles.row}>
           <Col span={12} className={styles.info}>
             <h2 className={styles.title}>
-              付款方{' '}
+              付款方
               <span>
-                即时余额 <Icon type="tips" />
+                即时余额
+                <Icon type="tips" />
                 <strong>￥0.00</strong>
               </span>
             </h2>
@@ -165,10 +166,12 @@ export default function Contact() {
                   </h3>
                 </li>
                 <li>
-                  <span>付款账号</span>4555 2145 2145 2145 5
+                  <span>付款账号</span>
+                  4555 2145 2145 2145 5
                 </li>
                 <li>
-                  <span>付款银行</span>中国工商银行股份有限公司南京高新园支行
+                  <span>付款银行</span>
+                  中国工商银行股份有限公司南京高新园支行
                 </li>
               </ul>
             </div>
@@ -187,17 +190,19 @@ export default function Contact() {
                   </h3>
                 </li>
                 <li>
-                  <span>收款账号</span>4367 1234 1234 1314 6
+                  <span>收款账号</span>
+                  4367 1234 1234 1314 6
                 </li>
                 <li>
-                  <span>收款银行</span>中国建设银行股份有限公司深圳高新园支行
+                  <span>收款银行</span>
+                  中国建设银行股份有限公司深圳高新园支行
                 </li>
               </ul>
             </div>
           </Col>
         </Row>
       </Collapse.Panel>
-      <Collapse.Panel header={'金额栏'} panelKey="amount">
+      <Collapse.Panel header="金额栏" panelKey="amount">
         <Form form={form} labelWidth={100}>
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
@@ -224,19 +229,19 @@ export default function Contact() {
         </Form>
       </Collapse.Panel>
       <Collapse.Panel
-        header={'付款明细'}
+        header="付款明细"
         panelKey="detail"
         extra={
           <Space className={formStyles.extra} size={16}>
             <button onClick={addItem}>增行</button>
-            <i className={formStyles.split}></i>
+            <i className={formStyles.split} />
             <button onClick={delItem}>删行</button>
           </Space>
         }
       >
-        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection} primaryKey={'index'} />
+        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection as any} primaryKey="index" />
       </Collapse.Panel>
-      <Collapse.Panel header={'附件'} panelKey="attachment">
+      <Collapse.Panel header="附件" panelKey="attachment">
         <Upload {...uploadProps} style={{ display: 'inline-block' }}>
           <Button type="ghost" icon={<Icon type="upload" />}>
             上传文件

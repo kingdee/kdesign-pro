@@ -1,5 +1,5 @@
-import React from 'react'
-import { Space, Button, Collapse, Row, Col, Input, Switch, Radio, Form, Table, Message } from '@kdcloudjs/kdesign'
+import React, { useEffect, useState } from 'react'
+import { Space, Button, Collapse, Row, Col, Input, Switch, Radio, Form, Table } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
 import globalStyles from '@/layouts/global.less'
 import detailStyles from '../index.less'
@@ -14,14 +14,14 @@ const customerColumns = [
   { code: 'date', width: 200, name: '迁入日期' },
 ]
 
-export default function (props: any) {
+export default () => {
   const [form] = Form.useForm()
-  const [basicInfo, setBasicInfo] = React.useState<Record<string, any>>({})
-  const [reductionRule, setReductionRule] = React.useState<Record<string, any>>({})
-  const [costSelected, setCostSelected] = React.useState<Array<string>>([])
-  const [customerSelected, setCustomerSelected] = React.useState<Array<string>>([])
-  const [costData, setCostData] = React.useState<Array<any>>([])
-  const [customerData, setCustomerData] = React.useState<Array<any>>([])
+  const [basicInfo, setBasicInfo] = useState<Record<string, any>>({})
+  const [reductionRule, setReductionRule] = useState<Record<string, any>>({})
+  const [costSelected, setCostSelected] = useState<Array<string>>([])
+  const [customerSelected, setCustomerSelected] = useState<Array<string>>([])
+  const [costData, setCostData] = useState<Array<any>>([])
+  const [customerData, setCustomerData] = useState<Array<any>>([])
 
   const costSelection = {
     type: 'checkbox',
@@ -36,59 +36,16 @@ export default function (props: any) {
   }
 
   async function getResources() {
-    const { basicInfo, reductionRule, costData, customerData } = await getDetailBasic()
-    setBasicInfo(basicInfo)
-    setReductionRule(reductionRule)
-    setCostData(costData)
-    setCustomerData(customerData)
+    const { basicInfo: bi, reductionRule: rr, costData: cd, customerData: cud } = await getDetailBasic()
+    setBasicInfo(bi)
+    setReductionRule(rr)
+    setCostData(cd)
+    setCustomerData(cud)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     getResources()
   }, [])
-
-  const handleAddCostLine = (e: React.MouseEvent) => {
-    setCostData([...costData, { code: Math.random() * 1000, cost: `项目${costData.length}` }])
-  }
-
-  const handleDeleteCostLine = (e: React.MouseEvent) => {
-    if (costSelected.length > 0) {
-      const newCostData = costData.filter(({ code }) => !costSelected.includes(code))
-      setCostData(newCostData)
-      setCostSelected([])
-    } else {
-      Message.warning('请选择要删除的行！')
-    }
-  }
-
-  const handleAddCustomerLine = (e: React.MouseEvent) => {
-    const index = customerData.length + 1
-    const mapPeri: Record<number, string> = {
-      1: '年',
-      2: '季',
-      3: '月',
-    }
-    const newline = {
-      code: Math.random() * 1000,
-      building: index % 2 ? 'A栋' : 'B栋',
-      unit: `${Math.ceil(Math.random() * 4)}单元`,
-      customer: `客户${index}`,
-      type: `${mapPeri[Math.ceil(Math.random() * 3)]}租`,
-      date: `2021-${Math.ceil(Math.random() * 12)}-${Math.ceil(Math.random() * 28)}`,
-    }
-
-    setCustomerData([...customerData, newline])
-  }
-
-  const handleDeleteCustomerLine = (e: React.MouseEvent) => {
-    if (customerSelected.length > 0) {
-      const newCustomerData = customerData.filter(({ code }) => !customerSelected.includes(code))
-      setCustomerData(newCustomerData)
-      setCustomerSelected([])
-    } else {
-      Message.warning('请选择要删除的行！')
-    }
-  }
 
   const handleMoveUp = (record: Record<string, any>, rowIndex: number) => {
     if (rowIndex > 0) {
@@ -126,7 +83,7 @@ export default function (props: any) {
           <button type="button" onClick={handleMoveUp.bind(null, record, rowIndex)}>
             上移
           </button>
-          <i className={detailStyles.split}></i>
+          <i className={detailStyles.split} />
           <button type="button" onClick={handleMoveDown.bind(null, record, rowIndex)}>
             下移
           </button>
@@ -147,7 +104,7 @@ export default function (props: any) {
         className={classnames(globalStyles.container, detailStyles.collapse)}
         defaultActiveKey={['info', 'rule', 'cost', 'customer']}
       >
-        <Collapse.Panel header={'基本信息'} panelKey="info">
+        <Collapse.Panel header="基本信息" panelKey="info">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               {basicInfo.project && (
@@ -205,7 +162,7 @@ export default function (props: any) {
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header={'减免规则'} panelKey="rule">
+        <Collapse.Panel header="减免规则" panelKey="rule">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               {reductionRule.method && (
@@ -271,7 +228,7 @@ export default function (props: any) {
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header={'减免费项'} panelKey="cost">
+        <Collapse.Panel header="减免费项" panelKey="cost">
           {costData && (
             <Table
               style={{ maxHeight: 800, overflow: 'auto', margin: '0 30px 0 25px' }}
@@ -279,11 +236,11 @@ export default function (props: any) {
               columns={costColumns}
               columnResize
               primaryKey="code"
-              rowSelection={costSelection}
+              rowSelection={costSelection as any}
             />
           )}
         </Collapse.Panel>
-        <Collapse.Panel header={'减免客户'} panelKey="customer">
+        <Collapse.Panel header="减免客户" panelKey="customer">
           {customerData && (
             <Table
               style={{ maxHeight: 800, overflow: 'auto', margin: '0 30px 0 25px' }}
@@ -291,7 +248,7 @@ export default function (props: any) {
               columns={customerColumns}
               columnResize
               primaryKey="code"
-              rowSelection={customerSelection}
+              rowSelection={customerSelection as any}
             />
           )}
         </Collapse.Panel>

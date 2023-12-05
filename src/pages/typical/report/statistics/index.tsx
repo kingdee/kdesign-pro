@@ -16,7 +16,8 @@ const customerColumns = [
     width: 200,
     title: (
       <div>
-        <span style={{ color: 'red' }}>*</span>右标题
+        <span style={{ color: 'red' }}>*</span>
+        右标题
       </div>
     ),
   },
@@ -25,7 +26,8 @@ const customerColumns = [
     width: 200,
     title: (
       <div>
-        <span style={{ color: 'red' }}>*</span>右标题
+        <span style={{ color: 'red' }}>*</span>
+        右标题
       </div>
     ),
   },
@@ -36,7 +38,8 @@ const customerColumns = [
     width: 200,
     title: (
       <div>
-        <span style={{ color: 'red' }}>*</span>右标题
+        <span style={{ color: 'red' }}>*</span>
+        右标题
       </div>
     ),
   },
@@ -168,7 +171,7 @@ const echartsData = {
       {
         data: [32, 37, 21, 29],
         type: 'bar', // echarts 图表类型， 必选
-        name: '成本', //数据项名称，非必选
+        name: '成本', // 数据项名称，非必选
         barWidth: 12,
       },
       {
@@ -226,25 +229,25 @@ const echartsData = {
   },
 }
 
-export default function (props: any) {
+export default () => {
   // const pipeline = useTablePipeline({}).input({ dataSource, columns }).use(features.columnResizeWidth())
 
   const [list, setList] = useState<any>([])
   const [showTable, setShowTable] = useState<boolean>(true)
   const [data, setData] = useState<any>(null)
-  const [opt1, setOpt1] = useState<any>(echartsData.o1)
-  const [opt2, setOpt2] = useState<any>(echartsData.o2)
-  const [opt3, setOpt3] = useState<any>(echartsData.o3)
-  const [opt4, setOpt4] = useState<any>(echartsData.o4)
-  const [opt5, setOpt5] = useState<any>(echartsData.o5)
-  const [opt6, setOpt6] = useState<any>(echartsData.o6)
+  const opt1 = echartsData.o1
+  const opt2 = echartsData.o2
+  const opt3 = echartsData.o3
+  const opt4 = echartsData.o4
+  const opt5 = echartsData.o5
+  const opt6 = echartsData.o6
 
-  let ref1: any = useRef(null)
-  let ref2: any = useRef(null)
-  let ref3: any = useRef(null)
-  let ref4: any = useRef(null)
-  let ref5: any = useRef(null)
-  let ref6: any = useRef(null)
+  const ref1: any = useRef(null)
+  const ref2: any = useRef(null)
+  const ref3: any = useRef(null)
+  const ref4: any = useRef(null)
+  const ref5: any = useRef(null)
+  const ref6: any = useRef(null)
   let echartInstance1: any
   let echartInstance2: any
   let echartInstance3: any
@@ -256,29 +259,29 @@ export default function (props: any) {
     const { o1, o2, o3, o4, o5, o6 } = echartsData
     const { data1, data2, data3, data4, data5, data6 } = data
 
-    echartInstance1 = ref1.getEchartsInstance()
-    echartInstance2 = ref2.getEchartsInstance()
-    echartInstance3 = ref3.getEchartsInstance()
-    echartInstance4 = ref4.getEchartsInstance()
-    echartInstance5 = ref5.getEchartsInstance()
-    echartInstance6 = ref6.getEchartsInstance()
+    echartInstance1 = ref1.current?.getEchartsInstance()
+    echartInstance2 = ref2.current?.getEchartsInstance()
+    echartInstance3 = ref3.current?.getEchartsInstance()
+    echartInstance4 = ref4.current?.getEchartsInstance()
+    echartInstance5 = ref5.current?.getEchartsInstance()
+    echartInstance6 = ref6.current?.getEchartsInstance()
 
-    let t1: any = Object.assign({}, o1)
+    const t1: any = { ...o1 }
     t1.series.data = data1
     echartInstance1.setOption(t1)
-    let t2: any = Object.assign({}, o2)
+    const t2: any = { ...o2 }
     t2.series = data2
     echartInstance2.setOption(t2)
-    let t3: any = Object.assign({}, o3)
+    const t3: any = { ...o3 }
     t3.series = data3
     echartInstance3.setOption(t3)
-    let t4: any = Object.assign({}, o4)
+    const t4: any = { ...o4 }
     t4.series = data4
     echartInstance4.setOption(t4)
-    let t5: any = Object.assign({}, o5)
+    const t5: any = { ...o5 }
     t5.series.data = data5
     echartInstance5.setOption(t5)
-    let t6: any = Object.assign({}, o6)
+    const t6: any = { ...o6 }
     t6.series = data6
     echartInstance6.setOption(t6)
 
@@ -310,8 +313,8 @@ export default function (props: any) {
 
   useEffect(() => {
     if (data && ref1 && ref4) {
-      echartInstance1 = ref1.getEchartsInstance()
-      echartInstance4 = ref4.getEchartsInstance()
+      echartInstance1 = ref1.current?.getEchartsInstance()
+      echartInstance4 = ref4.current?.getEchartsInstance()
       echartInstance1.resize({ width: 'auto' })
       echartInstance4.resize({ width: 'auto' })
     }
@@ -353,7 +356,8 @@ export default function (props: any) {
               <Row gutter={20}>
                 <Col span={6}>
                   <span className={reportStyles.label}>
-                    核算主体<em>*</em>
+                    核算主体
+                    <em>*</em>
                   </span>
                   <Input value="环宇科技股份有限公司" />
                 </Col>
@@ -363,7 +367,8 @@ export default function (props: any) {
                 </Col>
                 <Col span={6}>
                   <span className={reportStyles.label}>
-                    会计期间<em>*</em>
+                    会计期间
+                    <em>*</em>
                   </span>
                   <RangePicker
                     defaultPickerValue={[new Date('2021-01-01'), new Date('2021-12-31')]}
@@ -376,8 +381,8 @@ export default function (props: any) {
             <Table
               dataSource={list}
               useOuterBorder={false}
-              columns={customerColumns}
-              className={'statistics-table'}
+              columns={customerColumns as any}
+              className="statistics-table"
               style={{ flex: '1 1 100px', overflow: 'auto' }}
             />
           </div>
@@ -399,27 +404,17 @@ export default function (props: any) {
             <div className={styles.div}>
               <div className={styles.box} style={{ marginRight: showTable ? 0 : 20 }}>
                 <h4>资产净利率</h4>
-                <ReactECharts option={opt1} ref={(e) => (ref1 = e)} theme={'defaultTheme'} style={{ width: '100%' }} />
+                <ReactECharts option={opt1} ref={ref1} theme="defaultTheme" style={{ width: '100%' }} />
               </div>
               {!showTable && (
                 <>
                   <div className={styles.box}>
                     <h4>结算量占比</h4>
-                    <ReactECharts
-                      option={opt2}
-                      ref={(e) => (ref2 = e)}
-                      theme={'defaultTheme'}
-                      style={{ width: '100%' }}
-                    />
+                    <ReactECharts option={opt2} ref={ref2} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                   <div className={styles.box}>
                     <h4>利润表</h4>
-                    <ReactECharts
-                      option={opt3}
-                      ref={(e) => (ref3 = e)}
-                      theme={'defaultTheme'}
-                      style={{ width: '100%' }}
-                    />
+                    <ReactECharts option={opt3} ref={ref3} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                 </>
               )}
@@ -427,29 +422,20 @@ export default function (props: any) {
             <div className={styles.div}>
               <div className={styles.box} style={{ marginRight: showTable ? 0 : 20 }}>
                 <h4>
-                  业务笔数分析 <span>平均应付款:0.28万</span>
+                  业务笔数分析
+                  <span>平均应付款:0.28万</span>
                 </h4>
-                <ReactECharts option={opt4} ref={(e) => (ref4 = e)} theme={'defaultTheme'} style={{ width: '100%' }} />
+                <ReactECharts option={opt4} ref={ref4} theme="defaultTheme" style={{ width: '100%' }} />
               </div>
               {!showTable && (
                 <>
                   <div className={styles.box}>
                     <h4>费用占比</h4>
-                    <ReactECharts
-                      option={opt5}
-                      ref={(e) => (ref5 = e)}
-                      theme={'defaultTheme'}
-                      style={{ width: '100%' }}
-                    />
+                    <ReactECharts option={opt5} ref={ref5} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                   <div className={styles.box}>
                     <h4>应付账龄分析</h4>
-                    <ReactECharts
-                      option={opt6}
-                      ref={(e) => (ref6 = e)}
-                      theme={'defaultTheme'}
-                      style={{ width: '100%' }}
-                    />
+                    <ReactECharts option={opt6} ref={ref6} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                 </>
               )}

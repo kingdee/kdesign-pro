@@ -3,8 +3,14 @@
 .login {
   width: 100vw;
   height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin: 0 -6px;
+  flex-wrap: nowrap;
 
   .banner {
+    flex: 1;
     padding: 216px 50px 50px 158px;
     background: #276ff5 url(../../assets/images/login_banner.png) 60% 90% no-repeat;
     background-size: 70%;
@@ -15,6 +21,7 @@
       font-size: 50px;
       font-weight: normal;
     }
+
     h2 {
       margin: 0;
       color: #fff;
@@ -24,6 +31,7 @@
   }
 
   .bar {
+    width: 400px;
     position: relative;
     padding: 5% 32px 15px;
 

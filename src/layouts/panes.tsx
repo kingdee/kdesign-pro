@@ -1,22 +1,23 @@
-import { useState, lazy, useEffect, Suspense, ReactElement } from 'react'
+// @ts-nocheck
+import { useState, lazy, useEffect, Suspense, ReactNode } from 'react'
 import { history, IRouteComponentProps, useIntl } from 'umi'
 import { Tabs, Icon } from '@kdcloudjs/kdesign'
 import Loading from '@/loading'
 
 import globalStyles from './global.less'
 import styles from './panes.less'
-import { useFullScreen } from '@/utils/hooks'
+import useFullScreen from '@/utils/useFullScreen'
 
 interface IPane {
   key: string
-  name: React.ReactNode
-  component: ReactElement
+  name: ReactNode
+  component: any
 }
 interface PanesProps extends IRouteComponentProps {
   sideMenus: IMenuItem[]
 }
 
-export default function ({ sideMenus, location }: PanesProps) {
+export default ({ sideMenus, location }: PanesProps) => {
   const intl = useIntl()
   const { pathname } = location
 
@@ -72,7 +73,14 @@ export default function ({ sideMenus, location }: PanesProps) {
   }
 
   return (
-    <Tabs className={styles.panes}  effect="scrollx" type="dynamic" showScrollArrow activeKey={activeKey} onChange={handleChange}>
+    <Tabs
+      className={styles.panes}
+      effect="scrollx"
+      type="dynamic"
+      showScrollArrow
+      activeKey={activeKey}
+      onChange={handleChange}
+    >
       {panes.map(({ key, name, component }) => (
         <Tabs.TabPane
           {...{

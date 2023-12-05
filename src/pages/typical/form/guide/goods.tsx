@@ -77,7 +77,7 @@ export default function Goods() {
       defaultActiveKey={['info', 'features', 'bar', 'attachment']}
       style={{ overflow: 'overlay' }}
     >
-      <Collapse.Panel header={'商品信息'} panelKey="info">
+      <Collapse.Panel header="商品信息" panelKey="info">
         <Form form={form} labelWidth={100}>
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
@@ -143,52 +143,60 @@ export default function Goods() {
           </Row>
         </Form>
       </Collapse.Panel>
-      <Collapse.Panel header={'商品特性'} panelKey="features">
+      <Collapse.Panel header="商品特性" panelKey="features">
         <Space size={60} className={styles.features}>
           <div>
-            序列号管理 <Switch defaultChecked className={styles.switch} />
+            序列号管理
+            <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            批次管理 <Switch defaultChecked className={styles.switch} />
+            批次管理
+            <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可销售 <Switch defaultChecked className={styles.switch} />
+            可销售
+            <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可采购 <Switch defaultChecked className={styles.switch} />
+            可采购
+            <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可为子件 <Switch defaultChecked className={styles.switch} />
+            可为子件
+            <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可为组件 <Switch defaultChecked className={styles.switch} />
+            可为组件
+            <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
         <Space size={60} className={styles.features}>
           <div>
-            保质期管理 <Switch defaultChecked className={styles.switch} />
+            保质期管理
+            <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
         <Space size={60} className={styles.features}>
           <div>
-            辅助属性管理 <Switch defaultChecked className={styles.switch} />
+            辅助属性管理
+            <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
       </Collapse.Panel>
       <Collapse.Panel
-        header={'条码信息'}
+        header="条码信息"
         panelKey="bar"
         extra={
           <Space className={formStyles.extra} size={16}>
             <button onClick={addItem}>增行</button>
-            <i className={formStyles.split}></i>
+            <i className={formStyles.split} />
             <button onClick={delItem}>删行</button>
           </Space>
         }
       >
-        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection} primaryKey={'index'} />
+        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection as any} primaryKey="index" />
       </Collapse.Panel>
-      <Collapse.Panel header={'附件'} panelKey="attachment">
+      <Collapse.Panel header="附件" panelKey="attachment">
         <Upload {...uploadProps} style={{ display: 'inline-block' }}>
           <Button type="ghost" icon={<Icon type="upload" />}>
             上传文件

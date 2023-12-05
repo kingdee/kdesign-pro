@@ -37,13 +37,13 @@ const columns = [
   { code: 'date', width: 200, name: '申请时间' },
 ]
 
-export default function (props: any) {
+export default () => {
   const [current, setCurrent] = useState(0)
   const [dataSource, setDataSource] = useState<any>([])
 
   async function getData() {
-    const { dataSource } = await getDetailFlow()
-    setDataSource(dataSource)
+    const { dataSource: ds } = await getDetailFlow()
+    setDataSource(ds)
   }
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function (props: any) {
   const mapCont: Record<string, JSX.Element> = {
     0: (
       <Collapse className={detailStyles.collapse} defaultActiveKey={['invite', 'bid']}>
-        <Collapse.Panel header={'招标信息'} panelKey="invite">
+        <Collapse.Panel header="招标信息" panelKey="invite">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
@@ -208,7 +208,7 @@ export default function (props: any) {
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header={'发标信息'} panelKey="bid">
+        <Collapse.Panel header="发标信息" panelKey="bid">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
@@ -269,7 +269,11 @@ export default function (props: any) {
         <div className={styles.pagination}>
           <Space className={styles.notify} size={8}>
             <span>
-              已选{rows?.length}条数据，共{dataSource?.length}条（1张）
+              已选
+              {rows?.length}
+              条数据，共
+              {dataSource?.length}
+              条（1张）
             </span>
             <Button type="text" onClick={handleSelectAll}>
               {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
@@ -286,8 +290,8 @@ export default function (props: any) {
               useOuterBorder={false}
               style={{ flex: '1 1 100px', overflow: 'auto' }}
               dataSource={dataSource}
-              columns={columns}
-              rowSelection={rowSelection}
+              columns={columns as any}
+              rowSelection={rowSelection as any}
               columnResize
             />
           )}
@@ -296,7 +300,7 @@ export default function (props: any) {
     ),
     2: (
       <Collapse className={detailStyles.collapse} defaultActiveKey={['open', 'invite', 'attachment']}>
-        <Collapse.Panel header={'开标信息'} panelKey="open">
+        <Collapse.Panel header="开标信息" panelKey="open">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
@@ -358,7 +362,7 @@ export default function (props: any) {
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header={'招标信息'} panelKey="invite">
+        <Collapse.Panel header="招标信息" panelKey="invite">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
@@ -412,13 +416,13 @@ export default function (props: any) {
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header={'附件'} panelKey="attachment">
+        <Collapse.Panel header="附件" panelKey="attachment">
           <div className={styles.attachment}>
             <Space size={20} className={styles.action}>
               <Button icon={<Icon type="upload" />}>文件下载</Button>
               <span style={{ fontSize: 12, color: '#999' }}>支持ctrl+v粘贴截图</span>
             </Space>
-            <Upload {...uploadProps} className={detailStyles.row}>
+            <Upload {...(uploadProps as any)} className={detailStyles.row}>
               <Button icon={<Icon type="upload" />}>文件上传</Button>
             </Upload>
           </div>
@@ -436,16 +440,20 @@ export default function (props: any) {
         </Space>
         <Space className={styles.attr} size={20}>
           <div>
-            <span>采购组织：</span>环宇国际集团有限公司
+            <span>采购组织：</span>
+            环宇国际集团有限公司
           </div>
           <div>
-            <span>采购方式：</span>公开招标
+            <span>采购方式：</span>
+            公开招标
           </div>
           <div>
-            <span>计价模式：</span>总价包干
+            <span>计价模式：</span>
+            总价包干
           </div>
           <div>
-            <span>采购类型：</span>施工类
+            <span>采购类型：</span>
+            施工类
           </div>
         </Space>
       </div>

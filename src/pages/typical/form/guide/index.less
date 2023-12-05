@@ -9,6 +9,7 @@
 .features {
   align-items: center;
   padding: 16px 0;
+
   &:not(:last-child) {
     border-bottom: 1px solid @color-border-strong;
   }
@@ -30,6 +31,7 @@
 
 .info {
   position: relative;
+
   &:first-child::after {
     position: absolute;
     top: 0;
@@ -39,6 +41,7 @@
     content: '';
     background-color: #ccc;
   }
+
   .title {
     margin-bottom: 16px;
     color: @color-text-primary;
@@ -52,6 +55,7 @@
 
   .list {
     display: flex;
+
     > img {
       width: 68px;
       height: 68px;
@@ -88,12 +92,14 @@
   display: flex;
   margin-top: 18px;
   margin-right: 80px;
+
   .avatar {
     width: 68px;
     height: 68px;
     margin-right: 32px;
     border-radius: 50%;
     overflow: hidden;
+
     > img {
       width: 100%;
     }
@@ -102,12 +108,15 @@
   .attrs {
     li {
       width: 130px;
+
       &:not(:last-child) {
         margin-bottom: 4px;
       }
+
       color: @color-text-secondary;
       font-size: @font-size-small;
     }
+
     h3 {
       margin: 0;
       color: @color-text-primary;

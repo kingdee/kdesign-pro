@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Pagination, Input, Tree, Filter, Table } from '@kdcloudjs/kdesign'
 import { getListTree } from '@/services/list'
@@ -40,41 +40,42 @@ const columns = [
     width: 100,
     name: '经营活动',
     align: 'center',
-    render: (text: string) => <img src={require(`../../../../assets/images/right.png`)} style={{ width: '16px' }} />,
+    render: () => <img src={require(`../../../../assets/images/right.png`)} style={{ width: '16px' }} />,
   },
 ]
 
-export default function (props: any) {
-  const [expandedKeys, setExpandedKeys] = React.useState(['1', '1-1'])
-  const [selectedKeys, setSelectedKeys] = React.useState(['1-1'])
-  const [listTree, setListTree] = React.useState<{ [key: string]: any }>({})
+export default () => {
+  const [expandedKeys, setExpandedKeys] = useState(['1', '1-1'])
+  const [selectedKeys, setSelectedKeys] = useState(['1-1'])
+  const [listTree, setListTree] = useState<{ [key: string]: any }>({})
 
   async function initListTree() {
     const data = await getListTree()
     setListTree(data)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListTree()
   }, [])
 
   const { filterConditions, filterDefaultValue, dataSource, treeData } = listTree
 
-  const onSelect = (selectedKeys: string[]) => {
-    setSelectedKeys(selectedKeys)
+  const onSelect = (sks: string[]) => {
+    setSelectedKeys(sks)
   }
 
-  const onExpand = (expandedKeys: string[]) => {
-    setExpandedKeys(expandedKeys)
+  const onExpand = (eks: string[]) => {
+    setExpandedKeys(eks)
   }
 
-  const [viewType, setViewType] = React.useState('list')
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setViewType] = useState('list')
 
   const handleChangeView = (type: string) => {
     setViewType(type)
   }
 
-  const [rows, setRows] = React.useState<string[]>([])
+  const [rows, setRows] = useState<string[]>([])
 
   const rowSelection = {
     type: 'checkbox',
@@ -105,7 +106,7 @@ export default function (props: any) {
               title="项目流量现金"
               search={searchProps}
               conditions={filterConditions}
-              defaultValue={filterDefaultValue}
+              defaultValue={filterDefaultValue as any}
               onSchemeSave={() => {}}
             />
           )}
@@ -159,7 +160,10 @@ export default function (props: any) {
           <div className={listStyles.pagination}>
             <Space className={listStyles.notify} size={8}>
               <span>
-                已选{rows.length}条数据，共{dataSource?.length}条
+                已选
+                {rows.length}
+                条数据，共
+                {dataSource?.length}
               </span>
               <Button type="text" onClick={handleSelectAll}>
                 {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
@@ -176,8 +180,8 @@ export default function (props: any) {
                 useOuterBorder={false}
                 style={{ flex: '1 1 100px', overflow: 'auto' }}
                 dataSource={dataSource}
-                columns={columns}
-                rowSelection={rowSelection}
+                columns={columns as any}
+                rowSelection={rowSelection as any}
                 columnResize
               />
             )}

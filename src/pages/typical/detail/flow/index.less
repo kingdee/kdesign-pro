@@ -42,6 +42,7 @@
       circle {
         stroke: #999 !important;
       }
+
       path {
         fill: #999 !important;
       }
@@ -51,9 +52,11 @@
         .kd-steps-item-title {
           color: @color-theme;
         }
+
         circle {
           stroke: @color-theme !important;
         }
+
         path {
           fill: @color-theme !important;
         }
@@ -61,6 +64,7 @@
 
       &.kd-steps-item-process {
         z-index: 0;
+
         &::before {
           position: absolute;
           top: 0;
@@ -71,9 +75,11 @@
           background-color: #fff;
           transform: translateX(-50%);
         }
+
         .kd-steps-item-content {
           z-index: 1;
         }
+
         .kd-steps-item-iconContainer {
           .kd-steps-item-iconContainer-icon {
             .kd-steps-icon {
@@ -92,8 +98,10 @@
           width: calc(100% + 28px);
           height: 1px;
         }
+
         .kd-steps-item-iconContainer-icon {
           z-index: 1;
+
           .kd-steps-icon {
             position: relative;
             width: 32px;
@@ -102,6 +110,7 @@
             background-color: #f2f6ff;
           }
         }
+
         &::after {
           z-index: 0;
         }

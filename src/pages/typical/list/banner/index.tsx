@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import {
   Space,
@@ -44,28 +44,28 @@ const fields: Record<string, string> = {
   status: '状态',
 }
 
-export default function (props: any) {
-  const [viewType, setViewType] = React.useState('list')
-  const [data, setData] = React.useState([])
-  const [filterConditions, setFilterConditions] = React.useState([])
-  const [filterDefaultValue, setFilterDefaultValue] = React.useState([])
+export default () => {
+  const [viewType, setViewType] = useState('list')
+  const [data, setData] = useState<any[]>([])
+  const [filterConditions, setFilterConditions] = useState([])
+  const [filterDefaultValue, setFilterDefaultValue] = useState([])
 
   async function initListBasic() {
-    const { filterConditions, filterDefaultValue, dataSource } = await getListBanner()
-    setData(dataSource)
-    setFilterConditions(filterConditions)
-    setFilterDefaultValue(filterDefaultValue)
+    const glb = await getListBanner()
+    setData(glb.dataSource)
+    setFilterConditions(glb.filterConditions)
+    setFilterDefaultValue(glb.filterDefaultValue)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     initListBasic()
   }, [])
   const handleChangeView = (type: string) => {
     setViewType(type)
   }
 
-  const handleChange = (key: string, checked: boolean) => {
-    const nextData = data.map((item) => {
+  const handleChange = (key: string) => {
+    const nextData: any = data.map((item: any) => {
       if (item.key === key) {
         item.checked = !item.checked
       }
@@ -116,7 +116,7 @@ export default function (props: any) {
               title="商品管理123"
               search={searchProps}
               conditions={filterConditions}
-              defaultValue={filterDefaultValue}
+              defaultValue={filterDefaultValue as any}
               onSchemeSave={() => {}}
             />
           )}
@@ -150,7 +150,10 @@ export default function (props: any) {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选{selectedItems.length}条数据，共{data.length}条
+              已选
+              {selectedItems.length}
+              条数据，共
+              {data.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
               {selectedItems.length === data?.length ? '取消选择' : '选择全部'}
@@ -177,11 +180,7 @@ export default function (props: any) {
               promotion,
             }) => (
               <li key={key} className={styles.item}>
-                <Checkbox
-                  className={styles.checkbox}
-                  checked={checked}
-                  onChange={handleChange.bind(null, key, checked)}
-                />
+                <Checkbox className={styles.checkbox} checked={checked} onChange={() => handleChange(key)} />
                 <Row>
                   <Col span={2}>
                     <div className={styles.picture}>
@@ -190,36 +189,26 @@ export default function (props: any) {
                   </Col>
                   <Col span={5}>
                     <ul>
+                      <li>{`${fields.name}：${name}`}</li>
+                      <li>{`${fields.code}：${code}`}</li>
                       <li>
-                        {fields.name}：{name}
-                      </li>
-                      <li>
-                        {fields.code}：{code}
-                      </li>
-                      <li>
-                        {fields.standard}：{standard} {promotion && <span className={styles.promotion}>促</span>}
+                        {`${fields.standard}：${standard}  ${
+                          promotion && <span className={styles.promotion}>促</span>
+                        }`}
                       </li>
                     </ul>
                   </Col>
                   <Col span={5}>
                     <ul>
-                      <li>
-                        {fields.color}：{color}
-                      </li>
-                      <li>
-                        {fields.size}：{size}
-                      </li>
-                      <li>
-                        {fields.order}：{order}
-                      </li>
+                      <li>{`${fields.color}：${color}`}</li>
+                      <li>{`${fields.size}：${size}`}</li>
+                      <li>{`${fields.order}：${order}`}</li>
                     </ul>
                   </Col>
+                  <Col span={5}>{`${fields.confirmSize}：${confirmSize}`}</Col>
                   <Col span={5}>
-                    {fields.confirmSize}：{confirmSize}
-                  </Col>
-                  <Col span={5}>
-                    <span className={styles.price}>￥{price}</span>
-                    <span className={styles.originPrice}>￥{originPrice}</span>
+                    <span className={styles.price}>{`￥${price}`}</span>
+                    <span className={styles.originPrice}>{`￥${originPrice}`}</span>
                   </Col>
                   <Col span={2}>
                     <Tag type="status" color={status === '已上架' ? 'success' : 'expired'}>

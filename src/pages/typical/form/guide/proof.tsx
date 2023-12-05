@@ -1,22 +1,7 @@
 import { useState } from 'react'
-import {
-  Icon,
-  Collapse,
-  Row,
-  Col,
-  Input,
-  Form,
-  Button,
-  Select,
-  Space,
-  Upload,
-  Table,
-  DatePicker,
-} from '@kdcloudjs/kdesign'
+import { Icon, Collapse, Row, Col, Input, Form, Button, Space, Upload, Table, DatePicker } from '@kdcloudjs/kdesign'
 import formStyles from '../index.less'
 import styles from './index.less'
-
-const { Option } = Select
 
 export default function Proof() {
   const [form] = Form.useForm()
@@ -97,7 +82,7 @@ export default function Proof() {
       defaultActiveKey={['basic', 'proof', 'amount', 'detail', 'attachment']}
       style={{ overflow: 'overlay' }}
     >
-      <Collapse.Panel header={'基本信息'} panelKey="basic">
+      <Collapse.Panel header="基本信息" panelKey="basic">
         <div style={{ display: 'flex' }}>
           <div className={styles.profile}>
             <div className={styles.avatar}>
@@ -137,7 +122,7 @@ export default function Proof() {
           </Form>
         </div>
       </Collapse.Panel>
-      <Collapse.Panel header={'生成凭证信息'} panelKey="proof">
+      <Collapse.Panel header="生成凭证信息" panelKey="proof">
         <Form form={form} labelWidth={100}>
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
@@ -174,19 +159,19 @@ export default function Proof() {
         </Form>
       </Collapse.Panel>
       <Collapse.Panel
-        header={'转账信息'}
+        header="转账信息"
         panelKey="detail"
         extra={
           <Space className={formStyles.extra} size={16}>
             <button onClick={addItem}>增行</button>
-            <i className={formStyles.split}></i>
+            <i className={formStyles.split} />
             <button onClick={delItem}>删行</button>
           </Space>
         }
       >
-        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection} primaryKey={'index'} />
+        <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection as any} primaryKey="index" />
       </Collapse.Panel>
-      <Collapse.Panel header={'附件'} panelKey="attachment">
+      <Collapse.Panel header="附件" panelKey="attachment">
         <Upload {...uploadProps} style={{ display: 'inline-block' }}>
           <Button type="ghost" icon={<Icon type="upload" />}>
             上传文件

@@ -2,7 +2,7 @@ import Color from 'color'
 
 const tuple = <T extends readonly string[]>(...args: T): T => args
 export const colorTypes = tuple('hsl', 'hex', 'rgb', 'hsv')
-export type colorType = typeof colorTypes[number]
+export type colorType = (typeof colorTypes)[number]
 
 export interface ColorToolInterface {
   themeColor: string
@@ -12,23 +12,26 @@ export interface ColorToolInterface {
 }
 export default class ColorTool implements ColorToolInterface {
   readonly themeColor: string
+
   readonly type: colorType
 
   constructor(themeColor = '#276ff5', type: colorType = 'hex') {
     this.themeColor = themeColor
     this.type = type
   }
+
   /**
    * 获取当前主题色下1-9个衍生色
    */
   getColorPalettes(): Array<string> {
     const colors = []
-    for (let i = 1; i <= 9; i++) {
+    for (let i = 1; i <= 9; i += 1) {
       const color: string = this.getColorPalette(i)
       colors.push(color)
     }
     return colors
   }
+
   /**
    *
    * @param i 1-9个衍生色， 主题色为第六个
@@ -39,7 +42,9 @@ export default class ColorTool implements ColorToolInterface {
     const hsvH = Color(this.themeColor).hsv().hue()
     const hsvS = Color(this.themeColor).hsv().saturationv()
     const hsvV = Color(this.themeColor).hsv().value()
-    let hue, saturation, value
+    let hue
+    let saturation
+    let value
     if (hsvH >= 60 && hsvH <= 240) {
       hue = isLight ? hsvH - 2 * index : hsvH + 2 * index
     } else {

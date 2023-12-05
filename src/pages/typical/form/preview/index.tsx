@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Form, Button, Icon, Collapse, Row, Col, Input, Layout, Radio, Upload } from '@kdcloudjs/kdesign'
 import E from 'wangeditor'
@@ -8,7 +8,7 @@ import formStyles from '../index.less'
 import styles from './index.less'
 
 interface DataProps {
-  id?: number
+  id: number
   title?: string
   desc?: string
   image?: string
@@ -37,14 +37,14 @@ function beforeUpload(file: any) {
 }
 
 const ArticleForm = (props: any) => {
-  const { article, data, content, changeData } = props
+  const { article, data, changeData } = props
 
-  const [value, setValue] = React.useState(data.find((item: any) => item.id === article)?.image)
-  const [formData, setFormData] = React.useState<DataProps>({})
-  const [loading, setLoading] = React.useState(false)
-  const [imageUrl, setImageUrl] = React.useState('')
+  const [value, setValue] = useState(data.find((item: any) => item.id === article)?.image)
+  const [formData, setFormData] = useState<DataProps>({ id: 0 })
+  const [loading, setLoading] = useState(false)
+  const [imageUrl, setImageUrl] = useState('')
 
-  React.useEffect(() => {
+  useEffect(() => {
     setValue(data.find((item: any) => item.id === article)?.image)
     setFormData(data.find((item: any) => item.id === article) || {})
   }, [article, data])
@@ -54,15 +54,15 @@ const ArticleForm = (props: any) => {
       setLoading(true)
       setImageUrl('')
     } else if (info.file.status === 'done') {
-      getBase64(info.file.originFileObj, (imageUrl: string) => {
+      getBase64(info.file.originFileObj, (iu: string) => {
         setLoading(false)
-        setImageUrl(imageUrl)
+        setImageUrl(iu)
       })
     }
   }
 
-  const handleOnChange = (value: string, key: keyof DataProps) => {
-    changeData(key, value)
+  const handleOnChange = (v: string, key: keyof DataProps) => {
+    changeData(key, v)
   }
 
   const uploadButton = (
@@ -89,7 +89,7 @@ const ArticleForm = (props: any) => {
             <Input value={formData?.author} onChange={(e) => handleOnChange(e.target.value, 'author')} />
           </Form.Item>
         </Col>
-        <Col span={8}></Col>
+        <Col span={8} />
         <Col span={8}>
           <Form.Item label="描述" name="desc" required defaultValue="我就是描述文本" validateTrigger="onBlur">
             <Input value={formData?.desc} onChange={(e) => handleOnChange(e.target.value, 'desc')} />
@@ -129,28 +129,26 @@ const ArticleForm = (props: any) => {
           <span className={styles.describe}>建议尺寸：461*461，支持JPG、PNG格式，大小不超过2M</span>
         </Col>
         <Col span={24}>
-          <Form.Item label={<span className={styles.text}>正文</span>} name="body">
-            <div className={styles.editor} id="wang-editor" />
-          </Form.Item>
+          <div className={styles.editor} id="wang-editor" />
         </Col>
       </Row>
     </>
   )
 }
 
-export default function (props: any) {
+export default () => {
   const [form] = Form.useForm()
 
-  const [article, setArticle] = React.useState(1)
-  const [data, setData] = React.useState<DataProps[]>([])
+  const [article, setArticle] = useState(1)
+  const [data, setData] = useState<DataProps[]>([])
 
   async function init() {
-    const data = await getFormPreview()
-    const { previewData } = data
+    const d = await getFormPreview()
+    const { previewData } = d
     setData(previewData)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     init()
     const editor = new E('#wang-editor')
     editor.config.menus = [
@@ -172,12 +170,11 @@ export default function (props: any) {
     }
   }, [])
 
-  const handleSelectArticle = setArticle
-
   const handleDel = () => {
     const curData: DataProps[] = data.filter((_item, index) => index !== article - 1)
     setData(curData)
     if (curData.length) {
+      // @ts-ignore
       setArticle(curData[0].id)
     }
   }
@@ -193,13 +190,15 @@ export default function (props: any) {
 
   const handleMove = (type: string) => {
     const copyData = [...data]
-    let indx = copyData.findIndex((item) => item.id === article)
+    const indx = copyData.findIndex((item) => item.id === article)
     if (type === 'up' && indx > 0) {
+      // eslint-disable-next-line prefer-destructuring
       copyData[indx] = copyData.splice(indx - 1, 1, copyData[indx])[0]
       setData(copyData)
     }
 
     if (type === 'down' && indx < data.length - 1) {
+      // eslint-disable-next-line prefer-destructuring
       copyData[indx] = copyData.splice(indx + 1, 1, copyData[indx])[0]
       setData(copyData)
     }
@@ -208,6 +207,7 @@ export default function (props: any) {
   const changeData = (key: string, value: string) => {
     const indx = data.findIndex((item) => item.id === article)
     const copyData = [...data]
+    // @ts-ignore
     copyData[indx][key] = value
     setData(copyData)
   }
@@ -222,7 +222,7 @@ export default function (props: any) {
       </Space>
 
       <Collapse className={formStyles.collapse} defaultActiveKey={['basic']}>
-        <Collapse.Panel header={'模板基本信息区域'} panelKey="basic">
+        <Collapse.Panel header="模板基本信息区域" panelKey="basic">
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
               <Form.Item required label="创建业务单元" name="unit" defaultValue="请选择" validateTrigger="onBlur">
@@ -255,7 +255,7 @@ export default function (props: any) {
       <Layout className={styles.article}>
         <Sider className={styles.catalog} width={336}>
           <h3>文章列表</h3>
-          <Space className={styles.operation} split={<span className={formStyles.split}></span>} size={16}>
+          <Space className={styles.operation} split={<span className={formStyles.split} />} size={16}>
             <Button type="text" onClick={handleAdd}>
               新增
             </Button>
@@ -274,7 +274,9 @@ export default function (props: any) {
               <li
                 key={index}
                 className={classnames({ [styles.active]: article === id })}
-                onClick={handleSelectArticle.bind(null, id)}
+                onClick={() => {
+                  setArticle(id)
+                }}
               >
                 <img src={require(`../../../../assets/images/card_0${image}.png`)} alt="bg" />
                 <div className={styles.desc}>

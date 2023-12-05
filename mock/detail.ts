@@ -212,7 +212,7 @@ export default {
           date: `2021-0${Math.ceil(Math.random() * 9)}-${Math.floor(Math.random() * 3)}${Math.floor(
             Math.random() * 10,
           )}`,
-          code: 'CLBX-1040' + Math.floor(Math.random() * 10000),
+          code: `CLBX-1040${Math.floor(Math.random() * 10000)}`,
           supplier: '甲设计公司',
         }
       }),

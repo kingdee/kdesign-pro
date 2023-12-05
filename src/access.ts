@@ -1,6 +1,6 @@
 export default function access(initialState: { access: string } | undefined) {
-  const { access } = initialState ?? {}
+  const { access: as } = initialState ?? {}
   return {
-    canAdmin: access === 'kdcloud',
+    canAdmin: as === 'kdcloud',
   }
 }

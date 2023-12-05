@@ -15,7 +15,7 @@ interface IHeaderProps {
   handleSwitchApp: (path: string) => void
 }
 
-export default function ({ top, menus, appPath, handleSwitchApp }: IHeaderProps) {
+export default ({ top, menus, appPath, handleSwitchApp }: IHeaderProps) => {
   const intl = useIntl()
   const searchRef = useRef<HTMLInputElement>()
   const [showSearch, setShowSearch] = useState(false)

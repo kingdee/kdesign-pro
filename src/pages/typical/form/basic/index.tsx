@@ -1,5 +1,5 @@
 import { Space, Button, Icon, Collapse, Row, Col, Input, Switch, Upload, Form, Table } from '@kdcloudjs/kdesign'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getFormBasic } from '@/services/form'
 import formStyles from '../index.less'
 
@@ -24,7 +24,7 @@ const uploadProps = {
   },
 }
 
-export default function (props: any) {
+export default () => {
   const [form] = Form.useForm()
   const [index, setIndex] = useState(1)
   const [selected, setSelected] = useState<number[]>([])
@@ -71,7 +71,7 @@ export default function (props: any) {
       code: 'taxPrice',
       width: 150,
       name: '含税单价',
-      render: (data: any) => {
+      render: () => {
         return <Switch />
       },
     },
@@ -80,7 +80,8 @@ export default function (props: any) {
       width: 150,
       title: (
         <div>
-          <span style={{ color: 'red' }}>*</span>折扣价格
+          <span style={{ color: 'red' }}>*</span>
+          折扣价格
         </div>
       ),
     },
@@ -100,7 +101,7 @@ export default function (props: any) {
     form.setFieldsValue(base)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     init()
   }, [])
 
@@ -120,7 +121,7 @@ export default function (props: any) {
         defaultActiveKey={['basic', 'payable', 'attachment']}
         style={{ overflow: 'overlay' }}
       >
-        <Collapse.Panel header={'基本信息'} panelKey="basic">
+        <Collapse.Panel header="基本信息" panelKey="basic">
           <Form form={form} labelWidth={100}>
             <Row gutter={[80, 22]} className={formStyles.row}>
               <Col span={6}>
@@ -181,13 +182,14 @@ export default function (props: any) {
             </Row>
           </Form>
         </Collapse.Panel>
-        <Collapse.Panel header={'金额信息'} panelKey="amount">
+        <Collapse.Panel header="金额信息" panelKey="amount">
           金额信息内容
         </Collapse.Panel>
         <Collapse.Panel
           header={
             <div>
-              采购信息 <span className={formStyles.other}>采购组织：环球科技深圳分公司</span>
+              采购信息
+              <span className={formStyles.other}>采购组织：环球科技深圳分公司</span>
             </div>
           }
           panelKey="purchase"
@@ -195,20 +197,24 @@ export default function (props: any) {
           采购信息内容
         </Collapse.Panel>
         <Collapse.Panel
-          header={'应付明细'}
+          header="应付明细"
           panelKey="payable"
           extra={
             <Space className={formStyles.extra} size={16}>
               <button onClick={addItem}>增行</button>
-              <i className={formStyles.split}></i>
+              <i className={formStyles.split} />
               <button onClick={delItem}>删行</button>
             </Space>
           }
         >
-          {/* <Table style={{ maxHeight: 800, overflow: 'auto' }} {...customerPipeline.getProps()} /> */}
-          <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection} primaryKey={'index'} />
+          <Table
+            dataSource={state}
+            columns={customerColumns as any}
+            rowSelection={rowSelection as any}
+            primaryKey="index"
+          />
         </Collapse.Panel>
-        <Collapse.Panel header={'附件'} panelKey="attachment">
+        <Collapse.Panel header="附件" panelKey="attachment">
           <Upload {...uploadProps} style={{ display: 'inline-block' }}>
             <Button type="ghost" icon={<Icon type="upload" />}>
               上传文件

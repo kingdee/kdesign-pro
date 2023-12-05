@@ -7,7 +7,7 @@ export default {
         organization: '环宇机械集团',
         summary: index + 10,
         risk_name: '数值指标测试',
-        risk_code: '00268' + index,
+        risk_code: `00268${index}`,
         risk_level: '高',
         start_time: '2020-05-12',
         end_time: '2020-05-12',
@@ -82,7 +82,7 @@ export default {
       {
         data: [32, 37, 21, 29],
         type: 'bar', // echarts 图表类型， 必选
-        name: '成本', //数据项名称，非必选
+        name: '成本', // 数据项名称，非必选
         barWidth: 12,
       },
       {

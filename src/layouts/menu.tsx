@@ -15,7 +15,7 @@ interface SiderProps {
   sideMenus: IMenuItem[]
 }
 
-export default function ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderProps) {
+export default ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => {
   const intl = useIntl()
   const [collapsed, setCollapsed] = useState(false)
   const handleSwitchCollapsed = () => setCollapsed(!collapsed)
@@ -73,11 +73,17 @@ export default function ({ route, menu, menuTheme, pathname, sideMenus: menus }:
           {menus.map(({ path, name, icon, routes }: IMenuItem) => {
             const nameText = intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
             const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
-            return currentRoute?.unaccessible ? null : routes ? (
+            // eslint-disable-next-line no-nested-ternary
+            if (currentRoute?.unaccessible) {
+              return null
+            }
+            return routes ? (
               <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
-                {routes?.map(({ path, name }: IMenuItem) => {
-                  const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
-                  return currentRoute?.unaccessible ? null : <Item key={path}>{intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })}</Item>
+                {routes?.map(({ path: p, name: n }: IMenuItem) => {
+                  const cr = route?.routes?.find(({ path: routePath }) => p === routePath)
+                  return cr?.unaccessible ? null : (
+                    <Item key={p}>{intl.formatMessage({ id: `menu${p.replace(/\//g, '.')}`, defaultMessage: n })}</Item>
+                  )
                 })}
               </SubMenu>
             ) : (

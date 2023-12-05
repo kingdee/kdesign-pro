@@ -1,4 +1,4 @@
-@duration: .3s;
+@duration: 0.3s;
 
 :global {
   .page {
@@ -6,57 +6,56 @@
     height: 100%;
     width: 100%;
   }
-  
+
   .forward-enter {
     .page;
     opacity: 0;
     transform: translateX(10%);
   }
-  
+
   .forward-enter-active {
     .page;
     opacity: 1;
     transform: translateX(0);
     transition: all @duration ease-in;
   }
-  
+
   .forward-exit {
     .page;
     opacity: 1;
     transform: translateX(0);
   }
-  
+
   .forward-exit-active {
     .page;
     opacity: 0;
     transform: translateX(-10%);
     transition: all @duration ease-in;
   }
-  
+
   .back-enter {
     .page;
     opacity: 0;
     transform: translateX(-10%);
   }
-  
+
   .back-enter-active {
     .page;
     opacity: 1;
     transform: translateX(0);
     transition: all @duration ease-in;
   }
-  
+
   .back-exit {
     .page;
     opacity: 1;
     transform: translateX(0);
   }
-  
+
   .back-exit-active {
     .page;
     opacity: 0;
     transform: translate(10%);
     transition: all @duration ease-in;
   }
-  
 }
