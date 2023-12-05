@@ -129,7 +129,9 @@ const ArticleForm = (props: any) => {
           <span className={styles.describe}>建议尺寸：461*461，支持JPG、PNG格式，大小不超过2M</span>
         </Col>
         <Col span={24}>
-          <div className={styles.editor} id="wang-editor" />
+          <Form.Item label={(<span className={styles.text}>正文</span>) as any} name="body">
+            <div className={styles.editor} data-key="wang-editor" />
+          </Form.Item>
         </Col>
       </Row>
     </>
@@ -150,7 +152,7 @@ export default () => {
 
   useEffect(() => {
     init()
-    const editor = new E('#wang-editor')
+    const editor = new E('div[data-key="wang-editor"]')
     editor.config.menus = [
       'bold',
       'fontSize',
