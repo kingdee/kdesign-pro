@@ -177,7 +177,7 @@ export default () => {
               {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
             </Button>
           </Space>
-          <Pagination defaultCurrent={6} total={200} />
+          <Pagination defaultCurrent={6} total={200} dropdownProps={{ getPopupContainer: () => document.body }} />
         </div>
         <div className={globalStyles.tableContainer}>
           <div className={globalStyles.settings}>

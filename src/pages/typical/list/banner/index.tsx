@@ -159,7 +159,11 @@ export default () => {
               {selectedItems.length === data?.length ? '取消选择' : '选择全部'}
             </Button>
           </Space>
-          <Pagination defaultCurrent={1} total={data.length} />
+          <Pagination
+            defaultCurrent={1}
+            total={data.length}
+            dropdownProps={{ getPopupContainer: () => document.body }}
+          />
         </div>
         <ul className={styles.cardList}>
           {data.map(
