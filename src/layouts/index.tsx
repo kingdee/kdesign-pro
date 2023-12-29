@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { IRouteComponentProps, Redirect } from 'umi'
 import classnames from 'classnames'
 import { Layout, Empty } from '@kdcloudjs/kdesign'
@@ -15,10 +15,9 @@ import styles from './global.less'
 
 const menus = getMenus(originMenus)
 
-const appPath = '/typical'
-
 const Layouts = (props: IRouteComponentProps) => {
   const { location, history, route } = props
+  const [appPath, setAppPath] = useState('/typical')
 
   const user = JSON.parse(sessionStorage.getItem('user') as any)
   if (!user) {
@@ -37,6 +36,12 @@ const Layouts = (props: IRouteComponentProps) => {
   const { settings } = useContext(SettingsContext)
 
   const { top, menu, menuTheme, tabs } = settings
+
+  useEffect(() => {
+    if (menus.length > 1) {
+      setAppPath(`/${location.pathname.split('/')[1]}`)
+    }
+  }, [])
 
   return (
     <Layout className={styles.layout}>
