@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useState, lazy, useEffect, Suspense, ReactNode } from 'react'
-import { history, IRouteComponentProps, useIntl } from 'umi'
+import { history, useIntl, useLocation } from 'umi'
 import { Tabs, Icon } from '@kdcloudjs/kdesign'
 import Loading from '@/loading'
 
@@ -13,13 +13,13 @@ interface IPane {
   name: ReactNode
   component: any
 }
-interface PanesProps extends IRouteComponentProps {
+interface PanesProps {
   sideMenus: IMenuItem[]
 }
 
-export default ({ sideMenus, location }: PanesProps) => {
+export default ({ sideMenus }: PanesProps) => {
   const intl = useIntl()
-  const { pathname } = location
+  const { pathname } = useLocation()
 
   const [panes, setPanes] = useState<IPane[]>([])
   const [activeKey, setActiveKey] = useState('')

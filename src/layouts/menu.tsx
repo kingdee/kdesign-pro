@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { history, IRoute, useIntl } from 'umi'
+import { history, useIntl, useAccess } from 'umi'
 import classnames from 'classnames'
 import { Menu, Icon } from '@kdcloudjs/kdesign'
 
@@ -8,15 +8,15 @@ import styles from './menu.less'
 const { SubMenu, Item } = Menu
 
 interface SiderProps {
-  route: IRoute
   pathname: string
   menu: string
   menuTheme: string
   sideMenus: IMenuItem[]
 }
 
-export default ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => {
+export default ({ menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => {
   const intl = useIntl()
+  const access = useAccess()
   const [collapsed, setCollapsed] = useState(false)
   const handleSwitchCollapsed = () => setCollapsed(!collapsed)
 
@@ -70,28 +70,28 @@ export default ({ route, menu, menuTheme, pathname, sideMenus: menus }: SiderPro
     <div className={classnames(styles.side, { [styles.collapsed]: collapsed, [styles.light]: menuTheme === 'light' })}>
       <div className={classnames(styles.inner, { [styles.enter]: enter })}>
         <Menu {...menuProps}>
-          {menus.map(({ path, name, icon, routes }: IMenuItem) => {
-            const nameText = intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
-            const currentRoute = route?.routes?.find(({ path: routePath }) => path === routePath)
-            // eslint-disable-next-line no-nested-ternary
-            if (currentRoute?.unaccessible) {
-              return null
-            }
-            return routes ? (
-              <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
-                {routes?.map(({ path: p, name: n }: IMenuItem) => {
-                  const cr = route?.routes?.find(({ path: routePath }) => p === routePath)
-                  return cr?.unaccessible ? null : (
-                    <Item key={p}>{intl.formatMessage({ id: `menu${p.replace(/\//g, '.')}`, defaultMessage: n })}</Item>
-                  )
-                })}
-              </SubMenu>
-            ) : (
-              <Item key={path} icon={<Icon type={icon as string} />}>
-                {nameText}
-              </Item>
-            )
-          })}
+          {menus
+            .filter((d) => access.isAdmin || !d.access)
+            .map(({ path, name, icon, routes }: IMenuItem) => {
+              const nameText = intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
+              return routes ? (
+                <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
+                  {routes
+                    ?.filter((d) => access.isAdmin || d.access)
+                    .map(({ path: p, name: n }: IMenuItem) => {
+                      return (
+                        <Item key={p}>
+                          {intl.formatMessage({ id: `menu${p.replace(/\//g, '.')}`, defaultMessage: n })}
+                        </Item>
+                      )
+                    })}
+                </SubMenu>
+              ) : (
+                <Item key={path} icon={<Icon type={icon as string} />}>
+                  {nameText}
+                </Item>
+              )
+            })}
         </Menu>
         <div className={styles.innerBottom}>
           <div className={styles.collapsedHandle} onClick={handleSwitchCollapsed}>

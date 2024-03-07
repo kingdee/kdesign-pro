@@ -1,6 +1,5 @@
 import { history } from 'umi'
 import Loading from '@/loading'
-import { getAccess } from '@/services/user'
 import settings from '../config/settings'
 
 const loginPath = '/login'
@@ -13,29 +12,16 @@ export const initialStateConfig = {
 interface IState {
   settings?: Record<string, any>
   access?: string
-  fetchAccess?: () => Promise<string>
 }
 
 export async function getInitialState(): Promise<IState> {
-  const fetchAccess = async () => {
-    try {
-      const msg = await getAccess()
-      return msg.data.access
-    } catch (error) {
-      history.push(loginPath)
-    }
-    return undefined
-  }
-
   const state: IState = {
     settings,
-    fetchAccess,
   }
 
-  // 如果不是登录页面，执行
   if (history.location.pathname !== loginPath) {
-    const access = await fetchAccess()
-    state.access = access
+    const { access } = JSON.parse(sessionStorage.getItem('user') || '{}')
+    state.access = access || 'guest'
   }
 
   return state

@@ -17,12 +17,7 @@ export default [
       {
         path: '/',
         component: '@/layouts',
-        routes: [
-          ...getRoutes(menus),
-          {
-            component: './exception/404',
-          },
-        ],
+        routes: [...getRoutes(menus)],
       },
     ],
   },
