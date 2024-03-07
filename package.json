@@ -23,10 +23,11 @@
   "scripts": {
     "start": "cross-env REACT_APP_ENV=dev umi dev",
     "start:pre": "cross-env REACT_APP_ENV=pre umi dev",
+    "start:node17+": "cross-env NODE_OPTIONS=--openssl-legacy-provider REACT_APP_ENV=dev umi dev",
     "build": "umi build",
     "build:pre": "cross-env REACT_APP_ENV=pre umi build",
+    "build:node17+": "cross-env NODE_OPTIONS=--openssl-legacy-provider REACT_APP_ENV=pre umi build",
     "postinstall": "umi generate tmp",
-    "node17+": "cross-env NODE_OPTIONS=--openssl-legacy-provider REACT_APP_ENV=dev umi dev",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
