@@ -27,11 +27,13 @@ $ npm i -g @kdcloudjs/create-kdesign-app
 
 ## 初始化脚手架
 
-我们使用刚才安装的 create-kdesign-app 来快速初始化脚手架
+我们可以使用刚才安装的 create-kdesign-app 来快速初始化脚手架
 
 ```shell
 $ create-kdesign-app my-app
 ```
+
+当然，也可以直接使用`git clone`命令克隆本项目到本地
 
 安装依赖：
 
@@ -44,8 +46,14 @@ $ cd my-app && npm install
 安装好脚手架后就可以开始开发
 
 ```shell
+// 运行
 $ npm run start
+// 构建
+$ npm run build
 ```
+
+## FAQ
+1. [node.js v17 以上版本程序启动失败问题](https://github.com/kingdee/kdesign-pro/issues/9)
 
 ## 浏览器兼容性
 

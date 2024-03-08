@@ -1,26 +1,27 @@
 import { useState, useRef, useEffect } from 'react'
-import { useIntl } from 'umi'
+import { useIntl, history } from 'umi'
 import classnames from 'classnames'
 import { Layout, Space, Input, Icon } from '@kdcloudjs/kdesign'
 import User from './user'
 import News from './news'
 import styles from './header.less'
+import { menus } from '@/layouts/index'
 
 const { Header } = Layout
 
 interface IHeaderProps {
   appPath: string
-  menus: IMenuItem[]
   top: string
-  handleSwitchApp: (path: string) => void
 }
 
-export default ({ top, menus, appPath, handleSwitchApp }: IHeaderProps) => {
+export default ({ top, appPath }: IHeaderProps) => {
   const intl = useIntl()
   const searchRef = useRef<HTMLInputElement>()
   const [showSearch, setShowSearch] = useState(false)
 
   const handleShowSearch = () => setShowSearch(true)
+
+  const handleSwitchApp = (path: string) => history.push(path)
 
   useEffect(() => {
     showSearch && searchRef.current?.focus()

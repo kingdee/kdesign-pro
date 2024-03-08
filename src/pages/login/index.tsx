@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { IRouteComponentProps, Link, useModel, useIntl } from 'umi'
+import { Link, useModel, useIntl, history } from 'umi'
 import { Form, Input, Button, Radio, Space, Alert, Icon, Message } from '@kdcloudjs/kdesign'
 import SettingsContext from '@/layouts/custom-bar/context'
 import { login } from '@/services/user'
@@ -10,7 +10,7 @@ interface ILoginParams {
   password: string
 }
 
-export default ({ history }: IRouteComponentProps) => {
+export default () => {
   const intl = useIntl()
   const { settings } = useContext(SettingsContext)
   const { logo } = settings
@@ -18,17 +18,7 @@ export default ({ history }: IRouteComponentProps) => {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState('')
 
-  const { initialState, setInitialState } = useModel('@@initialState')
-
-  const getAccess = async () => {
-    const access = await initialState?.fetchAccess?.()
-    if (access) {
-      await setInitialState((s) => ({
-        ...s,
-        access,
-      }))
-    }
-  }
+  const { setInitialState } = useModel('@@initialState')
 
   async function submit({ values }: { values: ILoginParams }) {
     if (!loading) {
@@ -37,8 +27,11 @@ export default ({ history }: IRouteComponentProps) => {
       setLoading(false)
       if (status === 'success') {
         sessionStorage.setItem('user', JSON.stringify(data))
-        Message.success(intl.formatMessage({ id: 'login.success', defaultMessage: '登录成功！' }))
-        await getAccess()
+        Message.success(intl.formatMessage({ id: 'login.success', defaultMessage: `${data?.access || ''}登录成功！` }))
+        await setInitialState((s) => ({
+          ...s,
+          access: data?.access || 'guest',
+        }))
         history.push('/typical/workbench')
       } else {
         setMsg(`${intl.formatMessage({ id: 'login.failure', defaultMessage: '用户名或密码错误！' })}(kdcloud/kdesign)`)

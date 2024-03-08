@@ -14,8 +14,9 @@ const menus: IMenuItem[] = [
         name: '详情页',
         icon: 'my-receipt',
         level: 'category',
+        access: '',
         routes: [
-          { path: '/typical/detail/basic', name: '基础详情' },
+          { path: '/typical/detail/basic', name: '基础详情', access: 'kdcloud' },
           { path: '/typical/detail/columns', name: '分栏式详情' },
           { path: '/typical/detail/cross', name: '横向页签详情' },
           { path: '/typical/detail/vertical', name: '纵向导航详情' },
@@ -24,6 +25,7 @@ const menus: IMenuItem[] = [
       },
       {
         path: '/typical/list',
+        access: 'kdcloud',
         name: '列表页',
         icon: 'business-type',
         level: 'category',
@@ -40,6 +42,7 @@ const menus: IMenuItem[] = [
         name: '报表页',
         icon: 'report-form',
         level: 'category',
+        access: 'kdcloud',
         routes: [
           { path: '/typical/report/list', name: '列表报表' },
           { path: '/typical/report/statistics', name: '统计分析类报表' },
@@ -50,6 +53,7 @@ const menus: IMenuItem[] = [
         name: '表单页',
         icon: 'order-facet',
         level: 'category',
+        access: 'kdcloud',
         routes: [
           { path: '/typical/form/basic', name: '基础表单页' },
           { path: '/typical/form/guide', name: '向导式表单页' },

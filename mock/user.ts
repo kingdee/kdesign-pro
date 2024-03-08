@@ -6,10 +6,6 @@ const waitTime = (time = 100) => {
   })
 }
 
-let access = ''
-
-const getAccess = () => access
-
 const legalAccounts = ['kdcloud', 'guest']
 
 export default {
@@ -27,9 +23,9 @@ export default {
           data_center: 'XX业务XX升级库',
           business_unit: 'XXXX部',
           theme_color: '#276FF5',
+          access: username,
         },
       })
-      access = username
     } else {
       res.send({
         status: 'failure',
@@ -38,14 +34,6 @@ export default {
   },
   '/mock/user/logout': {
     status: 'success',
-  },
-  '/mock/access': (req: any, res: any) => {
-    res.send({
-      status: 'success',
-      data: {
-        access: getAccess(),
-      },
-    })
   },
   '/mock/user/tasks': [
     {

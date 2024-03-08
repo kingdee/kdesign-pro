@@ -1,5 +1,5 @@
 import React, { cloneElement, FunctionComponentElement } from 'react'
-import { IRouteComponentProps, withRouter } from 'umi'
+import { history, useLocation } from 'umi'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import styles from './global.less'
@@ -9,7 +9,8 @@ const classMap: Record<string, string> = {
   POP: 'back',
 }
 
-export default withRouter(({ location, children, history }: IRouteComponentProps) => {
+export default ({ children }: any) => {
+  const { pathname } = useLocation()
   return (
     <TransitionGroup
       className={styles.content}
@@ -17,9 +18,9 @@ export default withRouter(({ location, children, history }: IRouteComponentProps
         return cloneElement(child, { classNames: classMap[history.action] })
       }}
     >
-      <CSSTransition key={location.pathname} timeout={300}>
+      <CSSTransition key={pathname} timeout={300}>
         {children}
       </CSSTransition>
     </TransitionGroup>
   )
-})
+}

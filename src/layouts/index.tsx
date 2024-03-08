@@ -1,59 +1,52 @@
-import { useContext } from 'react'
-import { IRouteComponentProps, Redirect } from 'umi'
-import classnames from 'classnames'
-import { Layout, Empty } from '@kdcloudjs/kdesign'
-import SettingsContext from '@/layouts/custom-bar/context'
-import originMenus from '../../config/menus'
-import Header from './header'
-import Content from './content'
-import Panes from './panes'
-import Menu from './menu'
+import * as echarts from 'echarts'
+import { useEffect, useState } from 'react'
+import { history, Outlet, useLocation, useModel, useAccess } from 'umi'
+import defaultTheme from '@kdcloudjs/kd-charts/theme/echarts-theme-default'
+import { Message } from '@kdcloudjs/kdesign'
+import defaultSettings from '../../config/settings'
+import { SettingsContextProvider } from '@/layouts/custom-bar/context'
+import changeTheme from '@/utils/change-theme'
+import BaseLayout from '@/layouts/baseLayout'
+import routeConfig from '../../config/routes'
 import { getMenus } from '../../config/tools'
-import CustomBar from '@/layouts/custom-bar'
+import originMenus from '../../config/menus'
 
-import styles from './global.less'
+echarts.registerTheme('defaultTheme', defaultTheme)
 
-const menus = getMenus(originMenus)
+export const route = routeConfig[2]
+export const menus = getMenus(originMenus)
 
-const appPath = '/typical'
+export default () => {
+  const { pathname } = useLocation()
 
-const Layouts = (props: IRouteComponentProps) => {
-  const { location, history, route } = props
+  const { initialState } = useModel('@@initialState')
+  const access = useAccess()
+  const [settings, setSettings] = useState(defaultSettings)
+  const updateSettings = (option: Record<string, any>) => setSettings({ ...settings, ...option })
 
-  const user = JSON.parse(sessionStorage.getItem('user') as any)
-  if (!user) {
-    return <Redirect to="/login" />
+  const { colors, themeColor } = settings
+  const localThemeColor = localStorage.getItem('themeColor')
+  const theme = colors.find(({ value }: { value: string }) => value === (localThemeColor || themeColor)) || colors[0]
+
+  if (pathname !== '/login' && !access.accessible(initialState?.curRoute?.access)) {
+    Message.error(`您无权访问 ${initialState?.curRoute?.path || ''} !`)
+    history.push('/typical/exception/403')
   }
 
-  const { pathname } = location
-  const currentRoute = route?.routes?.find(({ path }) => path === pathname)
-  if (currentRoute?.unaccessible) {
-    const R403 = route?.routes?.find(({ path }) => path === '/typical/exception/403')
-    currentRoute.component = R403?.component
-  }
-
-  const handleSwitchApp = (path: string) => history.push(path)
-
-  const { settings } = useContext(SettingsContext)
-
-  const { top, menu, menuTheme, tabs } = settings
+  useEffect(() => {
+    updateSettings({ themeColor: theme.value })
+    changeTheme(theme.value)
+  }, [])
 
   return (
-    <Layout className={styles.layout}>
-      {top !== 'off' && <Header {...{ appPath, top, menus, handleSwitchApp }} />}
-      {menus.map(({ path, name, routes }) =>
-        routes ? (
-          <Layout key={path} className={classnames(styles.main, { [styles.active]: path === appPath })}>
-            {menu !== 'off' && <Menu {...{ sideMenus: routes, pathname, menu, menuTheme, route }} />}
-            {tabs ? <Panes {...{ sideMenus: routes, ...props }} /> : <Content {...props} />}
-          </Layout>
-        ) : (
-          <Empty description={name} className={classnames(styles.empty, { [styles.active]: path === appPath })} />
-        ),
+    <SettingsContextProvider value={{ settings, updateSettings }}>
+      {pathname === '/login' ? (
+        <Outlet />
+      ) : (
+        <BaseLayout>
+          <Outlet />
+        </BaseLayout>
       )}
-      {process.env.REACT_APP_ENV === 'pre' && <CustomBar />}
-    </Layout>
+    </SettingsContextProvider>
   )
 }
-
-export default Layouts
