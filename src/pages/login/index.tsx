@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { IRouteComponentProps, Link, useModel, useIntl } from 'umi'
+import { Link, useModel, useIntl, history } from 'umi'
 import { Form, Input, Button, Radio, Space, Alert, Icon, Message } from '@kdcloudjs/kdesign'
 import SettingsContext from '@/layouts/custom-bar/context'
 import { login } from '@/services/user'
@@ -10,7 +10,7 @@ interface ILoginParams {
   password: string
 }
 
-export default ({ history }: IRouteComponentProps) => {
+export default () => {
   const intl = useIntl()
   const { settings } = useContext(SettingsContext)
   const { logo } = settings

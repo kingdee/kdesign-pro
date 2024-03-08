@@ -77,7 +77,7 @@ export default ({ menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => 
               return routes ? (
                 <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
                   {routes
-                    ?.filter((d) => access.isAdmin || d.access)
+                    ?.filter((d) => access.isAdmin || !d.access)
                     .map(({ path: p, name: n }: IMenuItem) => {
                       return (
                         <Item key={p}>
