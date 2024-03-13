@@ -24,8 +24,6 @@
   ],
   "exclude": [
     "node_modules",
-    "lib",
-    "es",
     "dist",
     "typings",
     "**/__test__",

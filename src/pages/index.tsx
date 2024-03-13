@@ -1,6 +1,21 @@
-import { Outlet } from 'umi'
+import { useModel, history, Link } from 'umi'
+
 import './index.less'
 
 export default () => {
-  return <Outlet />
+  const { username } = useModel('global')
+
+  return (
+    <div className="home">
+      <div className="title">
+        <div>Hi</div>
+        <div>{username}</div>
+      </div>
+      <div className="navs">
+        <Link to="/login">登录页</Link>
+        <Link to="/exception/404">404</Link>
+        <Link to="/exception/403">403</Link>
+      </div>
+    </div>
+  )
 }

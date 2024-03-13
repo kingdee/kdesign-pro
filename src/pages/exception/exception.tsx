@@ -14,7 +14,7 @@ export default ({ status, message }: IExceptionProps) => {
   return (
     <ul className={styles.exception}>
       <li className={styles.img}>
-        <img src={require(`@/assets/images/${status}.png`)} alt={String(status)} height="160" />
+        <img src={require(`@/assets/${status}.png`)} alt={String(status)} height="160" />
       </li>
       <li className={styles.status}>{status}</li>
       <li className={styles.message}>{message}</li>

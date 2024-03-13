@@ -1,18 +1,16 @@
 import { Spin } from '@kdcloudjs/kdesign'
 
-type TType = 'page' | 'container' | 'component' | undefined
-
-interface IProps {
-  type?: TType
+export interface ILoading {
+  type?: 'page' | 'container' | undefined
 }
 
-export default ({ type = 'page' }: IProps) => {
+export default ({ type = 'page' }: ILoading) => {
   const styles = {
     flex: 'auto',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh',
+    height: type === 'page' ? '100vh' : '100%',
   }
 
   return (

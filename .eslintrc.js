@@ -1,29 +1,16 @@
 module.exports = {
   root: true,
-  env: {
-    browser: true,
-    es6: true,
-    jest: true,
-  },
-  globals: {
-    wx: true,
-  },
-  extends: [
-    'airbnb',
-    'prettier',
-    'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
-    'plugin:import/typescript',
-  ],
+  env: {browser: true, es6: true, jest: true},
+  extends: ['airbnb', 'prettier', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'plugin:import/typescript'],
   plugins: ['prettier', 'react-hooks', '@typescript-eslint'],
   rules: {
     camelcase: 0,
-    'prettier/prettier': 2,
     semi: [2, 'never'],
-    'jsx-quotes': [1, 'prefer-double'],
+    'prettier/prettier': 2,
     'import/extensions': 0,
     'import/no-unresolved': 0,
     'import/no-dynamic-require': 0,
+    'import/prefer-default-export': 0,
     'import/no-extraneous-dependencies': 0,
     'react/jsx-no-bind': 0,
     'react/react-in-jsx-scope': 0,
@@ -40,6 +27,7 @@ module.exports = {
     'jsx-a11y/no-noninteractive-tabindex': 0,
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'jsx-a11y/label-has-associated-control': 0,
+    'jsx-quotes': [1, 'prefer-double'],
     'global-require': 0,
     'no-use-before-define': 0,
     'no-unused-expressions': 0,
@@ -49,40 +37,21 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 0,
   },
   settings: {
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
+    'import/parsers': {'@typescript-eslint/parser': ['.ts', '.tsx']},
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-    'import/order': [
-      0,
-      {
-        groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
-        pathGroups: [
-          {
-            pattern: 'react*',
-            group: 'builtin',
-            position: 'before',
-          },
-          {
-            pattern: '@/**',
-            group: 'external',
-            position: 'after',
-          },
-        ],
-        pathGroupsExcludedImportTypes: [],
-        'newlines-between': 'always',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-        warnOnUnassignedImports: false,
-      },
-    ],
+    'import/order': [0, {
+      groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
+      pathGroups: [
+        {pattern: 'react*', group: 'builtin', position: 'before'},
+        {pattern: '@/**', group: 'external', position: 'after'}
+      ],
+      pathGroupsExcludedImportTypes: [],
+      'newlines-between': 'always',
+      alphabetize: {order: 'asc', caseInsensitive: true},
+      warnOnUnassignedImports: false,
+    }],
   },
   parserOptions: {
-    parser: '@typescript-eslint/parser',
-    ecmaFeatures: {
-      jsx: true,
-    },
+    parser: '@typescript-eslint/parser', ecmaFeatures: {jsx: true},
   },
-}
+};
