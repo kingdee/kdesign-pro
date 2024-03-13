@@ -42,12 +42,13 @@ $ Receiving objects stage 100% complete       # 等待接收完成
 $ Initializing Done                           # 完成
 ```
 
-- 当然，也可以访问 [kdesign-pro](https://github.com/kingdee/kdesign-pro)，直接克隆项目到本地，不同模板位于不同分支
+- 当然，也可以访问 [kdesign-pro](https://github.com/kingdee/kdesign-pro) 的`github`主页，直接克隆项目到本地，不同模板位于不同分支
 
 安装依赖：
 
+umi3默认使用npm, umi4默认使用pnpm, 可在`config/config.ts`或`.umirc.ts`中修改
+
 ```shell
-# 注：umi3默认使用npm, umi4默认使用pnpm, 可在config/config.ts中修改
 $ cd my-app && npm install
 ```
 
