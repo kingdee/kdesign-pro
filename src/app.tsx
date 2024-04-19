@@ -1,10 +1,22 @@
-import { history } from 'umi'
+import { history, RequestConfig } from 'umi'
 import Loading from '@/loading'
 import settings from '../config/settings'
 
-const loginPath = '/login'
+export const request: RequestConfig = {
+  timeout: 3000,
+  errorConfig: {},
+  requestInterceptors: [
+    (url, options) => ({
+      url,
+      options: {
+        ...options,
+        ...{ params: { ...options.params, lang: localStorage.getItem('umi_locale') || undefined } },
+      },
+    }),
+  ],
+  responseInterceptors: [(response) => response],
+}
 
-/** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
   loading: <Loading />,
 }
@@ -19,7 +31,7 @@ export async function getInitialState(): Promise<IState> {
     settings,
   }
 
-  if (history.location.pathname !== loginPath) {
+  if (history.location.pathname !== '/login') {
     const { access } = JSON.parse(sessionStorage.getItem('user') || '{}')
     state.access = access || 'guest'
   }

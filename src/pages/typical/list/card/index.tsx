@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Pagination, Card, Row, Col, Filter, Checkbox } from '@kdcloudjs/kdesign'
+import { useIntl } from 'umi'
 import { getListCard } from '@/services/list'
 
 import listStyles from '../index.less'
@@ -11,19 +12,21 @@ const views = [
   { type: 'card', icon: 'all-border' },
   { type: 'chart', icon: 'chart' },
 ]
-const searchProps = {
-  tags: [
-    { value: 'label', tag: '名称' },
-    { value: 'code', tag: '编码' },
-  ],
-}
 
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [viewType, setViewType] = useState('card')
   const [data, setData] = useState<any[]>([])
   const [filterConditions, setFilterConditions] = useState([])
   const [filterDefaultValue, setFilterDefaultValue] = useState([])
-
+  const searchProps = {
+    tags: [
+      { value: 'label', tag: i18n('list.card1') },
+      { value: 'code', tag: i18n('list.card2') },
+    ],
+  }
   async function initListBasic() {
     const glc = await getListCard()
     setData(glc.dataSource)
@@ -73,7 +76,7 @@ export default () => {
           {filterConditions && (
             <Filter
               style={{ width: '100%' }}
-              title="任务审批"
+              title={i18n('list.card3')}
               search={searchProps}
               conditions={filterConditions}
               defaultValue={filterDefaultValue as any}
@@ -82,19 +85,19 @@ export default () => {
           )}
         </div>
         <Space className={listStyles.operation} size={12}>
-          <Button type="primary">新增</Button>
-          <Button type="primary">保存</Button>
-          <Button type="primary">提交</Button>
-          <Button type="primary">删除</Button>
-          <Button type="primary">审核</Button>
-          <Button type="primary">影像查看</Button>
+          <Button type="primary">{i18n('add')}</Button>
+          <Button type="primary">{i18n('save')}</Button>
+          <Button type="primary">{i18n('commit')}</Button>
+          <Button type="primary">{i18n('delete')}</Button>
+          <Button type="primary">{i18n('list.card4')}</Button>
+          <Button type="primary">{i18n('list.card5')}</Button>
           <Button.Dropdown
             overlay={[
-              { value: 'approve', label: '审批' },
-              { value: 'reject', label: '驳回' },
+              { value: 'approve', label: i18n('approve') },
+              { value: 'reject', label: i18n('list.card6') },
             ]}
           >
-            更多
+            {i18n('more')}
           </Button.Dropdown>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
@@ -112,13 +115,13 @@ export default () => {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选
+              {i18n('selected')}
               {selectedItems.length}
-              条数据，共
+              {i18n('list.card7')}，{i18n('list.card8')}
               {data.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
-              {selectedItems.length === data?.length ? '取消选择' : '选择全部'}
+              {selectedItems.length === data?.length ? i18n('selectCancel') : i18n('selectAll')}
             </Button>
           </Space>
           <Pagination defaultCurrent={1} total={data.length} />
@@ -129,7 +132,7 @@ export default () => {
               <Col span={6} key={index}>
                 <Card title={title} style={{ width: '100%' }} hoverable>
                   <ul className={styles.attr}>
-                    <li>{`${name} ${dep}`}</li>
+                    <li>{name + dep}</li>
                     <li>{way}</li>
                     <li>{time}</li>
                     <li className={styles.amount}>{cost}</li>

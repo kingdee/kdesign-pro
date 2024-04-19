@@ -13,42 +13,45 @@ import {
   Popconfirm,
   Message,
 } from '@kdcloudjs/kdesign'
+import { useIntl } from 'umi'
 import { getListBanner } from '@/services/list'
 
 import listStyles from '../index.less'
 import styles from './index.less'
 
-const views = [
-  { type: 'list', icon: 'classify' },
-  { type: 'card', icon: 'all-border' },
-  { type: 'chart', icon: 'chart' },
-]
-const searchProps = {
-  tags: [
-    { value: 'label', tag: '名称' },
-    { value: 'code', tag: '编码' },
-  ],
-}
-
-const fields: Record<string, string> = {
-  picture: '照片',
-  name: '名称',
-  code: '编码',
-  standard: '规范',
-  color: '颜色',
-  size: '尺寸',
-  order: '下单',
-  confirmSize: '确认',
-  price: '价格',
-  originPrice: '原价',
-  status: '状态',
-}
-
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [viewType, setViewType] = useState('list')
   const [data, setData] = useState<any[]>([])
   const [filterConditions, setFilterConditions] = useState([])
   const [filterDefaultValue, setFilterDefaultValue] = useState([])
+
+  const views = [
+    { type: 'list', icon: 'classify' },
+    { type: 'card', icon: 'all-border' },
+    { type: 'chart', icon: 'chart' },
+  ]
+  const searchProps = {
+    tags: [
+      { value: 'label', tag: i18n('list.banner1') },
+      { value: 'code', tag: i18n('list.banner2') },
+    ],
+  }
+  const fields: Record<string, string> = {
+    picture: i18n('list.banner3'),
+    name: i18n('list.banner1'),
+    code: i18n('list.banner2'),
+    standard: i18n('list.banner4'),
+    color: i18n('list.banner5'),
+    size: i18n('list.banner6'),
+    order: i18n('list.banner7'),
+    confirmSize: i18n('list.banner8'),
+    price: i18n('list.banner9'),
+    originPrice: i18n('list.banner10'),
+    status: i18n('list.banner11'),
+  }
 
   async function initListBasic() {
     const glb = await getListBanner()
@@ -92,14 +95,14 @@ export default () => {
 
   function confirm() {
     Message.success({
-      content: '点击了确定',
+      content: i18n('list.banner12'),
       closable: true,
     })
   }
 
   function cancel() {
     Message.success({
-      content: '点击了取消',
+      content: i18n('list.banner13'),
       closable: true,
     })
   }
@@ -113,7 +116,7 @@ export default () => {
           {filterConditions && (
             <Filter
               style={{ width: '100%' }}
-              title="商品管理123"
+              title={`${i18n('list.banner14')}123`}
               search={searchProps}
               conditions={filterConditions}
               defaultValue={filterDefaultValue as any}
@@ -122,17 +125,17 @@ export default () => {
           )}
         </div>
         <Space className={listStyles.operation} size={12}>
-          <Button.Dropdown type="similar" overlay={[{ value: 'copy', label: '复制' }]}>
-            新增
+          <Button.Dropdown type="similar" overlay={[{ value: 'copy', label: i18n('copy') }]}>
+            {i18n('add')}
           </Button.Dropdown>
-          <Button type="primary">取消订单</Button>
+          <Button type="primary">{i18n('list.banner15')}</Button>
           <Button.Dropdown
             overlay={[
-              { value: 'input', label: '引入数据' },
-              { value: 'output', label: '引出数据' },
+              { value: 'input', label: i18n('list.banner16') },
+              { value: 'output', label: i18n('list.banner17') },
             ]}
           >
-            更多
+            {i18n('list.banner18')}
           </Button.Dropdown>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
@@ -150,18 +153,19 @@ export default () => {
         <div className={listStyles.pagination}>
           <Space className={listStyles.notify} size={8}>
             <span>
-              已选
+              {i18n('list.banner19')}
               {selectedItems.length}
-              条数据，共
+              {i18n('list.banner20')}，{i18n('list.banner21')}
               {data.length}
             </span>
             <Button type="text" onClick={handleSelectAll}>
-              {selectedItems.length === data?.length ? '取消选择' : '选择全部'}
+              {selectedItems.length === data?.length ? i18n('selectCancel') : i18n('selectAll')}
             </Button>
           </Space>
           <Pagination
             defaultCurrent={1}
             total={data.length}
+            // @ts-ignore
             dropdownProps={{ getPopupContainer: () => document.body }}
           />
         </div>
@@ -181,6 +185,7 @@ export default () => {
               price,
               originPrice,
               status,
+              statusStr,
               promotion,
             }) => (
               <li key={key} className={styles.item}>
@@ -215,15 +220,20 @@ export default () => {
                     <span className={styles.originPrice}>{`￥${originPrice}`}</span>
                   </Col>
                   <Col span={2}>
-                    <Tag type="status" color={status === '已上架' ? 'success' : 'expired'}>
-                      {status}
+                    <Tag type="status" color={status}>
+                      {statusStr}
                     </Tag>
                   </Col>
                 </Row>
                 <div className={styles.actions}>
                   <Icon type="put-on" />
                   <Icon type="edit-border" />
-                  <Popconfirm message="你确定要删除吗？" onConfirm={confirm} onCancel={cancel} placement="topLeft">
+                  <Popconfirm
+                    message={`${i18n('list.banner24')}？`}
+                    onConfirm={confirm}
+                    onCancel={cancel}
+                    placement="topLeft"
+                  >
                     <Icon type="delete" />
                   </Popconfirm>
                 </div>

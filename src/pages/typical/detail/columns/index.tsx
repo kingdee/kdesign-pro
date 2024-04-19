@@ -16,6 +16,7 @@ import {
   Icon,
 } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
+import { useIntl } from 'umi'
 import globalStyles from '@/layouts/global.less'
 import detailStyles from '../index.less'
 import styles from './index.less'
@@ -25,43 +26,46 @@ const { Group } = Radio
 const { Option } = Select
 
 const TaskHandle = () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [form] = Form.useForm()
   return (
     <Form className={detailStyles.form} form={form} labelWidth={120}>
       <ul className={styles.task}>
         <li>
-          <Form.Item label="单据编号" name="code" validateTrigger="onBlur">
+          <Form.Item label={i18n('detail.column1')} name="code" validateTrigger="onBlur">
             <Group style={{ marginTop: 8 }}>
               <Radio value="a" radioType="square">
-                审批
+                {i18n('approve')}
               </Radio>
               <Radio value="b" radioType="square">
-                移交
+                {i18n('handover')}
               </Radio>
             </Group>
           </Form.Item>
         </li>
         <li>
-          <Form.Item required label="审批决策" name="decision" validateTrigger="onBlur">
+          <Form.Item required label={i18n('detail.column24')} name="decision" validateTrigger="onBlur">
             <Select style={{ width: '100%' }}>
-              <Option value="1">同意</Option>
-              <Option value="2">不同意</Option>
+              <Option value="1">{i18n('agree')}</Option>
+              <Option value="2">{i18n('disagree')}</Option>
             </Select>
           </Form.Item>
         </li>
         <li>
-          <Form.Item label="下一步节点" name="nextNode" validateTrigger="onBlur">
-            <Input value="二级审批-吴欣艾" />
+          <Form.Item label={i18n('detail.column25')} name="nextNode" validateTrigger="onBlur">
+            <Input value={i18n('detail.column26')} />
           </Form.Item>
         </li>
         <li>
-          <Form.Item required label="审批意见" name="opinion" validateTrigger="onBlur">
+          <Form.Item required label={i18n('detail.column27')} name="opinion" validateTrigger="onBlur">
             <TextArea autoSize={{ minRows: 4, maxRows: 6 }} borderType="bordered" style={{ marginTop: 6 }} />
           </Form.Item>
         </li>
       </ul>
       <Button htmlType="submit" type="primary" style={{ width: 90, margin: '0 auto' }}>
-        提交
+        {i18n('commit')}
       </Button>
     </Form>
   )
@@ -70,6 +74,9 @@ const TaskHandle = () => {
 const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
 
 const ApprovalRecord = ({ records }: { records: Array<any> }) => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   return (
     <Timeline className={styles.records}>
       {records.map((item: any, index) => (
@@ -97,7 +104,7 @@ const ApprovalRecord = ({ records }: { records: Array<any> }) => {
               </h4>
               <span className={styles.time}>
                 {item.time}
-                {item.submit && <a>提交申请</a>}
+                {item.submit && <a>{i18n('commit')}</a>}
               </span>
             </div>
             <Icon className={styles.toMessage} type="communication-solid" />
@@ -108,14 +115,11 @@ const ApprovalRecord = ({ records }: { records: Array<any> }) => {
   )
 }
 
-const panes = [
-  { name: '任务处理', component: <TaskHandle /> },
-  { name: '审批记录', component: <ApprovalRecord records={[]} /> },
-]
-
 export default () => {
   const initalResources = { basicInfo: {}, saleInfo: {}, records: [] }
   const [resources, setResources] = useState<Record<string, any>>(initalResources)
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   function getResources() {
     getDetailColumns().then((rs) => {
@@ -133,33 +137,33 @@ export default () => {
     <div className={styles.columns}>
       <div className={styles.topPanel}>
         <Space size={12}>
-          <Button type="primary">查看流程图</Button>
-          <Button type="primary">传阅</Button>
-          <Button type="primary">协办</Button>
-          <Button type="primary">加签</Button>
-          <Button type="primary">退出</Button>
+          <Button type="primary">{i18n('detail.column28')}</Button>
+          <Button type="primary">{i18n('detail.column29')}</Button>
+          <Button type="primary">{i18n('detail.column30')}</Button>
+          <Button type="primary">{i18n('detail.column31')}</Button>
+          <Button type="primary">{i18n('quit')}</Button>
         </Space>
         <Pagination pageType="bill" defaultCurrent={2} total={50} />
       </div>
       <div className={classnames(globalStyles.container, styles.layout)}>
         <Collapse className={detailStyles.collapse} defaultActiveKey={['base', 'sale']}>
-          <Collapse.Panel header="基本信息" panelKey="base">
+          <Collapse.Panel header={i18n('basic')} panelKey="base">
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>单据编号</span>
+                  <span className={detailStyles.label}>{i18n('detail.column1')}</span>
                   <Input value={basicInfo.code} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>单据类型</span>
+                  <span className={detailStyles.label}>{i18n('detail.column2')}</span>
                   <Input value={basicInfo.billType} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>业务类型</span>
+                  <span className={detailStyles.label}>{i18n('detail.column3')}</span>
                   <Input value={basicInfo.businessType} />
                 </div>
               </Col>
@@ -167,13 +171,13 @@ export default () => {
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>订单日期</span>
+                  <span className={detailStyles.label}>{i18n('detail.column4')}</span>
                   <Input value={basicInfo.date} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>单据状态</span>
+                  <span className={detailStyles.label}>{i18n('detail.column5')}</span>
                   <Input value={basicInfo.status} />
                 </div>
               </Col>
@@ -181,29 +185,29 @@ export default () => {
             <Row gutter={80} className={detailStyles.row}>
               <Col span={24}>
                 <div>
-                  <span className={detailStyles.label}>备注</span>
-                  <Input placeholder="无" value={basicInfo.memo} />
+                  <span className={detailStyles.label}>{i18n('remark')}</span>
+                  <Input placeholder={i18n('empty')} value={basicInfo.memo} />
                 </div>
               </Col>
             </Row>
           </Collapse.Panel>
-          <Collapse.Panel header="销售信息" panelKey="sale">
+          <Collapse.Panel header={i18n('detail.column10')} panelKey="sale">
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>销售组织</span>
+                  <span className={detailStyles.label}>{i18n('detail.column11')}</span>
                   <Input value={saleInfo.organization} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>销售部门</span>
-                  <Input placeholder="无" value={saleInfo.department} />
+                  <span className={detailStyles.label}>{i18n('detail.column12')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.department} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>销售组</span>
+                  <span className={detailStyles.label}>{i18n('detail.column13')}</span>
                   <Input value={saleInfo.team} />
                 </div>
               </Col>
@@ -211,59 +215,59 @@ export default () => {
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>销售员</span>
+                  <span className={detailStyles.label}>{i18n('detail.column14')}</span>
                   <Input value={saleInfo.saler} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>客户</span>
+                  <span className={detailStyles.label}>{i18n('detail.column15')}</span>
                   <Input value={saleInfo.customer} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>联系人</span>
-                  <Input placeholder="无" value={saleInfo.contact} />
+                  <span className={detailStyles.label}>{i18n('detail.column16')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.contact} />
                 </div>
               </Col>
             </Row>
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>销售员</span>
-                  <Input placeholder="无" value={null} />
+                  <span className={detailStyles.label}>{i18n('detail.column17')}</span>
+                  <Input placeholder={i18n('empty')} value={null} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>联系地址</span>
-                  <Input placeholder="无" value={saleInfo.contactAddress} />
+                  <span className={detailStyles.label}>{i18n('detail.column18')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.contactAddress} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>收货方</span>
-                  <Input placeholder="无" value={saleInfo.deliver} />
+                  <span className={detailStyles.label}>{i18n('detail.column19')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.deliver} />
                 </div>
               </Col>
             </Row>
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>收货联系人</span>
-                  <Input placeholder="无" value={saleInfo.receipt} />
+                  <span className={detailStyles.label}>{i18n('detail.column20')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.receipt} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>收货地址</span>
-                  <Input placeholder="无" value={saleInfo.shippingAddress} />
+                  <span className={detailStyles.label}>{i18n('detail.column21')}</span>
+                  <Input placeholder={i18n('empty')} value={saleInfo.shippingAddress} />
                 </div>
               </Col>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>收票方</span>
+                  <span className={detailStyles.label}>{i18n('detail.column22')}</span>
                   <Input value={saleInfo.ticket} />
                 </div>
               </Col>
@@ -271,7 +275,7 @@ export default () => {
             <Row gutter={80} className={detailStyles.row}>
               <Col span={8}>
                 <div>
-                  <span className={detailStyles.label}>付款方</span>
+                  <span className={detailStyles.label}>{i18n('detail.column23')}</span>
                   <Input value={saleInfo.payer} />
                 </div>
               </Col>
@@ -279,10 +283,13 @@ export default () => {
           </Collapse.Panel>
         </Collapse>
         <div className={styles.tabs}>
-          <Tabs activeKey="任务处理">
-            {panes.map((pane) => (
+          <Tabs activeKey={i18n('detail.column6')}>
+            {[
+              { name: i18n('detail.column6'), component: <TaskHandle /> },
+              { name: i18n('detail.column7'), component: <ApprovalRecord records={[]} /> },
+            ].map((pane) => (
               <Tabs.TabPane key={pane.name} tab={pane.name}>
-                {pane.name === '审批记录' ? cloneElement(pane.component, { records }) : pane.component}
+                {pane.name === i18n('detail.column7') ? cloneElement(pane.component, { records }) : pane.component}
               </Tabs.TabPane>
             ))}
           </Tabs>

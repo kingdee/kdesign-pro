@@ -1,4 +1,4 @@
-import { history } from 'umi'
+import { history, useIntl } from 'umi'
 import { Button } from '@kdcloudjs/kdesign'
 import styles from './exception.less'
 
@@ -8,6 +8,9 @@ interface IExceptionProps {
 }
 
 export default ({ status, message }: IExceptionProps) => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const handleBackHome = () => {
     history.push('/')
   }
@@ -20,7 +23,7 @@ export default ({ status, message }: IExceptionProps) => {
       <li className={styles.message}>{message}</li>
       <li>
         <Button type="primary" onClick={handleBackHome}>
-          返回主页
+          {i18n('homepage')}
         </Button>
       </li>
     </ul>

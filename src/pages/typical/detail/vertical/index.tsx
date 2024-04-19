@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Space, Tag, Tabs, Button, Input, Row, Col, Pagination, Icon, Table, Form, Switch } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
+import { useIntl } from 'umi'
 import { getDetailVertical } from '@/services/detail'
 import { getFormAnchor } from '@/services/form'
 import globalStyles from '@/layouts/global.less'
@@ -10,7 +11,10 @@ import formStyles from '../../form/index.less'
 import infoStyles from './info.less'
 
 export default () => {
-  const [panes, setPanes] = useState<any>([])
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
+  const panes = [i18n('detail.vertical1'), i18n('detail.vertical2'), i18n('detail.vertical3')]
   const [expenseColumns, setExpenseColumns] = useState<any>([])
   const [expenseData, setExpenseData] = useState<any>([])
   const [rechargeColumns, setRechargeColumns] = useState<any>([])
@@ -18,7 +22,6 @@ export default () => {
 
   const getData = async () => {
     const {
-      panes: ps,
       rechargeColumns: tempRechargeColumns,
       rechargeData: temRechargeData,
       expenseColumns: tempExpenseColumns,
@@ -47,18 +50,17 @@ export default () => {
     setExpenseData(temExpenseData)
     setRechargeColumns(tempRechargeColumns)
     setRechargeData(temRechargeData)
-    setPanes(ps)
   }
 
   useEffect(() => {
     getData()
   }, [])
 
-  const mapCont: Record<string, any> = {
-    会员信息: <MemberInfo />,
-    充值记录: <RechargeRecord {...{ rechargeColumns, rechargeData }} />,
-    消费记录: <ExpenseRecord {...{ expenseColumns, expenseData }} />,
-  }
+  const mapCont: Record<string, any> = [
+    <MemberInfo />,
+    <RechargeRecord {...{ rechargeColumns, rechargeData }} />,
+    <ExpenseRecord {...{ expenseColumns, expenseData }} />,
+  ]
 
   return (
     <div className={classnames(globalStyles.container, styles.detailVertical)}>
@@ -67,10 +69,10 @@ export default () => {
         <ul className={styles.attr}>
           <li>
             <Space size={12}>
-              <span className={styles.title}>多账户卡</span>
+              <span className={styles.title}>{i18n('detail.vertical4')}</span>
               <i className={styles.split} />
               <Tag type="status" color="success">
-                正常
+                {i18n('detail.vertical5')}
               </Tag>
             </Space>
           </li>
@@ -79,9 +81,9 @@ export default () => {
       </div>
       <div className={styles.tabs}>
         <Tabs type="card" position="left" defaultActiveKey={panes[0]}>
-          {panes.map((pane: string) => (
+          {panes.map((pane: string, index) => (
             <Tabs.TabPane key={pane} tab={pane}>
-              {mapCont[pane]}
+              {mapCont[index]}
             </Tabs.TabPane>
           ))}
         </Tabs>
@@ -91,6 +93,9 @@ export default () => {
 }
 
 const MemberInfo = () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [form] = Form.useForm()
   const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
   const [dataSource, setDataSource] = useState([])
@@ -112,11 +117,16 @@ const MemberInfo = () => {
 
   const customerColumns = [
     { code: 'index', lock: true, width: 60, name: '#' },
-    { code: 'way', width: 100, name: '渠道' },
-    { code: 'checked', width: 100, name: '来源渠道', render: (value: boolean) => <Switch defaultChecked={value} /> },
-    { code: 'organization', width: 200, name: '组织' },
-    { code: 'id', width: 200, name: '对应用户ID' },
-    { code: 'memo', width: 200, name: '备注' },
+    { code: 'way', width: 100, name: i18n('detail.vertical6') },
+    {
+      code: 'checked',
+      width: 100,
+      name: i18n('detail.vertical7'),
+      render: (value: boolean) => <Switch defaultChecked={value} />,
+    },
+    { code: 'organization', width: 200, name: i18n('org') },
+    { code: 'id', width: 200, name: i18n('detail.vertical8') },
+    { code: 'memo', width: 200, name: i18n('remark') },
   ]
 
   const rowSelection = {
@@ -133,9 +143,9 @@ const MemberInfo = () => {
                 <img src={`${(window as any).routerBase}${avatar}`} />
               </div>
               <div className={infoStyles.tags}>
-                <div className={infoStyles.palceholder}>暂无信息标签，请添加标签哦～</div>
+                <div className={infoStyles.palceholder}>{i18n('detail.vertical9')}</div>
                 <Button type="primary" ghost>
-                  添加
+                  {i18n('add')}
                 </Button>
               </div>
             </header>
@@ -158,7 +168,7 @@ const MemberInfo = () => {
               })}
             </Row>
             <div className={infoStyles.part}>
-              <h4 id="recommendedInformation">会员推荐信息</h4>
+              <h4 id="recommendedInformation">{i18n('detail.vertical10')}</h4>
               <Row gutter={30}>
                 {recommendedInformation.map((item) => {
                   const { required, label, name, defaultValue, validateTrigger } = item
@@ -179,14 +189,14 @@ const MemberInfo = () => {
               </Row>
             </div>
             <div className={infoStyles.part}>
-              <h4>渠道信息</h4>
+              <h4>{i18n('detail.vertical11')}</h4>
               <Table columns={customerColumns} dataSource={dataSource} rowSelection={rowSelection as any} />
             </div>
             <div className={infoStyles.part}>
-              <h4 id="identityInformation">身份信息</h4>
+              <h4 id="identityInformation">{i18n('detail.vertical12')}</h4>
               <Button type="primary" ghost>
                 <Icon type="add" />
-                添加卡片
+                {i18n('add')}
               </Button>
               <ul className={infoStyles.cardWalls}>
                 {cardData.map((item: any, index) => (
@@ -202,8 +212,8 @@ const MemberInfo = () => {
                       ))}
                     </ol>
                     <div className={infoStyles.actions}>
-                      <Button type="text">编辑</Button>
-                      <Button type="text">取消</Button>
+                      <Button type="text">{i18n('edit')}</Button>
+                      <Button type="text">{i18n('cancel')}</Button>
                     </div>
                   </li>
                 ))}
@@ -217,20 +227,23 @@ const MemberInfo = () => {
 }
 
 const RechargeRecord = (props: { rechargeData: any[]; rechargeColumns: any[] }) => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const { rechargeData, rechargeColumns } = props
   return (
     <>
       <Button type="primary" style={{ margin: '16px 20px', alignSelf: 'flex-start' }}>
-        引出
+        {i18n('detail.vertical13')}
       </Button>
       <Row gutter={80}>
         <Col span={6} style={{ marginLeft: 20 }}>
-          <span className={detailStyles.label}>时间范围</span>
-          <Input value="最近一年" />
+          <span className={detailStyles.label}>{i18n('detail.vertical14')}</span>
+          <Input value={i18n('detail.vertical15')} />
         </Col>
         <Col span={6}>
-          <span className={detailStyles.label}>流水类型</span>
-          <Input value="充值" />
+          <span className={detailStyles.label}>{i18n('detail.vertical16')}</span>
+          <Input value={i18n('detail.vertical17')} />
         </Col>
       </Row>
       <div className={styles.table}>
@@ -252,20 +265,23 @@ const RechargeRecord = (props: { rechargeData: any[]; rechargeColumns: any[] }) 
 }
 
 const ExpenseRecord = (props: { expenseData: any[]; expenseColumns: any[] }) => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const { expenseData, expenseColumns } = props
   return (
     <>
       <Button type="primary" style={{ margin: '16px 20px', alignSelf: 'flex-start' }}>
-        引出
+        {i18n('detail.vertical13')}
       </Button>
       <Row gutter={80}>
         <Col span={6} style={{ marginLeft: 20 }}>
-          <span className={detailStyles.label}>时间范围</span>
-          <Input value="最近一年" />
+          <span className={detailStyles.label}>{i18n('detail.vertical14')}</span>
+          <Input value={i18n('detail.vertical15')} />
         </Col>
         <Col span={6}>
-          <span className={detailStyles.label}>流水类型</span>
-          <Input value="发卡、消费" />
+          <span className={detailStyles.label}>{i18n('detail.vertical16')}</span>
+          <Input value={i18n('detail.vertical18')} />
         </Col>
       </Row>
       <div className={styles.table}>

@@ -15,7 +15,7 @@ interface SiderProps {
 }
 
 export default ({ menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => {
-  const intl = useIntl()
+  const { formatMessage: i18n } = useIntl()
   const access = useAccess()
   const [collapsed, setCollapsed] = useState(false)
   const handleSwitchCollapsed = () => setCollapsed(!collapsed)
@@ -73,17 +73,13 @@ export default ({ menu, menuTheme, pathname, sideMenus: menus }: SiderProps) => 
           {menus
             .filter((d) => access.isAdmin || !d.access)
             .map(({ path, name, icon, routes }: IMenuItem) => {
-              const nameText = intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
+              const nameText = i18n({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })
               return routes ? (
                 <SubMenu key={path} icon={<Icon type={icon as string} />} title={nameText}>
                   {routes
                     ?.filter((d) => access.isAdmin || !d.access)
                     .map(({ path: p, name: n }: IMenuItem) => {
-                      return (
-                        <Item key={p}>
-                          {intl.formatMessage({ id: `menu${p.replace(/\//g, '.')}`, defaultMessage: n })}
-                        </Item>
-                      )
+                      return <Item key={p}>{i18n({ id: `menu${p.replace(/\//g, '.')}`, defaultMessage: n })}</Item>
                     })}
                 </SubMenu>
               ) : (

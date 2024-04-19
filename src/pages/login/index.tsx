@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { IRouteComponentProps, Link, useModel, useIntl } from 'umi'
+import { Link, useModel, useIntl, history } from 'umi'
 import { Form, Input, Button, Radio, Space, Alert, Icon, Message } from '@kdcloudjs/kdesign'
 import SettingsContext from '@/layouts/custom-bar/context'
 import { login } from '@/services/user'
@@ -10,8 +10,8 @@ interface ILoginParams {
   password: string
 }
 
-export default ({ history }: IRouteComponentProps) => {
-  const intl = useIntl()
+export default () => {
+  const { formatMessage: i18n } = useIntl()
   const { settings } = useContext(SettingsContext)
   const { logo } = settings
 
@@ -27,14 +27,14 @@ export default ({ history }: IRouteComponentProps) => {
       setLoading(false)
       if (status === 'success') {
         sessionStorage.setItem('user', JSON.stringify(data))
-        Message.success(intl.formatMessage({ id: 'login.success', defaultMessage: `${data?.access || ''}登录成功！` }))
+        Message.success(i18n({ id: 'login.success', defaultMessage: `${data?.access || ''}登录成功！` }))
         await setInitialState((s) => ({
           ...s,
           access: data?.access || 'guest',
         }))
         history.push('/typical/workbench')
       } else {
-        setMsg(`${intl.formatMessage({ id: 'login.failure', defaultMessage: '用户名或密码错误！' })}(kdcloud/kdesign)`)
+        setMsg(`${i18n({ id: 'login.failure', defaultMessage: '用户名或密码错误！' })}(kdcloud/kdesign)`)
       }
     }
   }
@@ -45,8 +45,8 @@ export default ({ history }: IRouteComponentProps) => {
   return (
     <div className={styles.login}>
       <div className={styles.banner}>
-        <h1>{intl.formatMessage({ id: 'login.location', defaultMessage: '企业级产品设计系统' })}</h1>
-        <h2>{intl.formatMessage({ id: 'login.slogan', defaultMessage: '赋能数字化时代新体验' })}</h2>
+        <h1>{i18n({ id: 'login.location', defaultMessage: '企业级产品设计系统' })}</h1>
+        <h2>{i18n({ id: 'login.slogan', defaultMessage: '赋能数字化时代新体验' })}</h2>
       </div>
       <div className={styles.bar}>
         {logo && (
@@ -55,32 +55,24 @@ export default ({ history }: IRouteComponentProps) => {
           </div>
         )}
         <div className={styles.title}>
-          <span>{intl.formatMessage({ id: 'login.account', defaultMessage: '账号密码登录' })}</span>
-          <Link to="#">{intl.formatMessage({ id: 'login.register', defaultMessage: '立即注册' })}</Link>
+          <span>{i18n({ id: 'login.account', defaultMessage: '账号密码登录' })}</span>
+          <Link to="#">{i18n({ id: 'login.register', defaultMessage: '立即注册' })}</Link>
         </div>
         {msg && <Alert message={msg} type="error" delayOffTime={0} showIcon />}
         <Form layout="vertical" labelWidth={100} onFinish={submit}>
-          <Form.Item
-            label={intl.formatMessage({ id: 'login.username', defaultMessage: '用户名' })}
-            name="username"
-            required
-          >
+          <Form.Item label={i18n({ id: 'login.username', defaultMessage: '用户名' })} name="username" required>
             <Input
               borderType="bordered"
-              placeholder={`${intl.formatMessage({ id: 'login.username', defaultMessage: '用户名' })}:kdcloud or guest`}
+              placeholder={`${i18n({ id: 'login.username', defaultMessage: '用户名' })}:kdcloud or guest`}
               defaultValue="kdcloud"
               allowClear
             />
           </Form.Item>
-          <Form.Item
-            label={intl.formatMessage({ id: 'login.password', defaultMessage: '密码' })}
-            name="password"
-            required
-          >
+          <Form.Item label={i18n({ id: 'login.password', defaultMessage: '密码' })} name="password" required>
             <Input
               allowClear
               borderType="bordered"
-              placeholder={`${intl.formatMessage({ id: 'login.password', defaultMessage: '密码' })}:kdesign`}
+              placeholder={`${i18n({ id: 'login.password', defaultMessage: '密码' })}:kdesign`}
               defaultValue="kdesign"
               type={pwdVisible ? 'text' : 'password'}
               suffix={
@@ -93,16 +85,16 @@ export default ({ history }: IRouteComponentProps) => {
             />
           </Form.Item>
           <div className={styles.assist}>
-            <Radio>{intl.formatMessage({ id: 'login.auto', defaultMessage: '自动登录' })}</Radio>
-            <Link to="#">{intl.formatMessage({ id: 'login.forget', defaultMessage: '忘记密码' })}</Link>
+            <Radio>{i18n({ id: 'login.auto', defaultMessage: '自动登录' })}</Radio>
+            <Link to="#">{i18n({ id: 'login.forget', defaultMessage: '忘记密码' })}</Link>
           </div>
           <Button size="large" type="primary" htmlType="submit" loading={loading} style={{ width: '100%', height: 44 }}>
-            {intl.formatMessage({ id: 'login.login', defaultMessage: '登录' })}
+            {i18n({ id: 'login.login', defaultMessage: '登录' })}
           </Button>
         </Form>
         <Space className={styles.footer} split={<i className={styles.split} />}>
-          <Link to="#">{intl.formatMessage({ id: 'login.agreement', defaultMessage: '服务协议' })}</Link>
-          <Link to="#">{intl.formatMessage({ id: 'login.privacy', defaultMessage: '隐私政策' })}</Link>
+          <Link to="#">{i18n({ id: 'login.agreement', defaultMessage: '服务协议' })}</Link>
+          <Link to="#">{i18n({ id: 'login.privacy', defaultMessage: '隐私政策' })}</Link>
         </Space>
       </div>
     </div>

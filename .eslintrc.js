@@ -33,6 +33,7 @@ module.exports = {
     'react/jsx-wrap-multilines': 0,
     'react/no-array-index-key': 0,
     'react/require-default-props': 0,
+    'react/jsx-one-expression-per-line': 0,
     'jsx-a11y/alt-text': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,

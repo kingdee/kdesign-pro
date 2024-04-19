@@ -1,5 +1,9 @@
+import { useIntl } from 'umi'
 import Exception from './exception'
 
 export default () => {
-  return <Exception status="404" message="抱歉，您访问的页面不存在。" />
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
+  return <Exception status="404" message={i18n('404')} />
 }

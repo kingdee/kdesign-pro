@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Space, Button, Collapse, Row, Col, Input, Switch, Radio, Form, Table } from '@kdcloudjs/kdesign'
 import classnames from 'classnames'
+import { useIntl } from 'umi'
 import globalStyles from '@/layouts/global.less'
 import detailStyles from '../index.less'
 import { getDetailBasic } from '@/services/detail'
 
-const customerColumns = [
-  { code: 'index', lock: true, width: 80, name: '#', render: (a: any, b: any, rowIndex: number) => rowIndex + 1 },
-  { code: 'building', width: 200, name: '楼栋' },
-  { code: 'unit', width: 200, name: '单元' },
-  { code: 'customer', width: 200, name: '房间客户' },
-  { code: 'type', width: 200, name: '客户类型' },
-  { code: 'date', width: 200, name: '迁入日期' },
-]
-
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
   const [form] = Form.useForm()
   const [basicInfo, setBasicInfo] = useState<Record<string, any>>({})
   const [reductionRule, setReductionRule] = useState<Record<string, any>>({})
@@ -22,6 +16,15 @@ export default () => {
   const [customerSelected, setCustomerSelected] = useState<Array<string>>([])
   const [costData, setCostData] = useState<Array<any>>([])
   const [customerData, setCustomerData] = useState<Array<any>>([])
+
+  const customerColumns = [
+    { code: 'index', lock: true, width: 80, name: '#', render: (a: any, b: any, rowIndex: number) => rowIndex + 1 },
+    { code: 'building', width: 200, name: i18n('detail.customer2') },
+    { code: 'unit', width: 200, name: i18n('detail.customer3') },
+    { code: 'customer', width: 200, name: i18n('detail.customer4') },
+    { code: 'type', width: 200, name: i18n('detail.customer5') },
+    { code: 'date', width: 200, name: i18n('detail.customer6') },
+  ]
 
   const costSelection = {
     type: 'checkbox',
@@ -73,19 +76,19 @@ export default () => {
 
   const costColumns = [
     { code: 'index', lock: true, width: 80, name: '#', render: (a: any, b: any, rowIndex: number) => rowIndex + 1 },
-    { code: 'cost', width: 200, name: '收费项目' },
+    { code: 'cost', width: 200, name: i18n('detail.rule2') },
     {
       code: 'sort',
       width: 200,
-      name: '减免排序',
+      name: i18n('detail.rule3'),
       render: (value: any, record: Record<string, any>, rowIndex: number) => (
         <Space className={detailStyles.extra} size={16}>
           <button type="button" onClick={handleMoveUp.bind(null, record, rowIndex)}>
-            上移
+            {i18n('detail.rule4')}
           </button>
           <i className={detailStyles.split} />
           <button type="button" onClick={handleMoveDown.bind(null, record, rowIndex)}>
-            下移
+            {i18n('detail.rule5')}
           </button>
         </Space>
       ),
@@ -96,21 +99,21 @@ export default () => {
     <Form className={detailStyles.form} form={form} labelWidth={120}>
       <Space className={detailStyles.operation} size={12}>
         <Button type="primary" htmlType="submit">
-          保存
+          {i18n('save')}
         </Button>
-        <Button type="primary">退出</Button>
+        <Button type="primary">{i18n('quit')}</Button>
       </Space>
       <Collapse
         className={classnames(globalStyles.container, detailStyles.collapse)}
         defaultActiveKey={['info', 'rule', 'cost', 'customer']}
       >
-        <Collapse.Panel header="基本信息" panelKey="info">
+        <Collapse.Panel header={i18n('basic')} panelKey="info">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               {basicInfo.project && (
                 <Form.Item
                   required
-                  label="项目"
+                  label={i18n('detail.basic2')}
                   name="project"
                   defaultValue={basicInfo.project}
                   validateTrigger="onBlur"
@@ -121,7 +124,13 @@ export default () => {
             </Col>
             <Col span={6}>
               {basicInfo.code && (
-                <Form.Item required label="任务编码" name="code" defaultValue={basicInfo.code} validateTrigger="onBlur">
+                <Form.Item
+                  required
+                  label={i18n('detail.basic3')}
+                  name="code"
+                  defaultValue={basicInfo.code}
+                  validateTrigger="onBlur"
+                >
                   <Input />
                 </Form.Item>
               )}
@@ -130,7 +139,7 @@ export default () => {
               {basicInfo.settlement && (
                 <Form.Item
                   required
-                  label="结算方式"
+                  label={i18n('detail.basic4')}
                   name="settlement"
                   defaultValue={basicInfo.settlement}
                   validateTrigger="onBlur"
@@ -141,7 +150,7 @@ export default () => {
             </Col>
             <Col span={6}>
               {basicInfo.allowance && (
-                <Form.Item label="是否自动执行赠送减免" name="allowance" validateTrigger="onBlur">
+                <Form.Item label={i18n('detail.basic5')} name="allowance" validateTrigger="onBlur">
                   <Switch defaultChecked={basicInfo.allowance} />
                 </Form.Item>
               )}
@@ -150,25 +159,25 @@ export default () => {
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               {basicInfo.deduction && (
-                <Form.Item label="是否按月抵扣" name="deduction" validateTrigger="onBlur">
+                <Form.Item label={i18n('detail.basic6')} name="deduction" validateTrigger="onBlur">
                   <Switch defaultChecked={basicInfo.deduction} />
                 </Form.Item>
               )}
             </Col>
             <Col span={18}>
-              <Form.Item label="备注" name="memo" defaultValue={basicInfo.memo} validateTrigger="onBlur">
-                <Input placeholder="无" />
+              <Form.Item label={i18n('remark')} name="memo" defaultValue={basicInfo.memo} validateTrigger="onBlur">
+                <Input placeholder={i18n('empty')} />
               </Form.Item>
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header="减免规则" panelKey="rule">
+        <Collapse.Panel header={i18n('detail.reduce1')} panelKey="rule">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               {reductionRule.method && (
                 <Form.Item
                   required
-                  label="减免方式"
+                  label={i18n('detail.reduce2')}
                   name="method"
                   defaultValue={reductionRule.method}
                   validateTrigger="onBlur"
@@ -181,7 +190,7 @@ export default () => {
               {reductionRule.start && (
                 <Form.Item
                   required
-                  label="应收开始期间"
+                  label={i18n('detail.reduce3')}
                   name="start"
                   defaultValue={reductionRule.start}
                   validateTrigger="onBlur"
@@ -194,7 +203,7 @@ export default () => {
               {reductionRule.end && (
                 <Form.Item
                   required
-                  label="应收结束期间"
+                  label={i18n('detail.reduce4')}
                   name="end"
                   defaultValue={reductionRule.end}
                   validateTrigger="onBlur"
@@ -207,7 +216,7 @@ export default () => {
               {reductionRule['per-amount'] && (
                 <Form.Item
                   required
-                  label="每期减免金额"
+                  label={i18n('detail.reduce5')}
                   name="per-amount"
                   defaultValue={reductionRule['per-amount']}
                   validateTrigger="onBlur"
@@ -219,16 +228,16 @@ export default () => {
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
-              <Form.Item label="减免金额" name="amount" validateTrigger="onBlur">
+              <Form.Item label={i18n('detail.reduce8')} name="amount" validateTrigger="onBlur">
                 <Radio.Group defaultValue={reductionRule.amount}>
-                  <Radio value={1}>应收</Radio>
-                  <Radio value={2}>违约金</Radio>
+                  <Radio value={1}>{i18n('detail.reduce6')}</Radio>
+                  <Radio value={2}>{i18n('detail.reduce7')}</Radio>
                 </Radio.Group>
               </Form.Item>
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header="减免费项" panelKey="cost">
+        <Collapse.Panel header={i18n('detail.rule1')} panelKey="cost">
           {costData && (
             <Table
               style={{ maxHeight: 800, overflow: 'auto', margin: '0 30px 0 25px' }}
@@ -240,7 +249,7 @@ export default () => {
             />
           )}
         </Collapse.Panel>
-        <Collapse.Panel header="减免客户" panelKey="customer">
+        <Collapse.Panel header={i18n('detail.customer1')} panelKey="customer">
           {customerData && (
             <Table
               style={{ maxHeight: 800, overflow: 'auto', margin: '0 30px 0 25px' }}

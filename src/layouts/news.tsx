@@ -8,7 +8,7 @@ import { getUserTasks, getUserMessages } from '@/services/user'
 import styles from './news.less'
 
 export default function News() {
-  const intl = useIntl()
+  const { formatMessage: i18n } = useIntl()
   const [exist, setExist] = useState(false)
   const [visible, setVisible] = useState(false)
   const handleClose = () => setVisible(false)
@@ -50,7 +50,7 @@ export default function News() {
       <div className={styles.mask} onClick={handleClose} />
       <div className={styles.bar}>
         <Tabs>
-          <Tabs.TabPane key="task" tab={intl.formatMessage({ id: 'header.news.task', defaultMessage: '任务' })}>
+          <Tabs.TabPane key="task" tab={i18n({ id: 'header.news.task', defaultMessage: '任务' })}>
             {tasks.length > 0 ? (
               <ul className={styles.list}>
                 {tasks.map(({ title, time, code, status }) => (
@@ -61,7 +61,7 @@ export default function News() {
                     </div>
                     <div className={styles.content}>
                       <span className={styles.code}>
-                        {`${intl.formatMessage({ id: 'header.news.code', defaultMessage: '单据编号' })}：${code}`}
+                        {`${i18n({ id: 'header.news.code', defaultMessage: '单据编号' })}：${code}`}
                       </span>
                       <span className={styles.status}>{status}</span>
                     </div>
@@ -72,7 +72,7 @@ export default function News() {
               <Empty className={styles.empty} />
             )}
           </Tabs.TabPane>
-          <Tabs.TabPane key="message" tab={intl.formatMessage({ id: 'header.news.message', defaultMessage: '消息' })}>
+          <Tabs.TabPane key="message" tab={i18n({ id: 'header.news.message', defaultMessage: '消息' })}>
             {messages.length > 0 ? (
               <ul className={styles.list}>
                 {messages.map(({ title, time, message, code }) => (
@@ -93,7 +93,7 @@ export default function News() {
           </Tabs.TabPane>
         </Tabs>
         <Button type="text" className={styles.more}>
-          {intl.formatMessage({ id: 'header.news.more', defaultMessage: '更多' })}
+          {i18n({ id: 'header.news.more', defaultMessage: '更多' })}
         </Button>
       </div>
     </div>
