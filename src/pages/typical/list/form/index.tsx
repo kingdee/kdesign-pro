@@ -74,13 +74,6 @@ export default () => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setViewType] = useState('list')
-
-  const handleChangeView = (type: string) => {
-    setViewType(type)
-  }
-
   const handleSwitchDetail = (key: string, e: any) => {
     e.stopPropagation()
     const isOpened = openKeys.find((item) => item === key)
@@ -192,12 +185,7 @@ export default () => {
           </Button.Dropdown>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
-              <Icon
-                key={type}
-                type={icon}
-                className={classnames({ active: type === 'list' })}
-                onClick={handleChangeView.bind(null, type)}
-              />
+              <Icon key={type} type={icon} className={classnames({ active: type === 'list' })} />
             ))}
           </Space>
         </Space>

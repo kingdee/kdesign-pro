@@ -5,7 +5,7 @@ import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
 import SettingsContext from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
 import { getUserInfo, logout } from '@/services/user'
-import { mapLocal } from '@/locales'
+import mapLocal from '@/locales'
 
 import styles from './user.less'
 

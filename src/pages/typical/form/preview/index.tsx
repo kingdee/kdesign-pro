@@ -338,15 +338,18 @@ export default () => {
   const handleMove = (type: string) => {
     const copyData = [...data]
     const indx = copyData.findIndex((item) => item.id === article)
+
     if (type === 'up' && indx > 0) {
-      // eslint-disable-next-line prefer-destructuring
-      copyData[indx] = copyData.splice(indx - 1, 1, copyData[indx])[0]
+      const movedItem = copyData[indx]
+      copyData[indx] = copyData[indx - 1]
+      copyData[indx - 1] = movedItem
       setData(copyData)
     }
 
     if (type === 'down' && indx < data.length - 1) {
-      // eslint-disable-next-line prefer-destructuring
-      copyData[indx] = copyData.splice(indx + 1, 1, copyData[indx])[0]
+      const movedItem = copyData[indx]
+      copyData[indx] = copyData[indx + 1]
+      copyData[indx + 1] = movedItem
       setData(copyData)
     }
   }

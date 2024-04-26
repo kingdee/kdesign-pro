@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useState, lazy, useEffect, Suspense, ReactNode } from 'react'
 import { history, useIntl, useLocation } from 'umi'
 import { Tabs, Icon } from '@kdcloudjs/kdesign'
@@ -81,17 +80,19 @@ export default ({ sideMenus }: PanesProps) => {
       activeKey={activeKey}
       onChange={handleChange}
     >
-      {panes.map(({ key, name, component }) => (
-        <Tabs.TabPane
-          {...{
-            key,
-            tab: i18n({ id: `menu${key.replace(/\//g, '.')}`, defaultMessage: name }),
-            operations: panes.length > 1 && [<Icon type="close" onClick={handleCloseTab.bind(this, key)} />],
-          }}
-        >
-          <Suspense fallback={<Loading />}>{component}</Suspense>
-        </Tabs.TabPane>
-      ))}
+      {
+        panes.map(({ key, component }) => (
+          <Tabs.TabPane
+            {...({
+              key,
+              tab: i18n({ id: `menu${key.replace(/\//g, '.')}` }),
+              operations: panes.length > 1 && [<Icon type="close" onClick={handleCloseTab.bind(this, key)} />],
+            } as any)}
+          >
+            <Suspense fallback={<Loading />}>{component}</Suspense>
+          </Tabs.TabPane>
+        )) as any
+      }
       <Tabs.TabPane specialPane="right">
         <Icon type="tips" />
         <Icon type={fullScreen ? 'close-full-screen' : 'expand'} onClick={handleSwitchFullScreen} />

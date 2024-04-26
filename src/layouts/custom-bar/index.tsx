@@ -136,7 +136,7 @@ const CustomBar = () => {
                   }}
                   onClick={updateThemeColor.bind(null, value)}
                 >
-                  <span className={styles.name}>{name}</span>
+                  <span className={styles.name}>{i18n({ id: name })}</span>
                 </li>
               ))}
             </ul>
@@ -170,19 +170,6 @@ const CustomBar = () => {
                   ))}
                 </ul>
               </li>
-              {/* <li className={classnames(styles.option, { [styles.disabled]: menu === 'off' })}> */}
-              {/*  <h4 className={styles.label}>侧边菜单栏底色</h4> */}
-              {/*  <ul className={styles.list}> */}
-              {/*    {menuThemeList.map(({ name, value }) => ( */}
-              {/*      <li key={value} onClick={() => menu !== 'off' && updateSettings({ menuTheme: value })}> */}
-              {/*        <div className={classnames(styles.piece, { [styles.active]: menuTheme === value })}> */}
-              {/*          <img src={require(`./images/menu_${value}.png`)} /> */}
-              {/*        </div> */}
-              {/*        <span>{i18n({ id: name })}</span> */}
-              {/*      </li> */}
-              {/*    ))} */}
-              {/*  </ul> */}
-              {/* </li> */}
               <li className={styles.option}>
                 <h4 className={styles.label}>{i18n({ id: 'setting.layouts.tab', defaultMessage: '页签栏' })}</h4>
                 <ul className={styles.list}>

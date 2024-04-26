@@ -72,13 +72,6 @@ export default () => {
     setExpandedKeys(eks)
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setViewType] = useState('list')
-
-  const handleChangeView = (type: string) => {
-    setViewType(type)
-  }
-
   const [rows, setRows] = useState<string[]>([])
 
   const rowSelection = {
@@ -138,12 +131,7 @@ export default () => {
           <Button type="primary">{i18n('back')}</Button>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
-              <Icon
-                key={type}
-                type={icon}
-                className={classnames({ active: type === 'list' })}
-                onClick={handleChangeView.bind(null, type)}
-              />
+              <Icon key={type} type={icon} className={classnames({ active: type === 'list' })} />
             ))}
           </Space>
         </Space>

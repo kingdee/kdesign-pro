@@ -38,7 +38,7 @@ const BaseLayout = (props: any) => {
           <Empty description={name} className={classnames(styles.empty, { [styles.active]: path === appPath })} />
         ),
       )}
-      {process.env.REACT_APP_ENV === 'pre' && <CustomBar />}
+      <CustomBar />
     </Layout>
   )
 }
