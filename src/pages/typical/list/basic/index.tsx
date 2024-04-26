@@ -107,6 +107,8 @@ export default () => {
     }
   }
 
+  const dropdownProps: any = { getPopupContainer: () => document.body }
+
   return (
     <div className={listStyles.container}>
       <div className={listStyles.panel}>
@@ -185,12 +187,7 @@ export default () => {
               {rows.length === dataSource?.length ? i18n('selectCancel') : i18n('selectAll')}
             </Button>
           </Space>
-          <Pagination
-            defaultCurrent={6}
-            total={200}
-            // @ts-ignore
-            dropdownProps={{ getPopupContainer: () => document.body }}
-          />
+          <Pagination defaultCurrent={6} total={200} dropdownProps={dropdownProps} />
         </div>
         <div className={globalStyles.tableContainer}>
           <div className={globalStyles.settings}>

@@ -322,7 +322,6 @@ export default () => {
     const curData: DataProps[] = data.filter((_item, index) => index !== article - 1)
     setData(curData)
     if (curData.length) {
-      // @ts-ignore
       setArticle(curData[0].id)
     }
   }
@@ -354,8 +353,7 @@ export default () => {
 
   const changeData = (key: string, value: string) => {
     const indx = data.findIndex((item) => item.id === article)
-    const copyData = [...data]
-    // @ts-ignore
+    const copyData: any = [...data]
     copyData[indx][key] = value
     setData(copyData)
   }
