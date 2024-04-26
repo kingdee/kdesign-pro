@@ -47,7 +47,7 @@ const TaskHandle = () => {
         </li>
         <li>
           <Form.Item required label={i18n('detail.column24')} name="decision" validateTrigger="onBlur">
-            <Select style={{ width: '100%' }}>
+            <Select style={{ width: '100%' }} defaultValue="1">
               <Option value="1">{i18n('agree')}</Option>
               <Option value="2">{i18n('disagree')}</Option>
             </Select>

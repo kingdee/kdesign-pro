@@ -32,8 +32,7 @@ export async function getInitialState(): Promise<IState> {
   }
 
   if (history.location.pathname !== '/login') {
-    const { access } = JSON.parse(sessionStorage.getItem('user') || '{}')
-    state.access = access || 'guest'
+    state.access = sessionStorage.getItem('username') || 'guest'
   }
 
   return state

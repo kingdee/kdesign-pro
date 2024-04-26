@@ -186,7 +186,6 @@ export default () => {
               originPrice,
               status,
               statusStr,
-              promotion,
             }) => (
               <li key={key} className={styles.item}>
                 <Checkbox className={styles.checkbox} checked={checked} onChange={() => handleChange(key)} />
@@ -200,11 +199,7 @@ export default () => {
                     <ul>
                       <li>{`${fields.name}：${name}`}</li>
                       <li>{`${fields.code}：${code}`}</li>
-                      <li>
-                        {`${fields.standard}：${standard}  ${
-                          promotion && <span className={styles.promotion}>促</span>
-                        }`}
-                      </li>
+                      <li>{`${fields.standard}：${standard}`}</li>
                     </ul>
                   </Col>
                   <Col span={5}>
@@ -216,8 +211,8 @@ export default () => {
                   </Col>
                   <Col span={5}>{`${fields.confirmSize}：${confirmSize}`}</Col>
                   <Col span={5}>
-                    <span className={styles.price}>{`￥${price}`}</span>
-                    <span className={styles.originPrice}>{`￥${originPrice}`}</span>
+                    <span className={styles.price}>{`${price}`}</span>
+                    <span className={styles.originPrice}>{`${originPrice}`}</span>
                   </Col>
                   <Col span={2}>
                     <Tag type="status" color={status}>

@@ -53,16 +53,16 @@ export default () => {
 
   const detailColumns = [
     { code: 'code', width: 100, name: i18n('list.form3'), align: 'left' },
-    { code: 'name', width: 100, name: i18n('list.form4'), align: 'left' },
-    { code: 'property', width: 100, name: i18n('list.form5'), align: 'left' },
+    { code: 'name', width: 200, name: i18n('list.form4'), align: 'left' },
+    { code: 'property', width: 200, name: i18n('list.form5'), align: 'left' },
     { code: 'quantity', width: 100, name: i18n('list.form6'), align: 'right' },
     { code: 'unit', width: 100, name: i18n('list.form7'), align: 'left' },
     { code: 'price', width: 100, name: i18n('list.form8'), align: 'right' },
     { code: 'sum', width: 100, name: i18n('list.form9'), align: 'right' },
     { code: 'existQuantity', width: 100, name: i18n('list.form10'), align: 'left' },
     { code: 'steamQuantity', width: 100, name: i18n('list.form11'), align: 'left' },
-    { code: 'address', width: 100, name: i18n('list.form12'), align: 'left' },
-    { code: 'memo', width: 100, name: i18n('remark'), align: 'left' },
+    { code: 'address', width: 200, name: i18n('list.form12'), align: 'left' },
+    { code: 'memo', width: 200, name: i18n('remark'), align: 'left' },
   ]
 
   const handleSelectAll = () => {
@@ -108,11 +108,11 @@ export default () => {
     },
     { code: 'time', width: 180, name: i18n('list.form15') },
     { code: 'principal', width: 100, name: i18n('list.form16') },
-    { code: 'name', width: 100, name: i18n('list.form17') },
+    { code: 'name', width: 200, name: i18n('list.form17') },
     { code: 'amount', width: 150, name: i18n('list.form18'), align: 'right' },
     {
       code: 'status',
-      width: 100,
+      width: 200,
       name: i18n('list.form19'),
       render: (text: string) => (
         <a href="true" style={{ color: '#5582F3' }} onClick={(e) => e.preventDefault()}>

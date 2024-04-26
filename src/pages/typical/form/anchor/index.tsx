@@ -36,14 +36,14 @@ export default () => {
 
   const customerColumns = [
     { code: 'index', lock: true, width: 60, name: '#' },
-    { code: 'way', width: 100, name: i18n('form.anchor1') },
+    { code: 'way', width: 200, name: i18n('form.anchor1') },
     {
       code: 'checked',
       width: 100,
       name: i18n('form.anchor2'),
       render: (value: boolean) => <Switch defaultChecked={value} />,
     },
-    { code: 'organization', width: 200, name: i18n('org') },
+    { code: 'organization', width: 400, name: i18n('org') },
     { code: 'id', width: 200, name: `${i18n('form.anchor3')}ID` },
     { code: 'memo', width: 200, name: i18n('remark') },
   ]

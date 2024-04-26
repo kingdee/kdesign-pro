@@ -696,7 +696,6 @@ export default {
   'form.vertical13': '条件',
   'form.vertical14': '薪资核算组',
   'form.vertical15': '并且',
-  'form.vertical16': '而且',
   'form.vertical17': '或者',
   'form.vertical18': '行政组织',
   'form.vertical19': '添加条件',

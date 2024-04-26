@@ -14,7 +14,7 @@ const OperationRecord = () => {
 
   const option678 = [i18n('form.vertical6'), i18n('form.vertical7'), i18n('form.vertical8')]
 
-  const option151617 = [i18n('form.vertical15'), i18n('form.vertical16'), i18n('form.vertical17')]
+  const option151617 = [i18n('form.vertical15'), i18n('form.vertical17')]
 
   return (
     <>
@@ -26,7 +26,12 @@ const OperationRecord = () => {
               <Input defaultValue={i18n('form.vertical5')} borderType="bordered" suffix={<Icon type="search" />} />
             </Col>
             <Col span={5}>
-              <Select borderType="bordered" style={{ width: '100%' }} size="small">
+              <Select
+                placeholder={i18n('form.vertical28')}
+                borderType="bordered"
+                style={{ width: '100%' }}
+                size="small"
+              >
                 {option678.map((value) => (
                   <Select.Option key={value} value={value}>
                     {value}
@@ -386,21 +391,21 @@ const PaymentSubject = () => {
         </Col>
         <Col span={6}>
           <Form.Item label={i18n('form.vertical32')} name="email" validateTrigger="onBlur">
-            <Select style={{ width: '100%' }}>
+            <Select style={{ width: '100%' }} defaultValue="default">
               <Option value="default">XXX@YYYY.com</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item label={i18n('form.vertical33')} name="certification" validateTrigger="onBlur">
-            <Select style={{ width: '100%' }}>
+            <Select style={{ width: '100%' }} defaultValue="default">
               <Option value="default">XXXXX</Option>
             </Select>
           </Form.Item>
         </Col>
         <Col span={6}>
           <Form.Item label={i18n('form.vertical34')} name="type" validateTrigger="onBlur">
-            <Select style={{ width: '100%' }}>
+            <Select style={{ width: '100%' }} defaultValue="default">
               <Option value="default">XXXXX</Option>
             </Select>
           </Form.Item>
@@ -471,7 +476,7 @@ const PersonGroup = () => {
         </Col>
         <Col span={6}>
           <Form.Item label={i18n('form.vertical46')} name="job" required validateTrigger="onBlur">
-            <Select placeholder={i18n('form.vertical28')} style={{ width: '100%' }}>
+            <Select placeholder={i18n('form.vertical28')} style={{ width: '100%' }} defaultValue="default">
               <Option value="default">{i18n('form.vertical47')}</Option>
             </Select>
           </Form.Item>
@@ -488,7 +493,7 @@ const PersonGroup = () => {
         </Col>
         <Col span={6}>
           <Form.Item label={i18n('form.vertical50')} name="email" validateTrigger="onBlur">
-            <Select style={{ width: '100%' }}>
+            <Select placeholder={i18n('form.vertical28')} style={{ width: '100%' }} defaultValue="default">
               <Option value="default">XXX@YYYY.com</Option>
             </Select>
           </Form.Item>

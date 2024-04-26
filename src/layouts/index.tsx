@@ -13,6 +13,7 @@ import CustomBar from '@/layouts/custom-bar'
 import routeConfig from '../../config/routes'
 
 import styles from './global.less'
+import { getUserInfo } from '@/services/user'
 
 export const menus = getMenus(originMenus)
 export const route = routeConfig[0].routes[2]
@@ -24,7 +25,7 @@ const Layouts = (props: any) => {
   const access = useAccess()
   const [appPath, setAppPath] = useState('/typical')
 
-  if (!JSON.parse(sessionStorage.getItem('user') as any)) {
+  if (!sessionStorage.getItem('username')) {
     return <Redirect to="/login" />
   }
 

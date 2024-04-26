@@ -4,7 +4,8 @@ import { Icon, Space, Dropdown } from '@kdcloudjs/kdesign'
 import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
 import SettingsContext from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
-import { logout } from '@/services/user'
+import { getUserInfo, logout } from '@/services/user'
+import { mapLocal } from '@/locales'
 
 import styles from './user.less'
 
@@ -15,14 +16,10 @@ type IThemeColor = {
   value: string
 }
 
-const mapLocal: Record<string, string> = {
-  'zh-CN': '简体中文',
-  'en-US': 'English',
-}
-
 export default function User() {
   const { formatMessage: i18n } = useIntl()
   const avatarRef = useRef<any>()
+  const [user, setUser] = useState<any>({})
 
   const { settings, updateSettings } = useContext(SettingsContext)
 
@@ -35,9 +32,14 @@ export default function User() {
 
   const [theme, setTheme] = useState(defaultTheme)
 
-  const { avatar, name, department, slogan, data_center, business_unit } = JSON.parse(
-    sessionStorage.getItem('user') as any,
-  )
+  const { avatar, name, department, slogan, data_center, business_unit } = user
+
+  useEffect(() => {
+    getUserInfo().then((res) => {
+      sessionStorage.setItem('user', JSON.stringify(res.data))
+      setUser(res.data)
+    })
+  }, [])
 
   const Locator = (
     <div className={styles.userHandle}>
@@ -76,7 +78,8 @@ export default function User() {
 
   const switchLocale = async (locale: string) => {
     setLocale(locale, false)
-    await handleLogout()
+    sessionStorage.removeItem('user')
+    window.location.reload()
   }
 
   const localesMenu = (
@@ -143,7 +146,7 @@ export default function User() {
             >
               <span className={`${styles.value} ${styles.color}`} tabIndex={0}>
                 <i className={styles.colorSquare} style={{ backgroundColor: theme.value }} />
-                {theme.name}
+                {i18n({ id: theme.name })}
                 <Icon className={styles.icon} type="arrow-down" />
               </span>
             </Dropdown>

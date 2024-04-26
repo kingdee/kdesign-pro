@@ -44,10 +44,10 @@ export default () => {
     { code: 'subject', width: 200, name: i18n('list.basic5') },
     { code: 'reimburse', width: 100, name: i18n('list.basic6') },
     { code: 'vouch', width: 100, name: i18n('list.basic7') },
-    { code: 'cash', width: 100, name: i18n('list.basic8') },
+    { code: 'cash', width: 150, name: i18n('list.basic8') },
     {
       code: 'current',
-      width: 200,
+      width: 250,
       name: i18n('list.basic9'),
       render: (text: string) => (
         <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
@@ -57,7 +57,7 @@ export default () => {
     },
     {
       code: 'status',
-      width: 70,
+      width: 150,
       name: i18n('list.basic10'),
       render: (text: string) => (
         <span
@@ -68,7 +68,7 @@ export default () => {
         </span>
       ),
     },
-    { code: 'department', width: 200, name: i18n('list.basic12') },
+    { code: 'department', width: 220, name: i18n('list.basic12') },
   ]
 
   async function initListBasic() {

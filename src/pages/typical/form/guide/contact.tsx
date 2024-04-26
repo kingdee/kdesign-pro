@@ -155,7 +155,7 @@ export default function Contact() {
               <span>
                 {i18n('form.guid.contact28')}
                 <Icon type="tips" />
-                <strong>￥0.00</strong>
+                <strong>0.00</strong>
               </span>
             </h2>
             <div className={styles.list}>

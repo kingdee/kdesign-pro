@@ -63,7 +63,7 @@ export default () => {
   ]
 
   return (
-    <div className={classnames(globalStyles.container, styles.detailVertical)}>
+    <div className={classnames(globalStyles.container, styles.detailVertical, 'detail-vertical')}>
       <div className={styles.card}>
         <img src={require('@/assets/images/VIP.png')} alt="" />
         <ul className={styles.attr}>

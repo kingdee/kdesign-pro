@@ -20,9 +20,9 @@ export default () => {
 
   const columns = [
     { code: 'index', lock: true, width: 60, name: i18n('report.list1'), align: 'center' },
-    { code: 'organization', width: 160, name: i18n('report.list2') },
+    { code: 'organization', width: 210, name: i18n('report.list2') },
     { code: 'summary', width: 80, name: i18n('report.list3') },
-    { code: 'risk_name', width: 160, name: i18n('report.list4') },
+    { code: 'risk_name', width: 200, name: i18n('report.list4') },
     { code: 'risk_code', width: 160, name: i18n('report.list5') },
     { code: 'risk_level', width: 96, name: i18n('report.list6') },
     { code: 'start_time', width: 160, name: i18n('report.list7') },

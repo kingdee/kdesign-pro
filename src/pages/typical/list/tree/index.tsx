@@ -33,7 +33,7 @@ export default () => {
     { code: 'index', lock: true, width: 60, name: '#', align: 'center' },
     {
       code: 'number',
-      width: 100,
+      width: 150,
       name: i18n('list.tree3'),
       render: (text: string) => (
         <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
@@ -41,8 +41,8 @@ export default () => {
         </a>
       ),
     },
-    { code: 'name', width: 200, name: i18n('list.tree1') },
-    { code: 'type', width: 100, name: i18n('list.tree4'), align: 'center' },
+    { code: 'name', width: 400, name: i18n('list.tree1') },
+    { code: 'type', width: 200, name: i18n('list.tree4'), align: 'center' },
     { code: 'flow', width: 100, name: i18n('list.tree5'), align: 'center' },
     {
       code: 'business',

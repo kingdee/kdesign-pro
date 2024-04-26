@@ -26,11 +26,11 @@ export default () => {
       const { status, data } = await login(values)
       setLoading(false)
       if (status === 'success') {
-        sessionStorage.setItem('user', JSON.stringify(data))
-        Message.success(i18n({ id: 'login.success', defaultMessage: `${data?.access || ''}登录成功！` }))
+        sessionStorage.setItem('username', data)
+        Message.success(i18n({ id: 'login.success', defaultMessage: `${data} 登录成功！` }))
         await setInitialState((s) => ({
           ...s,
-          access: data?.access || 'guest',
+          access: data || 'guest',
         }))
         history.push('/typical/workbench')
       } else {
