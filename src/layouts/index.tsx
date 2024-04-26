@@ -7,13 +7,11 @@ import defaultSettings from '../../config/settings'
 import { SettingsContextProvider } from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
 import BaseLayout from '@/layouts/baseLayout'
-import routeConfig from '../../config/routes'
 import { getMenus } from '../../config/tools'
 import originMenus from '../../config/menus'
 
 echarts.registerTheme('defaultTheme', defaultTheme)
 
-export const route = routeConfig[0].routes[2]
 export const menus = getMenus(originMenus)
 
 export default ({ children }: any) => {

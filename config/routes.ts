@@ -1,6 +1,8 @@
 import menus from './menus'
 import { getRoutes } from './tools'
 
+export const baseRoutes = [...getRoutes(menus)]
+
 export default [
   {
     path: '/',
@@ -17,7 +19,7 @@ export default [
       {
         path: '/',
         component: '@/pages',
-        routes: [...getRoutes(menus)],
+        routes: baseRoutes,
       },
     ],
   },

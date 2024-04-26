@@ -2,7 +2,7 @@ import { history, RequestConfig } from 'umi'
 import { Message } from '@kdcloudjs/kdesign'
 import Loading from '@/loading'
 import settings from '../config/settings'
-import { route } from '@/layouts'
+import { baseRoutes } from '../config/routes'
 import '@kdcloudjs/kdesign/dist/kdesign.css'
 import 'normalize.css'
 
@@ -46,7 +46,7 @@ export async function getInitialState(): Promise<IState> {
       history.push('/login')
     }
 
-    const curRoute = route.routes?.find(({ path }) => path === pathname)
+    const curRoute = baseRoutes.find(({ path }) => path === pathname)
 
     if (!curRoute && pathname !== '/') {
       Message.error(`页面 ${pathname || ''} 未找到!`)
