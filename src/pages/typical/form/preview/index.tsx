@@ -151,6 +151,8 @@ const ArticleForm = (props: any) => {
   )
 }
 
+let editor: any = null
+
 export default () => {
   const { formatMessage } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
@@ -164,6 +166,27 @@ export default () => {
     const d = await getFormPreview()
     const { previewData } = d
     setData(previewData)
+
+    if (!editor) {
+      editor = new E('#wang-editor')
+      editor.config.menus = [
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'justify',
+      ]
+      editor.config.lang = 'self'
+      editor.config.languages.self = editorLang
+      editor.i18next = i18next
+      editor.create()
+    }
   }
 
   const editorLang = {
@@ -295,26 +318,9 @@ export default () => {
 
   useEffect(() => {
     initData()
-    const editor: any = new E('#wang-editor')
-    editor.config.menus = [
-      'bold',
-      'fontSize',
-      'fontName',
-      'italic',
-      'underline',
-      'strikeThrough',
-      'indent',
-      'lineHeight',
-      'foreColor',
-      'backColor',
-      'justify',
-    ]
-    editor.config.lang = 'self'
-    editor.config.languages.self = editorLang
-    editor.i18next = i18next
-    editor.create()
+
     return () => {
-      editor.destroy()
+      editor && editor.destroy()
     }
   }, [])
 
