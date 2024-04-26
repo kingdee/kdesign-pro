@@ -74,13 +74,6 @@ export default () => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setViewType] = useState('list')
-
-  const handleChangeView = (type: string) => {
-    setViewType(type)
-  }
-
   const handleSwitchDetail = (key: string, e: any) => {
     e.stopPropagation()
     const isOpened = openKeys.find((item) => item === key)
@@ -156,6 +149,8 @@ export default () => {
     },
   }
 
+  const dropdownProps: any = { getPopupContainer: () => document.body }
+
   return (
     <div className={listStyles.container}>
       <div className={listStyles.panel}>
@@ -190,12 +185,7 @@ export default () => {
           </Button.Dropdown>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
-              <Icon
-                key={type}
-                type={icon}
-                className={classnames({ active: type === 'list' })}
-                onClick={handleChangeView.bind(null, type)}
-              />
+              <Icon key={type} type={icon} className={classnames({ active: type === 'list' })} />
             ))}
           </Space>
         </Space>
@@ -213,12 +203,7 @@ export default () => {
               {rows.length === dataSource?.length ? i18n('selectCancel') : i18n('selectAll')}
             </Button>
           </Space>
-          <Pagination
-            defaultCurrent={6}
-            total={200}
-            // @ts-ignore
-            dropdownProps={{ getPopupContainer: () => document.body }}
-          />
+          <Pagination defaultCurrent={6} total={200} dropdownProps={dropdownProps} />
         </div>
         <div className={globalStyles.tableContainer}>
           <div className={globalStyles.settings}>

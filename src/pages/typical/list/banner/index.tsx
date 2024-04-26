@@ -109,6 +109,8 @@ export default () => {
 
   const selectedItems = data.filter((item) => item.checked)
 
+  const dropdownProps: any = { getPopupContainer: () => document.body }
+
   return (
     <div className={listStyles.container}>
       <div className={listStyles.panel}>
@@ -162,12 +164,7 @@ export default () => {
               {selectedItems.length === data?.length ? i18n('selectCancel') : i18n('selectAll')}
             </Button>
           </Space>
-          <Pagination
-            defaultCurrent={1}
-            total={data.length}
-            // @ts-ignore
-            dropdownProps={{ getPopupContainer: () => document.body }}
-          />
+          <Pagination defaultCurrent={1} total={data.length} dropdownProps={dropdownProps} />
         </div>
         <ul className={styles.cardList}>
           {data.map(

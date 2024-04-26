@@ -1,10 +1,9 @@
-import { Button, Col, Collapse, Form, Icon, Input, Layout, Radio, Row, Space, Upload } from '@kdcloudjs/kdesign'
+import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
-import i18next from 'i18next'
-import { useEffect, useState } from 'react'
-import { useIntl } from 'umi'
+import { Space, Form, Button, Icon, Collapse, Row, Col, Input, Layout, Radio, Upload } from '@kdcloudjs/kdesign'
 import E from 'wangeditor'
-
+import i18next from 'i18next'
+import { useIntl } from 'umi'
 import { getFormPreview } from '@/services/form'
 
 import formStyles from '../index.less'
@@ -152,6 +151,8 @@ const ArticleForm = (props: any) => {
   )
 }
 
+let editor: any = null
+
 export default () => {
   const { formatMessage } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
@@ -165,6 +166,27 @@ export default () => {
     const d = await getFormPreview()
     const { previewData } = d
     setData(previewData)
+
+    if (!editor) {
+      editor = new E('#wang-editor')
+      editor.config.menus = [
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'justify',
+      ]
+      editor.config.lang = 'self'
+      editor.config.languages.self = editorLang
+      editor.i18next = i18next
+      editor.create()
+    }
   }
 
   const editorLang = {
@@ -296,26 +318,9 @@ export default () => {
 
   useEffect(() => {
     initData()
-    const editor: any = new E('#wang-editor')
-    editor.config.menus = [
-      'bold',
-      'fontSize',
-      'fontName',
-      'italic',
-      'underline',
-      'strikeThrough',
-      'indent',
-      'lineHeight',
-      'foreColor',
-      'backColor',
-      'justify',
-    ]
-    editor.config.lang = 'self'
-    editor.config.languages.self = editorLang
-    editor.i18next = i18next
-    editor.create()
+
     return () => {
-      editor.destroy()
+      editor && editor.destroy()
     }
   }, [])
 
@@ -323,7 +328,6 @@ export default () => {
     const curData: DataProps[] = data.filter((_item, index) => index !== article - 1)
     setData(curData)
     if (curData.length) {
-      // @ts-ignore
       setArticle(curData[0].id)
     }
   }
@@ -340,23 +344,25 @@ export default () => {
   const handleMove = (type: string) => {
     const copyData = [...data]
     const indx = copyData.findIndex((item) => item.id === article)
+
     if (type === 'up' && indx > 0) {
-      // eslint-disable-next-line prefer-destructuring
-      copyData[indx] = copyData.splice(indx - 1, 1, copyData[indx])[0]
+      const movedItem = copyData[indx]
+      copyData[indx] = copyData[indx - 1]
+      copyData[indx - 1] = movedItem
       setData(copyData)
     }
 
     if (type === 'down' && indx < data.length - 1) {
-      // eslint-disable-next-line prefer-destructuring
-      copyData[indx] = copyData.splice(indx + 1, 1, copyData[indx])[0]
+      const movedItem = copyData[indx]
+      copyData[indx] = copyData[indx + 1]
+      copyData[indx + 1] = movedItem
       setData(copyData)
     }
   }
 
   const changeData = (key: string, value: string) => {
     const indx = data.findIndex((item) => item.id === article)
-    const copyData = [...data]
-    // @ts-ignore
+    const copyData: any = [...data]
     copyData[indx][key] = value
     setData(copyData)
   }
