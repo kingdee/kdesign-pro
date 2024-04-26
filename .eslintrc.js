@@ -70,7 +70,7 @@ module.exports = {
           },
         ],
         pathGroupsExcludedImportTypes: [],
-        'newlines-between': 'always',
+        'newlines-between': 'never',
         alphabetize: {
           order: 'asc',
           caseInsensitive: true,
