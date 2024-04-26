@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: {browser: true, es6: true, jest: true},
-  extends: ['airbnb', 'prettier', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint', 'plugin:import/typescript'],
+  extends: ['airbnb', 'prettier', 'plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint'],
   plugins: ['prettier', 'react-hooks', '@typescript-eslint'],
   rules: {
     camelcase: 0,
@@ -20,6 +20,7 @@ module.exports = {
     'react/jsx-wrap-multilines': 0,
     'react/no-array-index-key': 0,
     'react/require-default-props': 0,
+    'react/jsx-one-expression-per-line': 0,
     'jsx-a11y/alt-text': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
@@ -38,17 +39,6 @@ module.exports = {
   settings: {
     'import/parsers': {'@typescript-eslint/parser': ['.ts', '.tsx']},
     'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
-    'import/order': [0, {
-      groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
-      pathGroups: [
-        {pattern: 'react*', group: 'builtin', position: 'before'},
-        {pattern: '@/**', group: 'external', position: 'after'}
-      ],
-      pathGroupsExcludedImportTypes: [],
-      'newlines-between': 'always',
-      alphabetize: {order: 'asc', caseInsensitive: true},
-      warnOnUnassignedImports: false,
-    }],
   },
   parserOptions: {
     parser: '@typescript-eslint/parser', ecmaFeatures: {jsx: true},

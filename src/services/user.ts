@@ -14,8 +14,8 @@ export async function logout(options?: { [key: string]: any }) {
   })
 }
 
-export async function getAccess() {
-  return request('/mock/access', {
+export async function getUserInfo() {
+  return request('/mock/user/info', {
     method: 'GET',
   })
 }

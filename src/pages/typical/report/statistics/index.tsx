@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import ReactECharts from 'echarts-for-react'
 import { Space, Button, Icon, Select, Row, Col, Input, RangePicker, Table } from '@kdcloudjs/kdesign'
+import { useIntl } from 'umi'
 import { getReportStatisticsList, getReportStatisticsEcharts } from '@/services/report'
 
 import reportStyles from '../index.less'
@@ -8,229 +9,244 @@ import styles from './index.less'
 
 const { Option } = Select
 
-const customerColumns = [
-  { code: 'type', width: 250, name: '资产' },
-  { code: 'time', width: 100, name: '行次' },
-  {
-    code: 'right',
-    width: 200,
-    title: (
-      <div>
-        <span style={{ color: 'red' }}>*</span>
-        右标题
-      </div>
-    ),
-  },
-  {
-    code: 'right',
-    width: 200,
-    title: (
-      <div>
-        <span style={{ color: 'red' }}>*</span>
-        右标题
-      </div>
-    ),
-  },
-  { code: 'type', width: 250, name: '负债及所有者权益' },
-  { code: 'time', width: 100, name: '行次' },
-  {
-    code: 'right',
-    width: 200,
-    title: (
-      <div>
-        <span style={{ color: 'red' }}>*</span>
-        右标题
-      </div>
-    ),
-  },
-]
-
-const echartsData = {
-  o1: {
-    grid: { left: 0, top: 40, right: 0, bottom: 0 },
-    legend: { icon: 'circle', left: 0 }, // 是否显示图例， 非必选
-    tooltip: {
-      trigger: 'item',
-    },
-    title: {
-      text: '25%',
-      x: 'center',
-      y: 'center',
-      textStyle: {
-        fontSize: 20,
-        fontWeight: 'normal',
-      },
-    },
-    series: [
-      {
-        name: '资产净利率',
-        type: 'pie',
-        radius: ['40%', '60%'],
-        avoidLabelOverlap: false,
-        label: {
-          show: false,
-          position: 'center',
-        },
-        labelLine: {
-          show: false,
-        },
-        data: [
-          { value: 1048, name: '净利润' },
-          { value: 735, name: '资产总量' },
-        ],
-      },
-    ],
-  },
-  o2: {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-      },
-    },
-    legend: {
-      icon: 'rect',
-      left: 0,
-    },
-    grid: {
-      left: 50,
-    },
-    xAxis: {
-      type: 'value',
-      name: 'Days',
-      axisLabel: {
-        formatter: '{value}',
-      },
-    },
-    yAxis: {
-      type: 'category',
-      inverse: true,
-      data: ['星期一', '星期二', '星期三', '星期四'],
-    },
-    series: [
-      {
-        name: '本月：0万',
-        type: 'bar',
-        label: { show: true },
-        data: [0, 0, 0, 0],
-      },
-      {
-        name: '上月：0万',
-        type: 'bar',
-        label: { show: true },
-        data: [0, 0, 0, 0],
-      },
-    ],
-  },
-  o3: {
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'shadow',
-      },
-    },
-    legend: {
-      icon: 'rect',
-      left: 0,
-    },
-    grid: {
-      left: 50,
-    },
-    xAxis: {
-      type: 'value',
-      name: 'Days',
-      axisLabel: {
-        formatter: '{value}',
-      },
-    },
-    yAxis: {
-      type: 'category',
-      inverse: true,
-      data: ['星期一', '星期二', '星期三', '星期四'],
-    },
-    series: [
-      {
-        name: '类型三：0万',
-        type: 'bar',
-        label: { show: true },
-        data: [0, 0, 0, 0],
-      },
-    ],
-  },
-  o4: {
-    grid: { left: 0, top: 40, right: 0, bottom: 0 },
-    legend: { icon: 'rect', left: 0 }, // 是否显示图例， 非必选
-    xAxis: {
-      type: 'category',
-      data: ['Q1', 'Q2', 'Q3', 'Q4'],
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        data: [32, 37, 21, 29],
-        type: 'bar', // echarts 图表类型， 必选
-        name: '成本', // 数据项名称，非必选
-        barWidth: 12,
-      },
-      {
-        data: [38, 72, 56, 71],
-        type: 'bar',
-        name: '销售额',
-        barWidth: 12,
-      },
-    ],
-    tooltip: {
-      show: true,
-    },
-  },
-  o5: {
-    legend: { icon: 'circle', left: 0 },
-    series: [
-      {
-        name: 'pie',
-        type: 'pie',
-        selectedMode: 'single',
-        data: [
-          { value: 0, name: '税费及附加费' },
-          { value: 0, name: '管理费用' },
-          { value: 0, name: '销售费用' },
-        ],
-      },
-    ],
-  },
-  o6: {
-    legend: {
-      data: ['应收笔数', '应付金额（万）'],
-      left: 0,
-    },
-    grid: { left: 0, right: 0, bottom: 0, containLabel: true },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: ['未到期', '31-90天', '181以上'],
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: [
-      {
-        name: '应收笔数',
-        type: 'line',
-        data: [0, 0, 0],
-      },
-      {
-        name: '应付金额（万）',
-        type: 'line',
-        data: [0, 0, 0],
-      },
-    ],
-  },
-}
-
 export default () => {
-  // const pipeline = useTablePipeline({}).input({ dataSource, columns }).use(features.columnResizeWidth())
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
+  const customerColumns = [
+    { code: 'type', width: 250, name: i18n('report.statistics1') },
+    { code: 'time', width: 100, name: i18n('report.statistics2') },
+    {
+      code: 'right',
+      width: 200,
+      title: (
+        <div>
+          <span style={{ color: 'red' }}>*</span>
+          {i18n('report.statistics3')}
+        </div>
+      ),
+    },
+    {
+      code: 'right',
+      width: 200,
+      title: (
+        <div>
+          <span style={{ color: 'red' }}>*</span>
+          {i18n('report.statistics3')}
+        </div>
+      ),
+    },
+    { code: 'type', width: 250, name: i18n('report.statistics4') },
+    { code: 'time', width: 100, name: i18n('report.statistics2') },
+    {
+      code: 'right',
+      width: 200,
+      title: (
+        <div>
+          <span style={{ color: 'red' }}>*</span>
+          {i18n('report.statistics3')}
+        </div>
+      ),
+    },
+  ]
+
+  const echartsData = {
+    o1: {
+      grid: { left: 0, top: 40, right: 0, bottom: 0 },
+      legend: { icon: 'circle', left: 0 },
+      tooltip: {
+        trigger: 'item',
+      },
+      title: {
+        text: '25%',
+        x: 'center',
+        y: 'center',
+        textStyle: {
+          fontSize: 20,
+          fontWeight: 'normal',
+        },
+      },
+      series: [
+        {
+          name: i18n('report.statistics7'),
+          type: 'pie',
+          radius: ['40%', '60%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center',
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: 1048, name: i18n('report.statistics8') },
+            { value: 735, name: i18n('report.statistics9') },
+          ],
+        },
+      ],
+    },
+    o2: {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      legend: {
+        icon: 'rect',
+        left: 0,
+      },
+      grid: {
+        left: 50,
+      },
+      xAxis: {
+        type: 'value',
+        name: 'Days',
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+      yAxis: {
+        type: 'category',
+        inverse: true,
+        data: [
+          i18n('report.statistics10'),
+          i18n('report.statistics11'),
+          i18n('report.statistics12'),
+          i18n('report.statistics13'),
+        ],
+      },
+      series: [
+        {
+          name: `${i18n('report.statistics14')}：0${i18n('report.statistics15')}`,
+          type: 'bar',
+          label: { show: true },
+          data: [0, 0, 0, 0],
+        },
+        {
+          name: `${i18n('report.statistics16')}：0${i18n('report.statistics15')}`,
+          type: 'bar',
+          label: { show: true },
+          data: [0, 0, 0, 0],
+        },
+      ],
+    },
+    o3: {
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'shadow',
+        },
+      },
+      legend: {
+        icon: 'rect',
+        left: 0,
+      },
+      grid: {
+        left: 50,
+      },
+      xAxis: {
+        type: 'value',
+        name: 'Days',
+        axisLabel: {
+          formatter: '{value}',
+        },
+      },
+      yAxis: {
+        type: 'category',
+        inverse: true,
+        data: [
+          i18n('report.statistics10'),
+          i18n('report.statistics11'),
+          i18n('report.statistics12'),
+          i18n('report.statistics13'),
+        ],
+      },
+      series: [
+        {
+          name: `${i18n('report.statistics17')}：0${i18n('report.statistics15')}`,
+          type: 'bar',
+          label: { show: true },
+          data: [0, 0, 0, 0],
+        },
+      ],
+    },
+    o4: {
+      grid: { left: 0, top: 40, right: 0, bottom: 0 },
+      legend: { icon: 'rect', left: 0 },
+      xAxis: {
+        type: 'category',
+        data: ['Q1', 'Q2', 'Q3', 'Q4'],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: [32, 37, 21, 29],
+          type: 'bar',
+          name: i18n('report.statistics20'),
+          barWidth: 12,
+        },
+        {
+          data: [38, 72, 56, 71],
+          type: 'bar',
+          name: i18n('report.statistics22'),
+          barWidth: 12,
+        },
+      ],
+      tooltip: {
+        show: true,
+      },
+    },
+    o5: {
+      legend: { icon: 'circle', left: 0 },
+      series: [
+        {
+          name: 'pie',
+          type: 'pie',
+          selectedMode: 'single',
+          data: [
+            { value: 0, name: i18n('report.statistics23') },
+            { value: 0, name: i18n('report.statistics24') },
+            { value: 0, name: i18n('report.statistics25') },
+          ],
+        },
+      ],
+    },
+    o6: {
+      legend: {
+        data: [i18n('report.statistics26'), `${i18n('report.statistics27')}（${i18n('report.statistics15')}）`],
+        left: 0,
+      },
+      grid: { left: 0, right: 0, bottom: 0, containLabel: true },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: [
+          i18n('report.statistics28'),
+          `'31-90${i18n('report.statistics29')}'`,
+          `'181${i18n('report.statistics30')}'`,
+        ],
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          name: i18n('report.statistics26'),
+          type: 'line',
+          data: [0, 0, 0],
+        },
+        {
+          name: `${i18n('report.statistics27')}（${i18n('report.statistics15')}）`,
+          type: 'line',
+          data: [0, 0, 0],
+        },
+      ],
+    },
+  }
 
   const [list, setList] = useState<any>([])
   const [showTable, setShowTable] = useState<boolean>(true)
@@ -328,25 +344,29 @@ export default () => {
     <div className={reportStyles.report}>
       <div className={reportStyles.panel}>
         <div className={reportStyles.filter}>
-          资金流量
-          <Select placeholder="筛选方案名称选择" borderType="bordered" style={{ width: 230, marginLeft: 24 }}>
-            <Option value="1">方案一</Option>
-            <Option value="2">方案二</Option>
-            <Option value="3">方案三</Option>
+          {i18n('report.statistics31')}
+          <Select
+            placeholder={i18n('report.statistics32')}
+            borderType="bordered"
+            style={{ width: 230, marginLeft: 24 }}
+          >
+            <Option value="1">{i18n('report.statistics33')}</Option>
+            <Option value="2">{i18n('report.statistics34')}</Option>
+            <Option value="3">{i18n('report.statistics35')}</Option>
           </Select>
         </div>
         <Space className={reportStyles.operation} size={12}>
           <Button.Dropdown
             type="similar"
             overlay={[
-              { value: 'copy', label: '复制' },
-              { value: 'paste', label: '粘贴' },
+              { value: 'copy', label: i18n('copy') },
+              { value: 'paste', label: i18n('report.statistics36') },
             ]}
           >
-            引出
+            {i18n('report.statistics37')}
           </Button.Dropdown>
-          <Button type="primary">刷新</Button>
-          <Button type="primary">退出</Button>
+          <Button type="primary">{i18n('refresh')}</Button>
+          <Button type="primary">{i18n('back')}</Button>
         </Space>
       </div>
       <div className={styles.cont}>
@@ -356,18 +376,18 @@ export default () => {
               <Row gutter={20}>
                 <Col span={6}>
                   <span className={reportStyles.label}>
-                    核算主体
+                    {i18n('report.statistics38')}
                     <em>*</em>
                   </span>
-                  <Input value="环宇科技股份有限公司" />
+                  <Input value={i18n('report.statistics39')} />
                 </Col>
                 <Col span={6}>
-                  <span className={reportStyles.label}>统计视图</span>
-                  <Input value="核算体系" />
+                  <span className={reportStyles.label}>{i18n('report.statistics40')}</span>
+                  <Input value={i18n('report.statistics41')} />
                 </Col>
                 <Col span={6}>
                   <span className={reportStyles.label}>
-                    会计期间
+                    {i18n('report.statistics42')}
                     <em>*</em>
                   </span>
                   <RangePicker
@@ -394,7 +414,7 @@ export default () => {
           }}
         >
           <header>
-            <h3>关键指标</h3>
+            <h3>{i18n('report.statistics43')}</h3>
             <span>
               <Icon type="setting" style={{ marginRight: 20 }} />
               <Icon type="expand" onClick={() => setShowTable(!showTable)} />
@@ -403,17 +423,17 @@ export default () => {
           <div className={styles.scroll}>
             <div className={styles.div}>
               <div className={styles.box} style={{ marginRight: showTable ? 0 : 20 }}>
-                <h4>资产净利率</h4>
+                <h4>{i18n('report.statistics7')}</h4>
                 <ReactECharts option={opt1} ref={ref1} theme="defaultTheme" style={{ width: '100%' }} />
               </div>
               {!showTable && (
                 <>
                   <div className={styles.box}>
-                    <h4>结算量占比</h4>
+                    <h4>{i18n('report.statistics44')}</h4>
                     <ReactECharts option={opt2} ref={ref2} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                   <div className={styles.box}>
-                    <h4>利润表</h4>
+                    <h4>{i18n('report.statistics45')}</h4>
                     <ReactECharts option={opt3} ref={ref3} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                 </>
@@ -422,19 +442,21 @@ export default () => {
             <div className={styles.div}>
               <div className={styles.box} style={{ marginRight: showTable ? 0 : 20 }}>
                 <h4>
-                  业务笔数分析
-                  <span>平均应付款:0.28万</span>
+                  {i18n('report.statistics46')}
+                  <span>
+                    {i18n('report.statistics47')}:0.28{i18n('report.statistics15')}
+                  </span>
                 </h4>
                 <ReactECharts option={opt4} ref={ref4} theme="defaultTheme" style={{ width: '100%' }} />
               </div>
               {!showTable && (
                 <>
                   <div className={styles.box}>
-                    <h4>费用占比</h4>
+                    <h4>{i18n('report.statistics48')}</h4>
                     <ReactECharts option={opt5} ref={ref5} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                   <div className={styles.box}>
-                    <h4>应付账龄分析</h4>
+                    <h4>{i18n('report.statistics49')}</h4>
                     <ReactECharts option={opt6} ref={ref6} theme="defaultTheme" style={{ width: '100%' }} />
                   </div>
                 </>

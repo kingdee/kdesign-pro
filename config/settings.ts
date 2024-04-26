@@ -1,52 +1,52 @@
 export default {
   colors: [
     {
-      name: '粉红色',
+      name: 'pink',
       value: '#F90C58',
     },
     {
-      name: '红色',
+      name: 'red',
       value: '#FB2323',
     },
     {
-      name: '橙色',
+      name: 'orange',
       value: '#FF5F1F',
     },
     {
-      name: '黄色',
+      name: 'yellow',
       value: '#FF991C',
     },
     {
-      name: '亮黄色',
+      name: 'lightYellow',
       value: '#FDC200',
     },
 
     {
-      name: '青柠',
+      name: 'lime',
       value: '#77C404',
     },
     {
-      name: '绿色',
+      name: 'green',
       value: '#1BA854',
     },
     {
-      name: '明青色',
+      name: 'cyan',
       value: '#16B8B1',
     },
     {
-      name: '浅蓝色',
+      name: 'lightBlue',
       value: '#16B0F1',
     },
     {
-      name: '蓝色',
+      name: 'blue',
       value: '#276FF5',
     },
     {
-      name: '深蓝色',
+      name: 'darkBlue',
       value: '#0E5FD8',
     },
     {
-      name: '紫色',
+      name: 'purple',
       value: '#701DF0',
     },
   ],

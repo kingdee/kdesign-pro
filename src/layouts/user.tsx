@@ -4,7 +4,8 @@ import { Icon, Space, Dropdown } from '@kdcloudjs/kdesign'
 import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
 import SettingsContext from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
-import { logout } from '@/services/user'
+import { getUserInfo, logout } from '@/services/user'
+import { mapLocal } from '@/locales'
 
 import styles from './user.less'
 
@@ -15,14 +16,10 @@ type IThemeColor = {
   value: string
 }
 
-const mapLocal: Record<string, string> = {
-  'zh-CN': '简体中文',
-  'en-US': 'English',
-}
-
 export default function User() {
-  const intl = useIntl()
+  const { formatMessage: i18n } = useIntl()
   const avatarRef = useRef<any>()
+  const [user, setUser] = useState<any>({})
 
   const { settings, updateSettings } = useContext(SettingsContext)
 
@@ -35,9 +32,18 @@ export default function User() {
 
   const [theme, setTheme] = useState(defaultTheme)
 
-  const { avatar, name, department, slogan, data_center, business_unit } = JSON.parse(
-    sessionStorage.getItem('user') as any,
-  )
+  const { avatar, name, department, slogan, data_center, business_unit } = user
+
+  const renderInit = () => {
+    getUserInfo().then((res) => {
+      sessionStorage.setItem('user', JSON.stringify(res.data))
+      setUser(res.data)
+    })
+  }
+
+  useEffect(() => {
+    renderInit()
+  }, [])
 
   const Locator = (
     <div className={styles.userHandle}>
@@ -60,7 +66,7 @@ export default function User() {
       {colors.map(({ name: n, value }: IThemeColor) => (
         <Item key={value}>
           <i className={styles.colorSquare} style={{ backgroundColor: value }} />
-          {n}
+          {i18n({ id: n })}
         </Item>
       ))}
     </Menu>
@@ -74,8 +80,10 @@ export default function User() {
     }
   }
 
-  const switchLocale = (locale: string) => {
+  const switchLocale = async (locale: string) => {
     setLocale(locale, false)
+    sessionStorage.removeItem('user')
+    window.location.reload()
   }
 
   const localesMenu = (
@@ -117,15 +125,13 @@ export default function User() {
       <div className={styles.cont}>
         <ul className={styles.list}>
           <li>
-            <span className={styles.name}>
-              {intl.formatMessage({ id: 'header.user.DC', defaultMessage: '数据中心' })}
-            </span>
+            <span className={styles.name}>{i18n({ id: 'header.user.DC', defaultMessage: '数据中心' })}</span>
             <span className={styles.value}>{data_center}</span>
             <i className={styles.icon} />
           </li>
           <li>
             <span className={styles.name}>
-              {intl.formatMessage({ id: 'header.user.bussiness.unit', defaultMessage: '业务单元' })}
+              {i18n({ id: 'header.user.bussiness.unit', defaultMessage: '业务单元' })}
             </span>
             <span className={styles.value}>
               {business_unit}
@@ -133,9 +139,7 @@ export default function User() {
             </span>
           </li>
           <li>
-            <span className={styles.name}>
-              {intl.formatMessage({ id: 'header.user.theme', defaultMessage: '主题' })}
-            </span>
+            <span className={styles.name}>{i18n({ id: 'header.user.theme', defaultMessage: '主题' })}</span>
             <Dropdown
               selectable
               trigger="click"
@@ -146,15 +150,15 @@ export default function User() {
             >
               <span className={`${styles.value} ${styles.color}`} tabIndex={0}>
                 <i className={styles.colorSquare} style={{ backgroundColor: theme.value }} />
-                {theme.name}
+                {i18n({ id: theme.name })}
                 <Icon className={styles.icon} type="arrow-down" />
               </span>
             </Dropdown>
           </li>
         </ul>
         <Space className={styles.features} size={16} split={<span className={styles.split} />}>
-          <span>{intl.formatMessage({ id: 'header.user.center', defaultMessage: '用户中心' })}</span>
-          <span>{intl.formatMessage({ id: 'header.user.about', defaultMessage: '关于产品' })}</span>
+          <span>{i18n({ id: 'header.user.center', defaultMessage: '用户中心' })}</span>
+          <span>{i18n({ id: 'header.user.about', defaultMessage: '关于产品' })}</span>
         </Space>
       </div>
     </div>,

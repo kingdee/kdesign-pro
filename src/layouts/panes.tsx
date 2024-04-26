@@ -18,7 +18,7 @@ interface PanesProps {
 }
 
 export default ({ sideMenus }: PanesProps) => {
-  const intl = useIntl()
+  const { formatMessage: i18n } = useIntl()
   const { pathname } = useLocation()
 
   const [panes, setPanes] = useState<IPane[]>([])
@@ -85,7 +85,7 @@ export default ({ sideMenus }: PanesProps) => {
         <Tabs.TabPane
           {...{
             key,
-            tab: intl.formatMessage({ id: `menu${key.replace(/\//g, '.')}`, defaultMessage: name }),
+            tab: i18n({ id: `menu${key.replace(/\//g, '.')}`, defaultMessage: name }),
             operations: panes.length > 1 && [<Icon type="close" onClick={handleCloseTab.bind(this, key)} />],
           }}
         >

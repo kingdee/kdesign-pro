@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import {
@@ -15,29 +16,17 @@ import {
   Upload,
 } from '@kdcloudjs/kdesign'
 
+import { useIntl } from 'umi'
 import globalStyles from '@/layouts/global.less'
 import detailStyles from '../index.less'
 import styles from './index.less'
 import { icon1, icon2, icon6 } from './steps-icon'
 import { getDetailFlow } from '@/services/detail'
 
-const columns = [
-  { code: 'index', lock: true, width: 60, name: '#' },
-  {
-    code: 'code',
-    width: 200,
-    name: '单据编号',
-    render: (text: string) => (
-      <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
-        {text}
-      </a>
-    ),
-  },
-  { code: 'supplier', width: 200, name: '供应商' },
-  { code: 'date', width: 200, name: '申请时间' },
-]
-
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [current, setCurrent] = useState(0)
   const [dataSource, setDataSource] = useState<any>([])
 
@@ -71,6 +60,22 @@ export default () => {
     }
   }
 
+  const columns = [
+    { code: 'index', lock: true, width: 60, name: '#' },
+    {
+      code: 'code',
+      width: 200,
+      name: i18n('detail.flow1'),
+      render: (text: string) => (
+        <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
+          {text}
+        </a>
+      ),
+    },
+    { code: 'supplier', width: 200, name: i18n('detail.flow2') },
+    { code: 'date', width: 200, name: i18n('detail.flow3') },
+  ]
+
   const uploadProps = {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange({ file, fileList }: Record<string, any>) {
@@ -83,21 +88,21 @@ export default () => {
         uid: '1',
         size: '11429478.4',
         status: 'done',
-        name: '标书模板.ppt',
+        name: `${i18n('detail.flow4')}.ppt`,
         url: 'http://www.baidu.com/xxx.png',
       },
       {
         uid: '2',
         size: '11429478.4',
         status: 'done',
-        name: '入围要求.ppt',
+        name: `${i18n('detail.flow5')}.ppt`,
         url: 'http://www.baidu.com/yyy.png',
       },
       {
         uid: '3',
         size: '11429478.4',
         status: 'done',
-        name: '资质名单.ppt',
+        name: `${i18n('detail.flow6')}.ppt`,
         url: 'http://www.baidu.com/zzz.png',
       },
     ],
@@ -106,81 +111,81 @@ export default () => {
   const mapCont: Record<string, JSX.Element> = {
     0: (
       <Collapse className={detailStyles.collapse} defaultActiveKey={['invite', 'bid']}>
-        <Collapse.Panel header="招标信息" panelKey="invite">
+        <Collapse.Panel header={i18n('detail.flow66')} panelKey="invite">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>招标名称</span>
-                <Input value="环球集团ISC" />
+                <span className={detailStyles.label}>{i18n('detail.flow8')}</span>
+                <Input value={`${i18n('detail.flow9')}ISC`} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>招标编号</span>
+                <span className={detailStyles.label}>{i18n('detail.flow10')}</span>
                 <Input value="ZC2007090001" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购类型</span>
-                <Input value="施工类" />
+                <span className={detailStyles.label}>{i18n('detail.flow89')}</span>
+                <Input value={i18n('detail.flow90')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购方式</span>
-                <Input value="公开招标" />
+                <span className={detailStyles.label}>{i18n('detail.flow85')}</span>
+                <Input value={i18n('detail.flow86')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购模式</span>
-                <Input value="项目采购" />
+                <span className={detailStyles.label}>{i18n('detail.flow54')}</span>
+                <Input value={i18n('detail.flow16')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>计价模式</span>
-                <Input value="总价包干" />
+                <span className={detailStyles.label}>{i18n('detail.flow87')}</span>
+                <Input value={i18n('detail.flow88')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>立项日期</span>
+                <span className={detailStyles.label}>{i18n('detail.flow57')}</span>
                 <Input value="2022-07-05" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购组织</span>
-                <Input value="环宇国际集团有限公司" />
+                <span className={detailStyles.label}>{i18n('detail.flow83')}</span>
+                <Input value={i18n('detail.flow84')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>委托方式</span>
-                <Input value="不委托" />
+                <span className={detailStyles.label}>{i18n('detail.flow60')}</span>
+                <Input value={i18n('detail.flow61')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购控制总金额</span>
+                <span className={detailStyles.label}>{i18n('detail.flow62')}</span>
                 <Input value="5,998,000.00" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>标书费</span>
+                <span className={detailStyles.label}>{i18n('detail.flow63')}</span>
                 <Input value="10,000.00" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>投标保证金</span>
+                <span className={detailStyles.label}>{i18n('detail.flow64')}</span>
                 <Input value="5,000.00" />
               </div>
             </Col>
@@ -188,76 +193,76 @@ export default () => {
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>单据状态</span>
-                <Input value="已审核" />
+                <span className={detailStyles.label}>{i18n('detail.flow65')}</span>
+                <Input value={i18n('detail.flow28')} />
               </div>
             </Col>
             <Col span={18}>
               <div>
-                <span className={detailStyles.label}>资质要求</span>
-                <Input value="A类供应商" />
+                <span className={detailStyles.label}>{i18n('detail.flow29')}</span>
+                <Input value={i18n('detail.flow30')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={24}>
               <div>
-                <span className={detailStyles.label}>采购说明</span>
-                <Input value="施工材料招标" />
+                <span className={detailStyles.label}>{i18n('detail.flow31')}</span>
+                <Input value={i18n('detail.flow32')} />
               </div>
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header="发标信息" panelKey="bid">
+        <Collapse.Panel header={i18n('detail.flow33')} panelKey="bid">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>指标名称</span>
-                <Input value="0309有发标无开标邀请函" />
+                <span className={detailStyles.label}>{i18n('detail.flow67')}</span>
+                <Input value={i18n('detail.flow68')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购方式</span>
-                <Input value="立项入围发标定标" />
+                <span className={detailStyles.label}>{i18n('detail.flow85')}</span>
+                <Input value={i18n('detail.flow37')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购类型</span>
-                <Input value="材料设备类" />
+                <span className={detailStyles.label}>{i18n('detail.flow89')}</span>
+                <Input value={i18n('detail.flow39')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>招标单位</span>
-                <Input value="环宇国际集团有限公司" />
+                <span className={detailStyles.label}>{i18n('detail.flow71')}</span>
+                <Input value={i18n('detail.flow84')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>邀请函确认截止时间</span>
+                <span className={detailStyles.label}>{i18n('detail.flow73')}</span>
                 <Input value="2022-07-31 10:50:33" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>发标时间</span>
-                <Input value="未填写" />
+                <span className={detailStyles.label}>{i18n('detail.flow74')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>答疑截止时间</span>
-                <Input value="未填写" />
+                <span className={detailStyles.label}>{i18n('detail.flow75')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>截标开标时间</span>
-                <Input value="未填写" />
+                <span className={detailStyles.label}>{i18n('detail.flow76')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
           </Row>
@@ -269,14 +274,16 @@ export default () => {
         <div className={styles.pagination}>
           <Space className={styles.notify} size={8}>
             <span>
-              已选
+              {i18n('detail.flow46')}
               {rows?.length}
-              条数据，共
+              {i18n('detail.flow47')}，{i18n('detail.flow48')}
               {dataSource?.length}
-              条（1张）
+              {i18n('detail.flow49')}
+              （1
+              {i18n('detail.flow50')}
             </span>
             <Button type="text" onClick={handleSelectAll}>
-              {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
+              {rows.length === dataSource?.length ? i18n('detail.flow51') : i18n('detail.flow52')}
             </Button>
           </Space>
           <Pagination defaultCurrent={6} total={200} />
@@ -300,55 +307,55 @@ export default () => {
     ),
     2: (
       <Collapse className={detailStyles.collapse} defaultActiveKey={['open', 'invite', 'attachment']}>
-        <Collapse.Panel header="开标信息" panelKey="open">
+        <Collapse.Panel header={i18n('detail.flow53')} panelKey="open">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购模式</span>
-                <Input value="项目采购" />
+                <span className={detailStyles.label}>{i18n('detail.flow54')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>计价模式</span>
-                <Input value="总价包干" />
+                <span className={detailStyles.label}>{i18n('detail.flow87')}</span>
+                <Input value={i18n('detail.flow88')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>立项日期</span>
+                <span className={detailStyles.label}>{i18n('detail.flow57')}</span>
                 <Input value="2022-07-05" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购组织</span>
-                <Input value="环宇国际集团有限公司" />
+                <span className={detailStyles.label}>{i18n('detail.flow83')}</span>
+                <Input value={i18n('detail.flow84')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>委托方式</span>
-                <Input value="不委托" />
+                <span className={detailStyles.label}>{i18n('detail.flow60')}</span>
+                <Input value={i18n('detail.flow61')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购控制总金额</span>
+                <span className={detailStyles.label}>{i18n('detail.flow62')}</span>
                 <Input value="5,998,000.00" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>标书费</span>
+                <span className={detailStyles.label}>{i18n('detail.flow63')}</span>
                 <Input value="10,000.00" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>投标保证金</span>
+                <span className={detailStyles.label}>{i18n('detail.flow64')}</span>
                 <Input value="5,000.00" />
               </div>
             </Col>
@@ -356,74 +363,78 @@ export default () => {
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>单据状态</span>
-                <Input value="已审核" />
+                <span className={detailStyles.label}>{i18n('detail.flow65')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header="招标信息" panelKey="invite">
+        <Collapse.Panel header={i18n('detail.flow66')} panelKey="invite">
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>指标名称</span>
-                <Input value="0309有发标无开标邀请函" />
+                <span className={detailStyles.label}>{i18n('detail.flow67')}</span>
+                <Input value={i18n('detail.flow68')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购方式</span>
-                <Input value="立项入围发标定标" />
+                <span className={detailStyles.label}>{i18n('detail.flow85')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>采购类型</span>
-                <Input value="材料设备类" />
+                <span className={detailStyles.label}>{i18n('detail.flow89')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>招标单位</span>
-                <Input value="环宇国际集团有限公司" />
+                <span className={detailStyles.label}>{i18n('detail.flow71')}</span>
+                <Input value={i18n('detail.flow84')} />
               </div>
             </Col>
           </Row>
           <Row gutter={80} className={detailStyles.row}>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>邀请函确认截止时间</span>
+                <span className={detailStyles.label}>{i18n('detail.flow73')}</span>
                 <Input value="2022-07-31 10:50:33" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>发标时间</span>
+                <span className={detailStyles.label}>{i18n('detail.flow74')}</span>
                 <Input value="2022" />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>答疑截止时间</span>
-                <Input value="未填写" />
+                <span className={detailStyles.label}>{i18n('detail.flow75')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
             <Col span={6}>
               <div>
-                <span className={detailStyles.label}>截标开标时间</span>
-                <Input value="未填写" />
+                <span className={detailStyles.label}>{i18n('detail.flow76')}</span>
+                <Input value={i18n('empty')} />
               </div>
             </Col>
           </Row>
         </Collapse.Panel>
-        <Collapse.Panel header="附件" panelKey="attachment">
+        <Collapse.Panel header={i18n('detail.flow77')} panelKey="attachment">
           <div className={styles.attachment}>
             <Space size={20} className={styles.action}>
-              <Button icon={<Icon type="upload" />}>文件下载</Button>
-              <span style={{ fontSize: 12, color: '#999' }}>支持ctrl+v粘贴截图</span>
+              <Button icon={<Icon type="upload" />}>{i18n('detail.flow78')}</Button>
+              <span style={{ fontSize: 12, color: '#999' }}>
+                {i18n('detail.flow79')}
+                ctrl+v
+                {i18n('detail.flow80')}
+              </span>
             </Space>
             <Upload {...(uploadProps as any)} className={detailStyles.row}>
-              <Button icon={<Icon type="upload" />}>文件上传</Button>
+              <Button icon={<Icon type="upload" />}>{i18n('detail.flow81')}</Button>
             </Upload>
           </div>
         </Collapse.Panel>
@@ -435,51 +446,51 @@ export default () => {
     <div className={classnames(globalStyles.container, styles.container)}>
       <div className={styles.card}>
         <Space className={styles.title} size={20}>
-          <span>王梦然招标立项</span>
+          <span>{i18n('detail.flow82')}</span>
           <span>00-00001-2020-00000042</span>
         </Space>
         <Space className={styles.attr} size={20}>
           <div>
-            <span>采购组织：</span>
-            环宇国际集团有限公司
+            <span>{i18n('detail.flow83')}：</span>
+            {i18n('detail.flow84')}
           </div>
           <div>
-            <span>采购方式：</span>
-            公开招标
+            <span>{i18n('detail.flow85')}：</span>
+            {i18n('detail.flow86')}
           </div>
           <div>
-            <span>计价模式：</span>
-            总价包干
+            <span>{i18n('detail.flow87')}：</span>
+            {i18n('detail.flow88')}
           </div>
           <div>
-            <span>采购类型：</span>
-            施工类
+            <span>{i18n('detail.flow89')}：</span>
+            {i18n('detail.flow90')}
           </div>
         </Space>
       </div>
       <Steps className={styles.steps} current={current} status="process" onChange={setCurrent}>
-        <Step title="招标立项" icon={icon1} />
-        <Step title="供方入围" icon={icon2} />
-        <Step title="开标" icon={icon6} />
+        <Step title={i18n('detail.flow91')} icon={icon1} />
+        <Step title={i18n('detail.flow92')} icon={icon2} />
+        <Step title={i18n('detail.flow93')} icon={icon6} />
       </Steps>
       <Space className={detailStyles.operation} size={12}>
-        <Button.Dropdown type="similar" overlay={[{ value: 'reversal', label: '反审核' }]}>
-          审核
+        <Button.Dropdown type="similar" overlay={[{ value: 'reversal', label: i18n('reapprove') }]}>
+          {i18n('approve')}
         </Button.Dropdown>
-        <Button type="primary">作废</Button>
-        <Button type="primary">立项调整</Button>
-        <Button type="primary">查看流程图</Button>
+        <Button type="primary">{i18n('abandon')}</Button>
+        <Button type="primary">{i18n('detail.flow94')}</Button>
+        <Button type="primary">{i18n('detail.flow95')}</Button>
         <Button.Dropdown
           type="similar"
           overlay={[
-            { value: 'setting', label: '设置' },
-            { value: 'print', label: '打印预览' },
+            { value: 'setting', label: i18n('detail.flow96') },
+            { value: 'print', label: i18n('detail.flow97') },
           ]}
         >
-          打印
+          {i18n('detail.flow98')}
         </Button.Dropdown>
-        <Button type="primary">刷新</Button>
-        <Button type="primary">退出</Button>
+        <Button type="primary">{i18n('refresh')}</Button>
+        <Button type="primary">{i18n('quit')}</Button>
       </Space>
       {Array(3)
         .fill(null)

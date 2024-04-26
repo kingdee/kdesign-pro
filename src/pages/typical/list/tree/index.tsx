@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import classnames from 'classnames'
 import { Space, Button, Icon, Pagination, Input, Tree, Filter, Table } from '@kdcloudjs/kdesign'
+import { useIntl } from 'umi'
 import { getListTree } from '@/services/list'
 
 import globalStyles from '@/layouts/global.less'
@@ -13,41 +14,44 @@ const views = [
   { type: 'chart', icon: 'waiting' },
 ]
 
-const searchProps = {
-  tags: [
-    { value: 'label', tag: '名称' },
-    { value: 'code', tag: '编码' },
-  ],
-}
-
-const columns = [
-  { code: 'index', lock: true, width: 60, name: '#', align: 'center' },
-  {
-    code: 'number',
-    width: 100,
-    name: '单据编号',
-    render: (text: string) => (
-      <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
-        {text}
-      </a>
-    ),
-  },
-  { code: 'name', width: 200, name: '名称' },
-  { code: 'type', width: 100, name: '项目类别', align: 'center' },
-  { code: 'flow', width: 100, name: '资金流向', align: 'center' },
-  {
-    code: 'business',
-    width: 100,
-    name: '经营活动',
-    align: 'center',
-    render: () => <img src={require(`../../../../assets/images/right.png`)} style={{ width: '16px' }} />,
-  },
-]
-
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [expandedKeys, setExpandedKeys] = useState(['1', '1-1'])
   const [selectedKeys, setSelectedKeys] = useState(['1-1'])
   const [listTree, setListTree] = useState<{ [key: string]: any }>({})
+
+  const searchProps = {
+    tags: [
+      { value: 'label', tag: i18n('list.tree1') },
+      { value: 'code', tag: i18n('list.tree2') },
+    ],
+  }
+
+  const columns = [
+    { code: 'index', lock: true, width: 60, name: '#', align: 'center' },
+    {
+      code: 'number',
+      width: 150,
+      name: i18n('list.tree3'),
+      render: (text: string) => (
+        <a href="true" style={{ color: '#0E5FD8' }} onClick={(e) => e.preventDefault()}>
+          {text}
+        </a>
+      ),
+    },
+    { code: 'name', width: 400, name: i18n('list.tree1') },
+    { code: 'type', width: 200, name: i18n('list.tree4'), align: 'center' },
+    { code: 'flow', width: 100, name: i18n('list.tree5'), align: 'center' },
+    {
+      code: 'business',
+      width: 100,
+      name: i18n('list.tree6'),
+      align: 'center',
+      render: () => <img src={require('../../../../assets/images/right.png')} style={{ width: '16px' }} />,
+    },
+  ]
 
   async function initListTree() {
     const data = await getListTree()
@@ -103,7 +107,7 @@ export default () => {
           {filterConditions && (
             <Filter
               style={{ width: '100%' }}
-              title="项目流量现金"
+              title={i18n('list.tree7')}
               search={searchProps}
               conditions={filterConditions}
               defaultValue={filterDefaultValue as any}
@@ -112,24 +116,24 @@ export default () => {
           )}
         </div>
         <Space className={listStyles.operation} size={12}>
-          <Button type="primary">新增</Button>
-          <Button type="primary">删除</Button>
-          <Button.Dropdown type="similar" overlay={[{ value: 'enabled', label: '启用' }]}>
-            禁用
+          <Button type="primary">{i18n('add')}</Button>
+          <Button type="primary">{i18n('delete')}</Button>
+          <Button.Dropdown type="similar" overlay={[{ value: 'enabled', label: i18n('list.tree8') }]}>
+            {i18n('list.tree9')}
           </Button.Dropdown>
-          <Button.Dropdown type="similar" overlay={[{ value: 'cancel', label: '取消分配' }]}>
-            分配
+          <Button.Dropdown type="similar" overlay={[{ value: 'cancel', label: i18n('list.tree10') }]}>
+            {i18n('list.tree11')}
           </Button.Dropdown>
           <Button.Dropdown
             overlay={[
-              { value: 'input', label: '引入数据' },
-              { value: 'output', label: '引出数据' },
+              { value: 'input', label: i18n('list.tree12') },
+              { value: 'output', label: i18n('list.tree13') },
             ]}
           >
-            更多
+            {i18n('more')}
           </Button.Dropdown>
-          <Button type="primary">刷新</Button>
-          <Button type="primary">退出</Button>
+          <Button type="primary">{i18n('refresh')}</Button>
+          <Button type="primary">{i18n('back')}</Button>
           <Space className={listStyles.viewSwitch}>
             {views.map(({ type, icon }) => (
               <Icon
@@ -144,7 +148,11 @@ export default () => {
       </div>
       <div className={styles.content}>
         <div className={styles.sider}>
-          <Input placeholder="请输入编码/名称" borderType="bordered" prefix={<Icon type="search" />} />
+          <Input
+            placeholder={`${i18n('list.tree14')}/${i18n('list.tree1')}`}
+            borderType="bordered"
+            prefix={<Icon type="search" />}
+          />
           <div className={globalStyles.container} style={{ margin: '21px -18px 0', fontSize: '12px' }}>
             <Tree
               treeData={treeData}
@@ -160,16 +168,21 @@ export default () => {
           <div className={listStyles.pagination}>
             <Space className={listStyles.notify} size={8}>
               <span>
-                已选
+                {i18n('selected')}
                 {rows.length}
-                条数据，共
+                {i18n('list.tree15')}，{i18n('list.tree16')}
                 {dataSource?.length}
               </span>
               <Button type="text" onClick={handleSelectAll}>
-                {rows.length === dataSource?.length ? '取消选择' : '选择全部'}
+                {rows.length === dataSource?.length ? i18n('selectCancel') : i18n('selectAll')}
               </Button>
             </Space>
-            <Pagination defaultCurrent={6} total={200} dropdownProps={{ getPopupContainer: () => document.body }} />
+            <Pagination
+              defaultCurrent={6}
+              total={200}
+              // @ts-ignore
+              dropdownProps={{ getPopupContainer: () => document.body }}
+            />
           </div>
           <div className={globalStyles.tableContainer}>
             <div className={globalStyles.settings}>

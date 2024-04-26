@@ -1,14 +1,8 @@
 import { Space, Button, Icon, Collapse, Row, Col, Input, Switch, Upload, Form, Table } from '@kdcloudjs/kdesign'
 import React, { useEffect, useState } from 'react'
+import { useIntl } from 'umi'
 import { getFormBasic } from '@/services/form'
 import formStyles from '../index.less'
-
-const dragButton = (
-  <div>
-    <Icon type="add" style={{ fontSize: 16, color: '#666', fontWeight: 'bolder' }} />
-    <div>点击或拖拽上传</div>
-  </div>
-)
 
 const uploadProps = {
   name: 'file',
@@ -17,18 +11,28 @@ const uploadProps = {
   onChange(info: any) {
     const { status } = info.file
     if (status === 'done') {
-      console.info(`${info.file.name} file uploaded successfully.`)
+      console.info('file uploaded successfully.')
     } else if (status === 'error') {
-      console.error(`${info.file.name} file upload failed.`)
+      console.error('file upload failed.')
     }
   },
 }
 
 export default () => {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [form] = Form.useForm()
   const [index, setIndex] = useState(1)
   const [selected, setSelected] = useState<number[]>([])
   const [state, setState] = useState<any[]>([])
+
+  const dragButton = (
+    <div>
+      <Icon type="add" style={{ fontSize: 16, color: '#666', fontWeight: 'bolder' }} />
+      <div>{i18n('form.basic1')}</div>
+    </div>
+  )
 
   const addItem = () => {
     const i = index + 1
@@ -36,14 +40,14 @@ export default () => {
       ...state,
       {
         index: i,
-        material: `绳子${i}`,
-        unit: '米',
+        material: i18n('form.basic2') + i,
+        unit: i18n('form.basic3'),
         number: '1000',
-        price: '￥10',
+        price: '10',
         taxPrice: undefined,
-        originPrice: '￥15',
+        originPrice: '15',
         gift: '-',
-        discountWay: '空',
+        discountWay: i18n('form.basic4'),
       },
     ]
     setState(list)
@@ -56,21 +60,21 @@ export default () => {
       setState(list)
       setSelected([])
     } else {
-      alert('请选中后删除')
+      alert(i18n('form.basic5'))
     }
   }
 
   const customerColumns = [
     { code: 'index', width: 100, name: '#' },
-    { code: 'material', width: 150, name: '物料' },
-    { code: 'unit', width: 150, name: '计价单位' },
-    { code: 'number', width: 150, name: '计价数量' },
-    { code: 'originPrice', width: 150, name: '单价' },
-    { code: 'gift', width: 150, name: '赠品' },
+    { code: 'material', width: 150, name: i18n('form.basic6') },
+    { code: 'unit', width: 150, name: i18n('form.basic7') },
+    { code: 'number', width: 150, name: i18n('form.basic8') },
+    { code: 'originPrice', width: 150, name: i18n('form.basic9') },
+    { code: 'gift', width: 150, name: i18n('form.basic10') },
     {
       code: 'taxPrice',
       width: 150,
-      name: '含税单价',
+      name: i18n('form.basic11'),
       render: () => {
         return <Switch />
       },
@@ -81,11 +85,11 @@ export default () => {
       title: (
         <div>
           <span style={{ color: 'red' }}>*</span>
-          折扣价格
+          {i18n('form.basic12')}
         </div>
       ),
     },
-    { code: 'price', name: '实际单价', width: 100 },
+    { code: 'price', name: i18n('form.basic13'), width: 100 },
   ]
 
   const rowSelection = {
@@ -108,12 +112,12 @@ export default () => {
   return (
     <div className={formStyles.form}>
       <Space className={formStyles.operation} size={12}>
-        <Button type="primary">删除</Button>
-        <Button.Dropdown type="similar" overlay={[{ value: 'enabled', label: '启用' }]}>
-          禁用
+        <Button type="primary">{i18n('form.basic14')}</Button>
+        <Button.Dropdown type="similar" overlay={[{ value: 'enabled', label: i18n('form.basic15') }]}>
+          {i18n('form.basic16')}
         </Button.Dropdown>
-        <Button type="primary">新增</Button>
-        <Button type="primary">中止执行</Button>
+        <Button type="primary">{i18n('add')}</Button>
+        <Button type="primary">{i18n('form.basic17')}</Button>
       </Space>
 
       <Collapse
@@ -121,89 +125,91 @@ export default () => {
         defaultActiveKey={['basic', 'payable', 'attachment']}
         style={{ overflow: 'overlay' }}
       >
-        <Collapse.Panel header="基本信息" panelKey="basic">
+        <Collapse.Panel header={i18n('basic')} panelKey="basic">
           <Form form={form} labelWidth={100}>
             <Row gutter={[80, 22]} className={formStyles.row}>
               <Col span={6}>
-                <Form.Item required label="应付组织" name="group" validateTrigger="onBlur">
+                <Form.Item required label={i18n('form.basic18')} name="group" validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="单据编号" name="code" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic19')} name="code" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="单据日期" name="date" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic20')} name="date" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="单据类型" name="type" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic21')} name="type" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item required label="供应商" name="supplier" validateTrigger="onBlur">
+                <Form.Item required label={i18n('form.basic22')} name="supplier" validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="供应商" name="supplier2" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic22')} name="supplier2" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="付款方式" name="payway" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic23')} name="payway" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="单据类型" name="type2" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic21')} name="type2" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item required label="备注" name="memo" validateTrigger="onBlur">
+                <Form.Item required label={i18n('remark')} name="memo" validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="付款组织" name="payGroup" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic24')} name="payGroup" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
               <Col span={6}>
-                <Form.Item label="计税类型" name="taxType" required validateTrigger="onBlur">
+                <Form.Item label={i18n('form.basic25')} name="taxType" required validateTrigger="onBlur">
                   <Input suffix={<Icon type="search" />} />
                 </Form.Item>
               </Col>
             </Row>
           </Form>
         </Collapse.Panel>
-        <Collapse.Panel header="金额信息" panelKey="amount">
-          金额信息内容
+        <Collapse.Panel header={i18n('form.basic26')} panelKey="amount">
+          {i18n('form.basic27')}
         </Collapse.Panel>
         <Collapse.Panel
           header={
             <div>
-              采购信息
-              <span className={formStyles.other}>采购组织：环球科技深圳分公司</span>
+              {i18n('form.basic28')}
+              <span className={formStyles.other}>
+                {i18n('form.basic29')}：{i18n('form.basic30')}
+              </span>
             </div>
           }
           panelKey="purchase"
         >
-          采购信息内容
+          {i18n('form.basic31')}
         </Collapse.Panel>
         <Collapse.Panel
-          header="应付明细"
+          header={i18n('form.basic32')}
           panelKey="payable"
           extra={
             <Space className={formStyles.extra} size={16}>
-              <button onClick={addItem}>增行</button>
+              <button onClick={addItem}>{i18n('form.basic33')}</button>
               <i className={formStyles.split} />
-              <button onClick={delItem}>删行</button>
+              <button onClick={delItem}>{i18n('form.basic34')}</button>
             </Space>
           }
         >
@@ -214,13 +220,17 @@ export default () => {
             primaryKey="index"
           />
         </Collapse.Panel>
-        <Collapse.Panel header="附件" panelKey="attachment">
+        <Collapse.Panel header={i18n('form.basic35')} panelKey="attachment">
           <Upload {...uploadProps} style={{ display: 'inline-block' }}>
             <Button type="ghost" icon={<Icon type="upload" />}>
-              上传文件
+              {i18n('form.basic36')}
             </Button>
           </Upload>
-          <span style={{ fontSize: 12, color: '#999', marginLeft: 20 }}>支持ctrl+v粘贴截图</span>
+          <span style={{ fontSize: 12, color: '#999', marginLeft: 20 }}>
+            {i18n('form.basic37')}
+            ctrl+v
+            {i18n('form.basic38')}
+          </span>
           <Upload.Dragger {...uploadProps} style={{ width: '100%', marginTop: 10 }}>
             {dragButton}
           </Upload.Dragger>

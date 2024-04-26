@@ -1,13 +1,24 @@
 import { useState } from 'react'
 import { Icon, Collapse, Row, Col, Input, Form, Button, Switch, Space, Upload, Table } from '@kdcloudjs/kdesign'
+import { useIntl } from 'umi'
 import formStyles from '../index.less'
 import styles from './index.less'
 
 export default function Goods() {
+  const { formatMessage } = useIntl()
+  const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
+
   const [form] = Form.useForm()
   const [index, setIndex] = useState(1)
   const [selected, setSelected] = useState<number[]>([])
-  const [state, setState] = useState<any[]>([{ index, goods: '显示屏', subject: '电子产品', dimension: '自定义' }])
+  const [state, setState] = useState<any[]>([
+    {
+      index,
+      goods: i18n('form.guid.goods1'),
+      subject: i18n('form.guid.goods2'),
+      dimension: i18n('form.guid.goods3'),
+    },
+  ])
 
   const addItem = () => {
     const i = index + 1
@@ -15,9 +26,9 @@ export default function Goods() {
       ...state,
       {
         index: i,
-        goods: `显示屏${i}`,
-        subject: '电子产品',
-        dimension: '自定义',
+        goods: i18n('form.guid.goods1') + i,
+        subject: i18n('form.guid.goods2'),
+        dimension: i18n('form.guid.goods3'),
       },
     ]
     setState(list)
@@ -30,18 +41,18 @@ export default function Goods() {
       setState(list)
       setSelected([])
     } else {
-      alert('请选中后删除')
+      alert(i18n('form.guid.goods4'))
     }
   }
 
   const customerColumns = [
-    { code: 'goods', width: 150, name: '商品' },
-    { code: 'subject', width: 150, name: '科目' },
-    { code: 'currency', width: 150, name: '币种' },
-    { code: 'origin', width: 150, name: '产地' },
-    { code: 'no', width: 150, name: '货号' },
-    { code: 'dimension', width: 150, name: '核算维度' },
-    { code: 'unit', width: 150, name: '计量单位' },
+    { code: 'goods', width: 150, name: i18n('form.guid.goods5') },
+    { code: 'subject', width: 150, name: i18n('form.guid.goods6') },
+    { code: 'currency', width: 150, name: i18n('form.guid.goods7') },
+    { code: 'origin', width: 150, name: i18n('form.guid.goods8') },
+    { code: 'no', width: 150, name: i18n('form.guid.goods9') },
+    { code: 'dimension', width: 150, name: i18n('form.guid.goods10') },
+    { code: 'unit', width: 150, name: i18n('form.guid.goods11') },
   ]
 
   const rowSelection = {
@@ -53,7 +64,7 @@ export default function Goods() {
   const dragButton = (
     <div>
       <Icon type="add" style={{ fontSize: 16, color: '#666', fontWeight: 'bolder' }} />
-      <div>点击或拖拽上传</div>
+      <div>{i18n('form.guid.goods12')}</div>
     </div>
   )
 
@@ -64,9 +75,9 @@ export default function Goods() {
     onChange(info: any) {
       const { status } = info.file
       if (status === 'done') {
-        console.info(`${info.file.name} file uploaded successfully.`)
+        console.info('file uploaded successfully.')
       } else if (status === 'error') {
-        console.error(`${info.file.name} file upload failed.`)
+        console.error('file upload failed.')
       }
     },
   }
@@ -77,132 +88,134 @@ export default function Goods() {
       defaultActiveKey={['info', 'features', 'bar', 'attachment']}
       style={{ overflow: 'overlay' }}
     >
-      <Collapse.Panel header="商品信息" panelKey="info">
+      <Collapse.Panel header={i18n('form.guid.goods13')} panelKey="info">
         <Form form={form} labelWidth={100}>
           <Row gutter={[80, 22]} className={formStyles.row}>
             <Col span={6}>
-              <Form.Item required label="标题内容" name="title" validateTrigger="onBlur">
+              <Form.Item required label={i18n('form.guid.goods14')} name="title" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="商品名称" name="name" required validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods15')} name="name" required validateTrigger="onBlur">
                 <Input suffix={<Icon type="search" />} />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="商品类别" name="category" required validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods16')} name="category" required validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="商品标签" name="tags" required validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods17')} name="tags" required validateTrigger="onBlur">
                 <Input suffix={<Icon type="search" />} />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="条形码" name="barCode" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods18')} name="barCode" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="规格型号" name="size" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods19')} name="size" validateTrigger="onBlur">
                 <Input suffix={<Icon type="search" />} />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="品牌" name="brand" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods20')} name="brand" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="产地" name="origin" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods8')} name="origin" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="助记码" name="aid" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods21')} name="aid" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="计量单位" name="unit" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods11')} name="unit" validateTrigger="onBlur">
                 <Input suffix={<Icon type="search" />} />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="款式" name="type" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods22')} name="type" validateTrigger="onBlur">
                 <Switch defaultChecked />
               </Form.Item>
             </Col>
             <Col span={6}>
-              <Form.Item label="款式" name="type" validateTrigger="onBlur">
+              <Form.Item label={i18n('form.guid.goods22')} name="type" validateTrigger="onBlur">
                 <Input />
               </Form.Item>
             </Col>
           </Row>
         </Form>
       </Collapse.Panel>
-      <Collapse.Panel header="商品特性" panelKey="features">
+      <Collapse.Panel header={i18n('form.guid.goods23')} panelKey="features">
         <Space size={60} className={styles.features}>
           <div>
-            序列号管理
+            {i18n('form.guid.goods24')}
             <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            批次管理
+            {i18n('form.guid.goods25')}
             <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可销售
+            {i18n('form.guid.goods26')}
             <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可采购
+            {i18n('form.guid.goods27')}
             <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可为子件
+            {i18n('form.guid.goods28')}
             <Switch defaultChecked className={styles.switch} />
           </div>
           <div>
-            可为组件
+            {i18n('form.guid.goods29')}
             <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
         <Space size={60} className={styles.features}>
           <div>
-            保质期管理
+            {i18n('form.guid.goods30')}
             <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
         <Space size={60} className={styles.features}>
           <div>
-            辅助属性管理
+            {i18n('form.guid.goods31')}
             <Switch defaultChecked className={styles.switch} />
           </div>
         </Space>
       </Collapse.Panel>
       <Collapse.Panel
-        header="条码信息"
+        header={i18n('form.guid.goods32')}
         panelKey="bar"
         extra={
           <Space className={formStyles.extra} size={16}>
-            <button onClick={addItem}>增行</button>
+            <button onClick={addItem}>{i18n('form.guid.goods33')}</button>
             <i className={formStyles.split} />
-            <button onClick={delItem}>删行</button>
+            <button onClick={delItem}>{i18n('form.guid.goods34')}</button>
           </Space>
         }
       >
         <Table dataSource={state} columns={customerColumns} rowSelection={rowSelection as any} primaryKey="index" />
       </Collapse.Panel>
-      <Collapse.Panel header="附件" panelKey="attachment">
+      <Collapse.Panel header={i18n('form.guid.goods35')} panelKey="attachment">
         <Upload {...uploadProps} style={{ display: 'inline-block' }}>
           <Button type="ghost" icon={<Icon type="upload" />}>
-            上传文件
+            {i18n('form.guid.goods36')}
           </Button>
         </Upload>
-        <span style={{ fontSize: 12, color: '#999', marginLeft: 20 }}>支持ctrl+v粘贴截图</span>
+        <span style={{ fontSize: 12, color: '#999', marginLeft: 20 }}>
+          {i18n('form.guid.goods37')}ctrl+v{i18n('form.guid.goods38')}
+        </span>
         <Upload.Dragger {...uploadProps} style={{ width: '100%', marginTop: 10 }}>
           {dragButton}
         </Upload.Dragger>

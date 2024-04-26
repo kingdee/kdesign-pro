@@ -15,7 +15,7 @@ interface IHeaderProps {
 }
 
 export default ({ top, appPath }: IHeaderProps) => {
-  const intl = useIntl()
+  const { formatMessage: i18n } = useIntl()
   const searchRef = useRef<HTMLInputElement>()
   const [showSearch, setShowSearch] = useState(false)
 
@@ -43,7 +43,7 @@ export default ({ top, appPath }: IHeaderProps) => {
                 className={classnames({ [styles.active]: path === appPath })}
                 onClick={handleSwitchApp.bind(null, path)}
               >
-                {intl.formatMessage({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })}
+                {i18n({ id: `menu${path.replace(/\//g, '.')}`, defaultMessage: name })}
               </li>
             ))}
           </ul>
@@ -54,7 +54,7 @@ export default ({ top, appPath }: IHeaderProps) => {
           <Input
             ref={searchRef}
             borderType="underline"
-            placeholder={intl.formatMessage({ id: 'header.search.placeholder', defaultMessage: '输入搜索内容' })}
+            placeholder={i18n({ id: 'header.search.placeholder', defaultMessage: '输入搜索内容' })}
             onBlur={handleSearchBlur}
             style={{ width: 300 }}
             prefix={<Icon type="search" />}
