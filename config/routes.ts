@@ -4,7 +4,7 @@ import { getRoutes } from './tools'
 export default [
   {
     path: '/',
-    component: '@/pages',
+    component: '@/layouts',
     routes: [
       {
         path: '/',
@@ -16,7 +16,7 @@ export default [
       },
       {
         path: '/',
-        component: '@/layouts',
+        component: '@/pages',
         routes: [...getRoutes(menus)],
       },
     ],

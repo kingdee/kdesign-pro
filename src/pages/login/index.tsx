@@ -26,7 +26,7 @@ export default () => {
       const { status, data } = await login(values)
       setLoading(false)
       if (status === 'success') {
-        sessionStorage.setItem('username', data)
+        sessionStorage.setItem('access', data)
         Message.success(i18n({ id: 'login.success', defaultMessage: `${data} 登录成功！` }))
         await setInitialState((s) => ({
           ...s,

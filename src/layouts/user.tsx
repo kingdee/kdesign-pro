@@ -34,11 +34,15 @@ export default function User() {
 
   const { avatar, name, department, slogan, data_center, business_unit } = user
 
-  useEffect(() => {
+  const renderInit = () => {
     getUserInfo().then((res) => {
       sessionStorage.setItem('user', JSON.stringify(res.data))
       setUser(res.data)
     })
+  }
+
+  useEffect(() => {
+    renderInit()
   }, [])
 
   const Locator = (
