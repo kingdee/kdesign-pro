@@ -1,14 +1,14 @@
-import { Empty, Layout } from '@kdcloudjs/kdesign'
-import classnames from 'classnames'
 import { useContext, useEffect, useState } from 'react'
 import { useLocation } from 'umi'
+import { Empty, Layout } from '@kdcloudjs/kdesign'
+import classnames from 'classnames'
 
-import Content from '@/layouts/content'
-import CustomBar from '@/layouts/custom-bar'
 import SettingsContext from '@/layouts/custom-bar/context'
 import Header from '@/layouts/header'
 import Menu from '@/layouts/menu'
 import Panes from '@/layouts/panes'
+import Content from '@/layouts/content'
+import CustomBar from '@/layouts/custom-bar'
 
 import styles from '@/layouts/global.less'
 import { menus } from '@/layouts/index'

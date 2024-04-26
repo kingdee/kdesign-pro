@@ -40,14 +40,12 @@ export async function getInitialState(): Promise<IState> {
     if (!access) {
       history.push('/login')
     }
-
     const curRoute = baseRoutes.find(({ path }) => path === pathname)
 
     if (!curRoute && pathname !== '/') {
       Message.error(`页面 ${pathname || ''} 未找到!`)
       history.push('/typical/exception/404')
     }
-
     state.curRoute = curRoute
   }
 

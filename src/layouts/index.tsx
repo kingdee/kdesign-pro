@@ -1,15 +1,14 @@
-import defaultTheme from '@kdcloudjs/kd-charts/theme/echarts-theme-default'
-import { ConfigProvider, Message } from '@kdcloudjs/kdesign'
 import * as echarts from 'echarts'
 import { useEffect, useState } from 'react'
-import { history, Outlet, useAccess, useIntl, useLocation, useModel } from 'umi'
-
-import BaseLayout from '@/layouts/baseLayout'
+import { history, useLocation, useModel, useAccess, useIntl, Outlet } from 'umi'
+import defaultTheme from '@kdcloudjs/kd-charts/theme/echarts-theme-default'
+import { Message, ConfigProvider } from '@kdcloudjs/kdesign'
+import defaultSettings from '../../config/settings'
 import { SettingsContextProvider } from '@/layouts/custom-bar/context'
 import changeTheme from '@/utils/change-theme'
-import originMenus from '../../config/menus'
-import defaultSettings from '../../config/settings'
+import BaseLayout from '@/layouts/baseLayout'
 import { getMenus } from '../../config/tools'
+import originMenus from '../../config/menus'
 
 echarts.registerTheme('defaultTheme', defaultTheme)
 
