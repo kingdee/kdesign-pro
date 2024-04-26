@@ -1,6 +1,5 @@
 import { history, RequestConfig } from 'umi'
 import { Message } from '@kdcloudjs/kdesign'
-import Loading from '@/loading'
 import settings from '../config/settings'
 import { baseRoutes } from '../config/routes'
 import '@kdcloudjs/kdesign/dist/kdesign.css'
@@ -19,10 +18,6 @@ export const request: RequestConfig = {
     }),
   ],
   responseInterceptors: [(response) => response],
-}
-
-export const initialStateConfig = {
-  loading: <Loading />,
 }
 
 export interface IState {
