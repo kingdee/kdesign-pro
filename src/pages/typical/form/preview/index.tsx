@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import { Space, Form, Button, Icon, Collapse, Row, Col, Input, Layout, Radio, Upload } from '@kdcloudjs/kdesign'
 import E from 'wangeditor'
 import i18next from 'i18next'
-import { useIntl } from 'umi'
+import { useIntl, useLocation } from 'umi'
 import { getFormPreview } from '@/services/form'
 
 import formStyles from '../index.less'
@@ -155,39 +155,13 @@ let editor: any = null
 
 export default () => {
   const { formatMessage } = useIntl()
+  const { pathname } = useLocation()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
 
   const [article, setArticle] = useState(1)
   const [data, setData] = useState<DataProps[]>([])
-
-  async function initData() {
-    const d = await getFormPreview()
-    const { previewData } = d
-    setData(previewData)
-
-    if (!editor) {
-      editor = new E('#wang-editor')
-      editor.config.menus = [
-        'bold',
-        'fontSize',
-        'fontName',
-        'italic',
-        'underline',
-        'strikeThrough',
-        'indent',
-        'lineHeight',
-        'foreColor',
-        'backColor',
-        'justify',
-      ]
-      editor.config.lang = 'self'
-      editor.config.languages.self = editorLang
-      editor.i18next = i18next
-      editor.create()
-    }
-  }
 
   const editorLang = {
     wangEditor: {
@@ -316,13 +290,49 @@ export default () => {
     },
   }
 
+  const initData = () => {
+    getFormPreview().then((res) => {
+      const { previewData } = res
+      setData(previewData)
+    })
+  }
+
+  const destroyEditor = () => {
+    editor && editor?.destroy()
+    editor = null
+  }
+
+  const initEditor = () => {
+    destroyEditor()
+    editor = new E('#wang-editor')
+    editor.config.menus = [
+      'bold',
+      'fontSize',
+      'fontName',
+      'italic',
+      'underline',
+      'strikeThrough',
+      'indent',
+      'lineHeight',
+      'foreColor',
+      'backColor',
+      'justify',
+    ]
+    editor.config.lang = 'self'
+    editor.config.languages.self = editorLang
+    editor.i18next = i18next
+    editor.create()
+
+    return destroyEditor
+  }
+
   useEffect(() => {
     initData()
-
-    return () => {
-      editor && editor.destroy()
-    }
   }, [])
+
+  useEffect(() => {
+    initEditor()
+  }, [pathname])
 
   const handleDel = () => {
     const curData: DataProps[] = data.filter((_item, index) => index !== article - 1)
