@@ -27,8 +27,7 @@ export interface IState {
 }
 
 export async function getInitialState(): Promise<IState> {
-  const isPre = process.env.REACT_APP_ENV === 'pre'
-  ;(window as any).routerBase = isPre ? '/preview/' : '/'
+  ;(window as any).routerBase = process.env.REACT_APP_ENV === 'pre' ? '/preview/' : '/'
 
   const { pathname } = window.location
   const loginPath = '/login'
@@ -43,9 +42,8 @@ export async function getInitialState(): Promise<IState> {
     }
 
     const curRoute = baseRoutes.find(({ path }) => pathname.indexOf(path) > -1)
-    const isRoot = (isPre && ['/preview', '/preview/', '/'].includes(pathname)) || (!isPre && pathname === '/')
 
-    if (!curRoute && !isRoot) {
+    if (!curRoute && !['/preview', '/preview/', '/'].includes(pathname)) {
       Message.error(`页面 ${pathname || ''} 未找到!`)
       history.push('/typical/exception/404')
     }
