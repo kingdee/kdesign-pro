@@ -41,7 +41,7 @@ export async function getInitialState(): Promise<IState> {
       history.push('/login')
     }
 
-    const curRoute = baseRoutes.find(({ path }) => path === pathname)
+    const curRoute = baseRoutes.find(({ path }) => pathname.indexOf(path) > -1)
 
     if (!curRoute && pathname !== '/') {
       Message.error(`页面 ${pathname || ''} 未找到!`)
