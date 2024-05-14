@@ -108,6 +108,10 @@ const ArticleForm = (props: any) => {
         </Col>
         <Col span={24}>
           <Form.Item label={i18n('form.preview6')} name="background" required>
+            <div className={styles.describe}>
+              {i18n('form.preview7')}：461*461，{i18n('form.preview8')}JPG、PNG{i18n('form.preview9')}，
+              {i18n('form.preview10')}2M
+            </div>
             <Radio.Group
               className={styles.selectBg}
               value={value}
@@ -137,10 +141,6 @@ const ArticleForm = (props: any) => {
               </Radio>
             </Radio.Group>
           </Form.Item>
-          <span className={styles.describe}>
-            {i18n('form.preview7')}：461*461，{i18n('form.preview8')}JPG、PNG{i18n('form.preview9')}，
-            {i18n('form.preview10')}2M
-          </span>
         </Col>
         <Col span={24}>
           <div className={styles.text}>{i18n('form.preview11')}</div>
@@ -304,24 +304,28 @@ export default () => {
 
   const initEditor = () => {
     destroyEditor()
-    editor = new E('#wang-editor')
-    editor.config.menus = [
-      'bold',
-      'fontSize',
-      'fontName',
-      'italic',
-      'underline',
-      'strikeThrough',
-      'indent',
-      'lineHeight',
-      'foreColor',
-      'backColor',
-      'justify',
-    ]
-    editor.config.lang = 'self'
-    editor.config.languages.self = editorLang
-    editor.i18next = i18next
-    editor.create()
+    try {
+      editor = new E('#wang-editor')
+      editor.config.menus = [
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'justify',
+      ]
+      editor.config.lang = 'self'
+      editor.config.languages.self = editorLang
+      editor.i18next = i18next
+      editor.create()
+    } catch {
+      console.log('error')
+    }
 
     return destroyEditor
   }

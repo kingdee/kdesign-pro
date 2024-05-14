@@ -55,4 +55,5 @@ export default {
   menu: 'inline',
   menuTheme: 'dark',
   tabs: false,
+  logo: true,
 }

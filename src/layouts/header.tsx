@@ -33,7 +33,7 @@ export default ({ top, appPath }: IHeaderProps) => {
     <Header className={styles.header}>
       <div className={styles.brand}>
         <div className={styles.logo}>
-          <img src={`${(window as any).routerBase}logo.png`} height="24" />
+          <img src={`${(window as any).routerBase}logo.svg`} height="27" />
         </div>
         {top === 'nav' && (
           <ul className={styles.nav}>

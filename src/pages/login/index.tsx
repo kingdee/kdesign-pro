@@ -51,7 +51,7 @@ export default () => {
       <div className={styles.bar}>
         {logo && (
           <div className={styles.logo}>
-            <img src={`${(window as any).routerBase}${logo}`} height="30" />
+            <img src={`${(window as any).routerBase}logo.svg`} height="34" />
           </div>
         )}
         <div className={styles.title}>

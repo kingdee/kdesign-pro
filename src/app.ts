@@ -36,7 +36,7 @@ export async function getInitialState(): Promise<IState> {
     settings,
     access: access || 'guest',
   }
-  if (pathname !== loginPath) {
+  if (pathname.indexOf(loginPath) === -1) {
     if (!access) {
       history.push('/login')
     }
