@@ -38,7 +38,7 @@ export async function getInitialState(): Promise<IState> {
   }
   if (pathname.indexOf(loginPath) === -1) {
     if (!access) {
-      history.push('/login')
+      history.push(loginPath)
     }
 
     const curRoute = baseRoutes.find(({ path }) => pathname.indexOf(path) > -1)

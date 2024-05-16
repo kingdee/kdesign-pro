@@ -1,5 +1,5 @@
 import { history, getAllLocales, getLocale, setLocale, useIntl } from 'umi'
-import { useState, useRef, useContext, useEffect } from 'react'
+import { useState, useRef, useContext, useEffect, useLayoutEffect } from 'react'
 import { Icon, Space, Dropdown } from '@kdcloudjs/kdesign'
 import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
 import SettingsContext from '@/layouts/custom-bar/context'
@@ -41,7 +41,7 @@ export default function User() {
     })
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     renderInit()
   }, [])
 

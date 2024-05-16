@@ -48,7 +48,7 @@ export default () => {
     { code: 'memo', width: 200, name: i18n('remark') },
   ]
 
-  const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
+  const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
 
   return (
     <Tabs type="card" defaultActiveKey="vip" className={classnames(formStyles.form, styles.container)}>

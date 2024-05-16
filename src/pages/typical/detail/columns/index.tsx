@@ -71,7 +71,7 @@ const TaskHandle = () => {
   )
 }
 
-const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
+const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
 
 const ApprovalRecord = ({ records }: { records: Array<any> }) => {
   const { formatMessage } = useIntl()

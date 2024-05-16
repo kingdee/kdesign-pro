@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { Link, useModel, useIntl, history } from 'umi'
 import { Form, Input, Button, Radio, Space, Alert, Icon, Message } from '@kdcloudjs/kdesign'
 import SettingsContext from '@/layouts/custom-bar/context'
@@ -41,6 +41,13 @@ export default () => {
 
   const [pwdVisible, setPwdVisible] = useState(false)
   const handleSwitchPwdVisible = () => setPwdVisible(!pwdVisible)
+
+  useEffect(() => {
+    const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
+    if (avatar) {
+      history.push('/typical/workbench')
+    }
+  }, [])
 
   return (
     <div className={styles.login}>

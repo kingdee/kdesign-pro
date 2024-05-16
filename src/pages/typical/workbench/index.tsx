@@ -13,9 +13,10 @@ export default () => {
   const lang = getLocale()
   const [home, setHome] = useState<Record<string, any>>({})
 
-  async function getData() {
-    const payable = await getHome({ lang })
-    setHome(payable)
+  const getData = () => {
+    getHome().then((res) => {
+      setHome(res)
+    })
   }
 
   useEffect(() => {
@@ -31,8 +32,12 @@ export default () => {
           <div className={styles.banner}>
             {banners && (
               <Carousel>
-                {banners.map((banner: string) => (
-                  <img key={banner} src={require(`@/assets/images/${banner}`)} />
+                {banners.map((banner: any) => (
+                  <div className={styles.banneritem} key={banner.img}>
+                    <img src={require(`@/assets/images/${banner.img}`)} />
+                    <div>{banner.title}</div>
+                    <div>{banner.subtitle}</div>
+                  </div>
                 ))}
               </Carousel>
             )}
@@ -112,46 +117,51 @@ export default () => {
             <h4 className={styles.title}>{i18n({ id: 'workbench.overdue', defaultMessage: '逾期账款' })}</h4>
             {funds && (
               <Carousel className={styles.funds}>
-                {funds.map(({ name, code, logo, amount, expire, payment, settlement }: Record<string, any>) => (
-                  <div key={code} className={styles.fund}>
-                    <header>
-                      <img src={require(`@/assets/images/${logo}`)} width="48" />
-                      <div className={styles.tit}>
-                        <span className={styles.name}>{name}</span>
-                        <span className={styles.code}>
-                          {`${i18n({
-                            id: 'workbench.overdue.code',
-                            defaultMessage: '单据编号',
-                          })}    ${code}`}
-                        </span>
-                      </div>
-                      <img src={require(`@/assets/images/unpopable.png`)} style={{ height: 60, marginTop: -12 }} />
-                    </header>
-                    <ul className={styles.attr}>
-                      <li>
-                        <label>{`${i18n({ id: 'workbench.overdue.amount', defaultMessage: '逾期金额' })}：`}</label>
-                        {amount}
-                      </li>
-                      <li>
-                        <label>{`${i18n({ id: 'workbench.overdue.expiry', defaultMessage: '到期日' })}：`}</label>
-                        {expire}
-                      </li>
-                      <li>
-                        <label>{`${i18n({ id: 'workbench.overdue.payment', defaultMessage: '付款方式' })}：`}</label>
-                        {payment}
-                      </li>
-                      <li>
-                        <label>
-                          {`${i18n({
-                            id: 'workbench.overdue.settlement',
-                            defaultMessage: '结算方式',
-                          })}：`}
-                        </label>
-                        {settlement}
-                      </li>
-                    </ul>
-                  </div>
-                ))}
+                {funds.map(
+                  ({ name, code, logo, amount, expire, payment, settlement, statusStr }: Record<string, any>) => (
+                    <div key={code} className={styles.fund}>
+                      <header>
+                        <img src={require(`@/assets/images/${logo}`)} width="48" />
+                        <div className={styles.tit}>
+                          <span className={styles.name}>{name}</span>
+                          <span className={styles.code}>
+                            {`${i18n({
+                              id: 'workbench.overdue.code',
+                              defaultMessage: '单据编号',
+                            })}    ${code}`}
+                          </span>
+                        </div>
+                        <div className={styles.titimg}>
+                          <img src={require(`@/assets/images/unpopable.png`)} />
+                          <div>{statusStr}</div>
+                        </div>
+                      </header>
+                      <ul className={styles.attr}>
+                        <li>
+                          <label>{`${i18n({ id: 'workbench.overdue.amount', defaultMessage: '逾期金额' })}：`}</label>
+                          <div>{amount}</div>
+                        </li>
+                        <li>
+                          <label>{`${i18n({ id: 'workbench.overdue.expiry', defaultMessage: '到期日' })}：`}</label>
+                          <div>{expire}</div>
+                        </li>
+                        <li>
+                          <label>{`${i18n({ id: 'workbench.overdue.payment', defaultMessage: '付款方式' })}：`}</label>
+                          <div>{payment}</div>
+                        </li>
+                        <li>
+                          <label>
+                            {`${i18n({
+                              id: 'workbench.overdue.settlement',
+                              defaultMessage: '结算方式',
+                            })}：`}
+                          </label>
+                          {settlement}
+                        </li>
+                      </ul>
+                    </div>
+                  ),
+                )}
               </Carousel>
             )}
           </div>

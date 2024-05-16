@@ -95,7 +95,7 @@ const ArticleForm = (props: any) => {
           </Form.Item>
         </Col>
         <Col span={8} />
-        <Col span={8}>
+        <Col span={16}>
           <Form.Item
             label={i18n('form.preview4')}
             name="desc"
@@ -170,7 +170,7 @@ export default () => {
       创建: 'create',
       修改: 'edit',
       如: 'like',
-      请输入正文: 'please enter the text',
+      请输入正文: i18n('wang.editor26'),
       menus: {
         title: {
           标题: i18n('wang.editor1'),
@@ -324,7 +324,7 @@ export default () => {
       editor.i18next = i18next
       editor.create()
     } catch {
-      console.log('error')
+      console.error('error')
     }
 
     return destroyEditor

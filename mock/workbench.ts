@@ -2,7 +2,23 @@ export default {
   '/mock/home': async (req: any, res: any) => {
     const { lang } = req.query || {}
     let data = {
-      banners: ['home_banner_01.png', 'home_banner_02.png', 'home_banner_03.png'],
+      banners: [
+        {
+          img: 'home_banner_01.png',
+          title: 'EBC变革之路',
+          subtitle: '探究数字化转型',
+        },
+        {
+          img: 'home_banner_02.png',
+          title: '解说业财税系统',
+          subtitle: 'SAAS技术革新',
+        },
+        {
+          img: 'home_banner_03.png',
+          title: '一张图看懂审批流',
+          subtitle: '业务审批流程讲解',
+        },
+      ],
       receipt: {
         submit: 25,
         audit: 6,
@@ -32,6 +48,7 @@ export default {
           expire: '2022-04-19',
           payment: '赊账',
           settlement: '现金支票',
+          statusStr: '未收款',
         },
         {
           name: '华生控股集团',
@@ -41,6 +58,7 @@ export default {
           expire: '2022-04-23',
           payment: '赊账',
           settlement: '现金支票',
+          statusStr: '未收款',
         },
         {
           name: '利金科技有限公司',
@@ -50,6 +68,7 @@ export default {
           expire: '2022-04-12',
           payment: '赊账',
           settlement: '现金支票',
+          statusStr: '未收款',
         },
       ],
       bills: [
@@ -241,7 +260,23 @@ export default {
     }
     if (lang === 'en-US') {
       data = {
-        banners: ['home_banner_01.png', 'home_banner_02.png', 'home_banner_03.png'],
+        banners: [
+          {
+            img: 'home_banner_01.png',
+            title: 'EBC Road of Transformation',
+            subtitle: 'exploring digital transformation',
+          },
+          {
+            img: 'home_banner_02.png',
+            title: 'Explaining Business Tax System',
+            subtitle: 'SAAS technology innovation',
+          },
+          {
+            img: 'home_banner_03.png',
+            title: 'Understand Workflow',
+            subtitle: 'explanation of business approval process',
+          },
+        ],
         receipt: {
           submit: 25,
           audit: 6,
@@ -271,6 +306,7 @@ export default {
             expire: '2022-04-19',
             payment: 'On credit',
             settlement: 'Cash cheque',
+            statusStr: 'NotPay',
           },
           {
             name: 'Watson Holding Group',
@@ -280,6 +316,7 @@ export default {
             expire: '2022-04-23',
             payment: 'On credit',
             settlement: 'Cash cheque',
+            statusStr: 'NotPay',
           },
           {
             name: 'Lijin Technology Co., LTD',
@@ -289,6 +326,7 @@ export default {
             expire: '2022-04-12',
             payment: 'On credit',
             settlement: 'Cash cheque',
+            statusStr: 'NotPay',
           },
         ],
         bills: [
@@ -481,7 +519,23 @@ export default {
     }
     if (lang === 'ja-JP') {
       data = {
-        banners: ['home_banner_01.png', 'home_banner_02.png', 'home_banner_03.png'],
+        banners: [
+          {
+            img: 'home_banner_01.png',
+            title: 'EBC変革の道',
+            subtitle: 'デジタル変革の探求',
+          },
+          {
+            img: 'home_banner_02.png',
+            title: '業務財税システムの解説',
+            subtitle: 'SAAS技術革新',
+          },
+          {
+            img: 'home_banner_03.png',
+            title: '承認フローを理解する',
+            subtitle: '業務承認プロセスの解説',
+          },
+        ],
         receipt: {
           submit: 25,
           audit: 6,
@@ -511,6 +565,7 @@ export default {
             expire: '2022-04-19',
             payment: '掛取引',
             settlement: '現金小切手',
+            statusStr: '未受領金',
           },
           {
             name: '華生ホールディングス・グループ',
@@ -520,6 +575,7 @@ export default {
             expire: '2022-04-23',
             payment: '掛取引',
             settlement: '現金小切手',
+            statusStr: '未受領金',
           },
           {
             name: '利金テクノロジー有限公司',
@@ -529,6 +585,7 @@ export default {
             expire: '2022-04-12',
             payment: '掛取引',
             settlement: '現金小切手',
+            statusStr: '未受領金',
           },
         ],
         bills: [
@@ -721,7 +778,23 @@ export default {
     }
     if (lang === 'vi-VN') {
       data = {
-        banners: ['home_banner_01.png', 'home_banner_02.png', 'home_banner_03.png'],
+        banners: [
+          {
+            img: 'home_banner_01.png',
+            title: 'Con Đường Biến Đổi EBC',
+            subtitle: 'Khám phá Chuyển Đổi Số',
+          },
+          {
+            img: 'home_banner_02.png',
+            title: 'Giải Thích Hệ Thống Tài Chính',
+            subtitle: 'Đổi Mới Công Nghệ SAAS',
+          },
+          {
+            img: 'home_banner_03.png',
+            title: 'Hiểu Quy Trình Phê Duyệt',
+            subtitle: 'Giải Thích Quy Trình Phê Duyệt Công Việc',
+          },
+        ],
         receipt: {
           submit: 25,
           audit: 6,
@@ -751,6 +824,7 @@ export default {
             expire: '2022-04-19',
             payment: 'Tín dụng',
             settlement: 'Tiền mặt',
+            statusStr: 'Chưa thanh toán',
           },
           {
             name: 'Tập đoàn Hua Sheng Holdings',
@@ -760,6 +834,7 @@ export default {
             expire: '2022-04-23',
             payment: 'Tín dụng',
             settlement: 'Tiền mặt',
+            statusStr: 'Chưa thanh toán',
           },
           {
             name: 'Công ty Công nghệ Lợi Kim',
@@ -769,6 +844,7 @@ export default {
             expire: '2022-04-12',
             payment: 'Tín dụng',
             settlement: 'Tiền mặt',
+            statusStr: 'Chưa thanh toán',
           },
         ],
         bills: [

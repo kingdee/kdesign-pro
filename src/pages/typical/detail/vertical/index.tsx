@@ -97,7 +97,7 @@ const MemberInfo = () => {
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
-  const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
+  const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
   const [dataSource, setDataSource] = useState([])
   const [basicInformation, setBasicInformation] = useState([])
   const [recommendedInformation, setRecommendedInformation] = useState([])

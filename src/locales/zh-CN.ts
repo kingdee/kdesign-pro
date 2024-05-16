@@ -264,6 +264,7 @@ export default {
   'wang.editor23': '撤销',
   'wang.editor24': '全屏',
   'wang.editor25': '代办事项',
+  'wang.editor26': '请输入正文',
 
   // page
   'detail.basic2': '项目',

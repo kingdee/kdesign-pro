@@ -84,7 +84,7 @@ export default function Proof() {
     },
   }
 
-  const { avatar } = JSON.parse(sessionStorage.getItem('user') as any)
+  const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
 
   return (
     <Collapse

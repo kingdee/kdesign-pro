@@ -254,6 +254,7 @@ export default {
   'wang.editor23': 'Hủy bỏ',
   'wang.editor24': 'toàn màn hình',
   'wang.editor25': 'Những việc cần làm',
+  'wang.editor26': 'Vui lòng nhập nội dung',
   'detail.basic2': 'dự án',
   'detail.basic3': 'mã hóa nhiệm vụ',
   'detail.basic4': 'Phương thức giải quyết',

@@ -254,6 +254,7 @@ export default {
   'wang.editor23': 'Cancel',
   'wang.editor24': 'full screen',
   'wang.editor25': 'To-do items',
+  'wang.editor26': 'please enter the text',
   'detail.basic2': 'project',
   'detail.basic3': 'task coding',
   'detail.basic4': 'Settlement Method',

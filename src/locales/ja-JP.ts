@@ -254,6 +254,7 @@ export default {
   'wang.editor23': 'キャンセル',
   'wang.editor24': '全画面表示',
   'wang.editor25': 'To Do アイテム',
+  'wang.editor26': '本文を入力してください',
   'detail.basic2': 'プロジェクト',
   'detail.basic3': 'タスクコーディング',
   'detail.basic4': '決済方法',
