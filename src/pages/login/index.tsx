@@ -43,8 +43,7 @@ export default () => {
   const handleSwitchPwdVisible = () => setPwdVisible(!pwdVisible)
 
   useEffect(() => {
-    const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
-    if (avatar) {
+    if (sessionStorage.getItem('user') && sessionStorage.getItem('access')) {
       history.push('/typical/workbench')
     }
   }, [])
