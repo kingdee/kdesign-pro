@@ -20,7 +20,7 @@ import listStyles from '../index.less'
 import styles from './index.less'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [viewType, setViewType] = useState('list')
@@ -53,7 +53,7 @@ export default () => {
     status: i18n('list.banner11'),
   }
 
-  async function initListBasic() {
+  async function initPage() {
     const glb = await getListBanner()
     setData(glb.dataSource)
     setFilterConditions(glb.filterConditions)
@@ -61,8 +61,9 @@ export default () => {
   }
 
   useEffect(() => {
-    initListBasic()
-  }, [])
+    initPage()
+  }, [lang])
+
   const handleChangeView = (type: string) => {
     setViewType(type)
   }

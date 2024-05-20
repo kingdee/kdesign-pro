@@ -8,7 +8,7 @@ interface IExceptionProps {
 }
 
 export default ({ status, message }: IExceptionProps) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const handleBackHome = () => {

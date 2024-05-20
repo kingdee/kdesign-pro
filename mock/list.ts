@@ -878,7 +878,7 @@ const data3 = {
     treeData: [
       {
         key: '1',
-        title: '全部',
+        title: 'すべて',
         children: [
           {
             key: '1-0',
@@ -930,9 +930,9 @@ const data3 = {
       .map((_, index) => ({
         index: index + 1,
         number: 'C23.136',
-        name: '收回投资收到的现金',
-        type: '主表项目',
-        flow: '资金流入',
+        name: '投資で受け取った現金の回収',
+        type: 'マスターテーブルアイテム',
+        flow: '資金流入',
         business: '',
       })),
   },

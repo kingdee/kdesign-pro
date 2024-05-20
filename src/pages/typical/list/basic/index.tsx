@@ -8,7 +8,7 @@ import globalStyles from '@/layouts/global.less'
 import listStyles from '../index.less'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [listBasic, setListBasic] = useState<{ [key: string]: any }>({})
@@ -69,14 +69,14 @@ export default () => {
     { code: 'department', width: 220, name: i18n('list.basic12') },
   ]
 
-  async function initListBasic() {
+  async function initPage() {
     const data = await getListBasic()
     setListBasic(data)
   }
 
   useEffect(() => {
-    initListBasic()
-  }, [])
+    initPage()
+  }, [lang])
 
   const { filterConditions, filterDefaultValue, dataSource } = listBasic
 

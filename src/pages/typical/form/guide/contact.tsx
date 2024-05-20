@@ -20,7 +20,7 @@ import styles from './index.less'
 const { Option } = Select
 
 export default function Contact() {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()

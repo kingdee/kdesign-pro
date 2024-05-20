@@ -7,7 +7,7 @@ import styles from './index.less'
 import { getDetailCross } from '@/services/detail'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [materialColumns, setMaterialColumns] = useState<any>([])
@@ -20,7 +20,7 @@ export default () => {
   const [transportData, setTransportData] = useState<any>([])
   const [panes, setPanes] = useState<any>([])
 
-  async function getData() {
+  async function initPage() {
     const gd = await getDetailCross()
 
     setMaterialColumns(gd.materialColumns)
@@ -35,8 +35,8 @@ export default () => {
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    initPage()
+  }, [lang])
 
   return (
     <div className={styles.cross}>

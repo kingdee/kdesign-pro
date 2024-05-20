@@ -39,7 +39,7 @@ function beforeUpload(file: any) {
 }
 
 const ArticleForm = (props: any) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const { article, data, changeData } = props
@@ -154,7 +154,7 @@ const ArticleForm = (props: any) => {
 let editor: any = null
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const { pathname } = useLocation()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
@@ -290,7 +290,7 @@ export default () => {
     },
   }
 
-  const initData = () => {
+  const initPage = () => {
     getFormPreview().then((res) => {
       const { previewData } = res
       setData(previewData)
@@ -331,8 +331,8 @@ export default () => {
   }
 
   useEffect(() => {
-    initData()
-  }, [])
+    initPage()
+  }, [lang])
 
   useEffect(() => {
     initEditor()

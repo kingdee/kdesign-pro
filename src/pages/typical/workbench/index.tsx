@@ -13,14 +13,14 @@ export default () => {
   const lang = getLocale()
   const [home, setHome] = useState<Record<string, any>>({})
 
-  const getData = () => {
+  const initPage = () => {
     getHome().then((res) => {
       setHome(res)
     })
   }
 
   useEffect(() => {
-    getData()
+    initPage()
   }, [lang])
 
   const { banners, receipt, receive, boots, funds, bills, agingOption, rateOptions, news } = home

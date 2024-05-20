@@ -11,7 +11,7 @@ import formStyles from '../../form/index.less'
 import infoStyles from './info.less'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const panes = [i18n('detail.vertical1'), i18n('detail.vertical2'), i18n('detail.vertical3')]
@@ -93,7 +93,7 @@ export default () => {
 }
 
 const MemberInfo = () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -103,7 +103,7 @@ const MemberInfo = () => {
   const [recommendedInformation, setRecommendedInformation] = useState([])
   const [cardData, setCardData] = useState([])
 
-  async function initListForm() {
+  async function initPage() {
     const gfa = await getFormAnchor()
     setDataSource(gfa.dataSource)
     setBasicInformation(gfa.basicInformation)
@@ -112,8 +112,8 @@ const MemberInfo = () => {
   }
 
   useEffect(() => {
-    initListForm()
-  }, [])
+    initPage()
+  }, [lang])
 
   const customerColumns = [
     { code: 'index', lock: true, width: 60, name: '#' },
@@ -227,7 +227,7 @@ const MemberInfo = () => {
 }
 
 const RechargeRecord = (props: { rechargeData: any[]; rechargeColumns: any[] }) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const { rechargeData, rechargeColumns } = props
@@ -265,7 +265,7 @@ const RechargeRecord = (props: { rechargeData: any[]; rechargeColumns: any[] }) 
 }
 
 const ExpenseRecord = (props: { expenseData: any[]; expenseColumns: any[] }) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const { expenseData, expenseColumns } = props

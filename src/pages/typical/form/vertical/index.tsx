@@ -9,7 +9,7 @@ import styles from './index.less'
 const { Option } = Select
 
 const OperationRecord = () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const option678 = [i18n('form.vertical6'), i18n('form.vertical7'), i18n('form.vertical8')]
@@ -334,7 +334,7 @@ const OperationRecord = () => {
 }
 
 const PaymentSubject = () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -456,7 +456,7 @@ const PaymentSubject = () => {
 }
 
 const PersonGroup = () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -509,7 +509,7 @@ const PersonGroup = () => {
 }
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const mapCont: Record<string, JSX.Element> = {

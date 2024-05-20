@@ -9,7 +9,7 @@ import formStyles from '../index.less'
 import styles from './index.less'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -28,7 +28,7 @@ export default () => {
 
   useEffect(() => {
     initListForm()
-  }, [])
+  }, [lang])
 
   const rowSelection = {
     type: 'checkbox',

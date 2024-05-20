@@ -26,7 +26,7 @@ const { Group } = Radio
 const { Option } = Select
 
 const TaskHandle = () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -74,7 +74,7 @@ const TaskHandle = () => {
 const { avatar = 'avatar.png' } = JSON.parse((sessionStorage.getItem('user') || '{}') as any)
 
 const ApprovalRecord = ({ records }: { records: Array<any> }) => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   return (
@@ -118,18 +118,18 @@ const ApprovalRecord = ({ records }: { records: Array<any> }) => {
 export default () => {
   const initalResources = { basicInfo: {}, saleInfo: {}, records: [] }
   const [resources, setResources] = useState<Record<string, any>>(initalResources)
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
-  function getResources() {
+  function initPage() {
     getDetailColumns().then((rs) => {
       setResources(rs)
     })
   }
 
   useEffect(() => {
-    getResources()
-  }, [])
+    initPage()
+  }, [lang])
 
   const { basicInfo, saleInfo, records } = resources
 

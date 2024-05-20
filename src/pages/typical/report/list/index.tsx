@@ -11,7 +11,7 @@ import report_icon_0 from '@/assets/images/report_icon_0.png'
 const { Option } = Select
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [isSumView, setIsSumView] = useState(false)
@@ -65,7 +65,7 @@ export default () => {
     { code: 'summary', width: 80, name: i18n('report.list3') },
   ]
 
-  async function initListBasic() {
+  async function initPage() {
     const { dataSource } = await getReportBasic()
     setData(dataSource)
     const { sumData: sd } = await getReportBasicSum()
@@ -73,8 +73,8 @@ export default () => {
   }
 
   useEffect(() => {
-    initListBasic()
-  }, [])
+    initPage()
+  }, [lang])
 
   return (
     <div className={reportStyles.report}>

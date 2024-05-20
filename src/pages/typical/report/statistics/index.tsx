@@ -10,7 +10,7 @@ import styles from './index.less'
 const { Option } = Select
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const customerColumns = [
@@ -338,7 +338,7 @@ export default () => {
 
   useEffect(() => {
     initPage()
-  }, [])
+  }, [lang])
 
   return (
     <div className={reportStyles.report}>

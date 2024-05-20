@@ -15,7 +15,7 @@ const views = [
 ]
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [expandedKeys, setExpandedKeys] = useState(['1', '1-1'])
@@ -53,14 +53,14 @@ export default () => {
     },
   ]
 
-  async function initListTree() {
+  async function initPage() {
     const data = await getListTree()
     setListTree(data)
   }
 
   useEffect(() => {
-    initListTree()
-  }, [])
+    initPage()
+  }, [lang])
 
   const { filterConditions, filterDefaultValue, dataSource, treeData } = listTree
 

@@ -24,20 +24,20 @@ import { icon1, icon2, icon6 } from './steps-icon'
 import { getDetailFlow } from '@/services/detail'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [current, setCurrent] = useState(0)
   const [dataSource, setDataSource] = useState<any>([])
 
-  async function getData() {
+  async function initPage() {
     const { dataSource: ds } = await getDetailFlow()
     setDataSource(ds)
   }
 
   useEffect(() => {
-    getData()
-  }, [])
+    initPage()
+  }, [lang])
 
   const [rows, setRows] = useState<string[]>([])
 
@@ -80,7 +80,7 @@ export default () => {
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange({ file, fileList }: Record<string, any>) {
       if (file.status !== 'uploading') {
-        console.log(file, fileList)
+        console.info(file, fileList)
       }
     },
     defaultFileList: [

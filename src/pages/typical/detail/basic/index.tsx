@@ -7,7 +7,7 @@ import detailStyles from '../index.less'
 import { getDetailBasic } from '@/services/detail'
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
   const [form] = Form.useForm()
   const [basicInfo, setBasicInfo] = useState<Record<string, any>>({})
@@ -38,7 +38,7 @@ export default () => {
     onChange: setCustomerSelected,
   }
 
-  async function getResources() {
+  async function initPage() {
     const { basicInfo: bi, reductionRule: rr, costData: cd, customerData: cud } = await getDetailBasic()
     setBasicInfo(bi)
     setReductionRule(rr)
@@ -47,8 +47,8 @@ export default () => {
   }
 
   useEffect(() => {
-    getResources()
-  }, [])
+    initPage()
+  }, [lang])
 
   const handleMoveUp = (record: Record<string, any>, rowIndex: number) => {
     if (rowIndex > 0) {

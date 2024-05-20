@@ -1,5 +1,5 @@
 import { history, getAllLocales, getLocale, setLocale, useIntl } from 'umi'
-import { useState, useRef, useContext, useEffect, useLayoutEffect } from 'react'
+import { useState, useRef, useContext, useEffect } from 'react'
 import { Icon, Space, Dropdown } from '@kdcloudjs/kdesign'
 import usePopper from '@kdcloudjs/kdesign/es/_utils/usePopper'
 import SettingsContext from '@/layouts/custom-bar/context'
@@ -17,9 +17,10 @@ type IThemeColor = {
 }
 
 export default function User() {
-  const { formatMessage: i18n } = useIntl()
+  const { formatMessage: i18n, locale: lang } = useIntl()
   const avatarRef = useRef<any>()
   const [user, setUser] = useState<any>({})
+  const [visible, setVisible] = useState<boolean>(false)
 
   const { settings, updateSettings } = useContext(SettingsContext)
 
@@ -34,16 +35,16 @@ export default function User() {
 
   const { avatar, name, department, slogan, data_center, business_unit } = user
 
-  const renderInit = () => {
+  const initPage = () => {
     getUserInfo().then((res) => {
       sessionStorage.setItem('user', JSON.stringify(res.data))
       setUser(res.data)
     })
   }
 
-  useLayoutEffect(() => {
-    renderInit()
-  }, [])
+  useEffect(() => {
+    initPage()
+  }, [lang])
 
   const Locator = (
     <div className={styles.userHandle}>
@@ -82,8 +83,7 @@ export default function User() {
 
   const switchLocale = async (locale: string) => {
     setLocale(locale, false)
-    sessionStorage.removeItem('user')
-    window.location.reload()
+    setVisible(false)
   }
 
   const localesMenu = (
@@ -165,6 +165,8 @@ export default function User() {
     {
       gap: 1,
       trigger: 'click',
+      visible,
+      onVisibleChange: (v) => setVisible(v),
       placement: 'bottomRight',
       prefixCls: 'kd-pro-user-center-popper',
       getTriggerElement: () => avatarRef.current,

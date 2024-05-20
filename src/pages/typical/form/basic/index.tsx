@@ -19,7 +19,7 @@ const uploadProps = {
 }
 
 export default () => {
-  const { formatMessage } = useIntl()
+  const { formatMessage, locale: lang } = useIntl()
   const i18n = (id: string, defaultMessage = undefined) => formatMessage({ id, defaultMessage })
 
   const [form] = Form.useForm()
@@ -98,7 +98,7 @@ export default () => {
     onChange: setSelected,
   }
 
-  async function init() {
+  async function initPage() {
     const data = await getFormBasic()
     const { base, list } = data
     setState(list)
@@ -106,8 +106,8 @@ export default () => {
   }
 
   useEffect(() => {
-    init()
-  }, [])
+    initPage()
+  }, [lang])
 
   return (
     <div className={formStyles.form}>
