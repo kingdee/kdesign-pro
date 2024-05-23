@@ -24,7 +24,7 @@ export default defineConfig({
   },
   hash: true,
   dynamicImportSyntax: {},
-  favicon: `${basePath}favicon.ico`,
+  favicon: `https://kingdee.design/theme/favicon.ico`,
   define: {
     'process.env': { NODE_ENV, REACT_APP_ENV, UMI_ENV },
   },
