@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     camelcase: 0,
     'prettier/prettier': 2,
-    semi: [2, 'never'],
+    semi: 0,
     'jsx-quotes': [1, 'prefer-double'],
     'import/extensions': 0,
     'import/no-unresolved': 0,
@@ -47,6 +47,7 @@ module.exports = {
     'no-param-reassign': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-unused-vars': 0,
   },
   settings: {
     'import/parsers': {

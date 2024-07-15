@@ -1,23 +1,26 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# vscode
+.kdesign-vscode-plugin/
+*.vsix
+
 # dependencies
-/node_modules
-/npm-debug.log*
-/yarn-error.log
-/yarn.lock
-/package-lock.json
-/pnpm-lock.yaml
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
 
 # production
-/dist
-/pro
+out
+dist
 
 # misc
 .DS_Store
 .idea
 
 # umi
-/src/.umi
-/src/.umi-production
-/src/.umi-test
-/.env.local
+**/src/.umi
+**/src/.umi-production
+**/src/.umi-test
+**/.env.local
+web/yarn.lock

@@ -11,3 +11,6 @@ coverage
 scripts/previewEditor/**/*
 jest-stare
 packages
+out
+.vscode
+.idea

@@ -3,6 +3,7 @@
 **/*.ejs
 **/*.html
 package.json
-.umi
-.umi-production
-.umi-test
+**/*.umi
+**/*.umi-production
+**/*.umi-test
+out
