@@ -48,7 +48,7 @@
     "ie >= 11"
   ],
   "dependencies": {
-    "@kdcloudjs/kdesign": "^1.7.52",
+    "@kdcloudjs/kdesign": "^1.8.46",
     "classnames": "^2.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"

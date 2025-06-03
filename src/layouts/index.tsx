@@ -1,6 +1,6 @@
-import { Outlet, useModel, useLocation, history } from 'umi'
+import { history, Outlet, useLocation, useModel } from 'umi'
 
-import './index.less'
+import '@kdcloudjs/kdesign/dist/kdesign.min.css'
 
 export default () => {
   const { initialState } = useModel('@@initialState')

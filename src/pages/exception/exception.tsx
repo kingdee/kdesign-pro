@@ -1,5 +1,5 @@
-import { history } from 'umi'
 import { Button } from '@kdcloudjs/kdesign'
+import { history } from 'umi'
 import styles from './exception.less'
 
 interface IExceptionProps {

@@ -1,6 +1,3 @@
-@import 'layouts/reset.less';
-@import '../node_modules/@kdcloudjs/kdesign/dist/kdesign.css';
-
 @font-face {
   font-family: 'KINGDEEKB-Bold';
   src: url(../public/fontfamily/KINGDEEKB-Bold.ttf);
@@ -21,10 +18,15 @@
   --kd-c-button-sizing-min-width-middle: 85px;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body,
 html {
   color: #212121;
   overflow: hidden;
   font-family: PingFangSC-Regular, Microsoft YaHei, Microsoft Sans Serif, serif;
 }
-

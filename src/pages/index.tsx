@@ -1,4 +1,4 @@
-import { useModel, history, Link } from 'umi'
+import { Link, useModel } from 'umi'
 
 import './index.less'
 

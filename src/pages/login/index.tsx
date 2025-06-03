@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link, useModel, history } from 'umi'
-import { Form, Input, Button, Radio, Space, Alert, Icon, Message } from '@kdcloudjs/kdesign'
+import { history, Link, useModel } from 'umi'
+
+import { Alert, Button, Form, Icon, Input, Message, Radio, Space } from '@kdcloudjs/kdesign'
 
 import { login } from '@/services/user'
 import styles from './index.less'
