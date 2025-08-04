@@ -34,7 +34,7 @@ export default () => {
         }))
         history.push('/typical/workbench')
       } else {
-        setMsg(`${i18n({ id: 'login.failure', defaultMessage: '用户名或密码错误！' })}(kdcloud/kdesign)`)
+        setMsg(`${i18n({ id: 'login.failure', defaultMessage: '用户名或密码错误！' })}`)
       }
     }
   }
@@ -69,8 +69,7 @@ export default () => {
           <Form.Item label={i18n({ id: 'login.username', defaultMessage: '用户名' })} name="username" required>
             <Input
               borderType="bordered"
-              placeholder={`${i18n({ id: 'login.username', defaultMessage: '用户名' })}:kdcloud or guest`}
-              defaultValue="kdcloud"
+              placeholder={`${i18n({ id: 'login.username', defaultMessage: '用户名' })}`}
               allowClear
             />
           </Form.Item>
@@ -78,8 +77,7 @@ export default () => {
             <Input
               allowClear
               borderType="bordered"
-              placeholder={`${i18n({ id: 'login.password', defaultMessage: '密码' })}:kdesign`}
-              defaultValue="kdesign"
+              placeholder={`${i18n({ id: 'login.password', defaultMessage: '密码' })}`}
               type={pwdVisible ? 'text' : 'password'}
               suffix={
                 <Icon

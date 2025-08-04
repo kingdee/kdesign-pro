@@ -382,6 +382,7 @@ const getData = (lang: any, index: number = 1) => {
 }
 
 const legalAccounts = ['kdcloud', 'guest']
+const legalAccountsEn = ['k_12_D_@_cloud—345', 'gu_12_D_#_est—345']
 
 export default {
   'POST /mock/user/login': async (req: any, res: any) => {
@@ -391,7 +392,7 @@ export default {
       data: username,
     }
     await waitTime(1000)
-    if (legalAccounts.includes(username) && password === 'kdesign') {
+    if (legalAccounts.includes(username) && legalAccountsEn.includes(password)) {
       res.send(data)
     } else {
       res.send({
